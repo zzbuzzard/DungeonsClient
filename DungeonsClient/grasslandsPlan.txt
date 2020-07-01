@@ -1,0 +1,88 @@
+Grasslands
+Should be more difficult than desert, but not by an immense amount.
+
+Muncher needs rename
+
+Planned Items:
+Head:
+	Elven helmet, vine helmet
+Torso:
+	Plant armour, cobweb armour
+Weapons:
+	Spider fang dagger, Elven bow, elven sword, earth staff, vine whip
+Accessory:
+	Speed charm, corrupt amulet
+Specials:
+
+Balance
+  - Dark muncher
+  - Elf archer
+  - Elf knight
+  - Cursed elf knight
+  - Leafling
+  - Ent
+  - Spider
+Balance items and drop rates
+Create boss, triffid
+
+Ent will walk slowly towards the player.
+When it gets in range 10 or something, it spawns leaflings with no loot.
+
+  - The player deals w the leaflings
+
+The ent shoots BIG leaves that aren't that damaging but apply SLOW
+The ent continues advancing slowly towards the player. Trigger range is very low, however, so it will return to spawn.
+
+
+Ent phase 2: 
+	Moves faster towards closest players, spawning damaging tiles in a 2 thick square around it
+
+
+Tiles should be updated after
+
+Damaging tiles:
+	Code should run in the tile's object.
+	So in update()
+
+Entities have an OnScreen var
+If they're not on screen, just tp directly to their front most location
+And dont call update (?)
+
+To defeat solo:
+	Player enters ent room and lures the leaflings out
+	Returns to the room and tanks the ent's hits
+
+To defeat in a group:
+	Someone lures all leaflings out the room
+	The others attack the ent
+
+
+
+Enemies
+	Muncher: FAST + SHORT RANGE
+		Speed charm [nerf it though]
+	Dark muncher [rare]: FAST + SHORT RANGE
+		Corrupt amulet [glass cannon]
+	Eye spore: STATIONARY + RANGED
+		Plant armour [rare; balance]
+	Elf archer: FAST + RANGED
+		Elven bow
+	Elf knight: MEDIUM SPD + TANK
+		Elven sword
+	Cursed elf knight: BUFFED ELF KNIGHT
+		Elven sword
+		Elven helmet
+	Leafling:
+		Vine helmet
+	Ent [2x2]: SPAWNS IN LEAFLINGS IN TIMED GROUPS. MAX OF 10. RANGED DPS.
+		Earth staff
+		Vine helmet
+		Corrupt amulet
+	Spider:
+		Cobweb armour
+		Spider fang dagger
+	MAYBE: Venomous spider: HOWEVER WE ALREADY HAVE DARK MUNCHER, CURSED ELF KNIGHT. PUT SIMILAR STUFF IN DESERT FIRST AT LEAST.
+		Toxic helmet
+	Triffid [boss]:
+		Vine whip
+

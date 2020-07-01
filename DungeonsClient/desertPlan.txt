@@ -1,0 +1,46 @@
+Desert
+
+Enemy1 is now Sand ghoul
+Enemy2 is now Desert ghoul
+
+Implemented Items:
+Head:
+	Slime facemask, rusty helmet
+Torso:
+	Sand cape, scorpion scale armour, mage robe, rusty chestplate
+Weapons:
+	Scorpion dagger, bone bow, fire staff, sandstone sword, cactus blade
+Accessory:
+	Slime essence, cursed cactus eye
+Specials:
+
+Enemies
+	Enemy1:
+		Sand cape
+	Enemy2:
+		Sand cape
+	Scorpion: FAST
+		Scorpion dagger
+		Scorpion scale armour
+	Sand mage: SLOW, LONG RANGE
+		Fire staff
+		Mage robe (texture = Warm cloak)
+	Sand archer: SLOW, MID RANGE
+		Bone bow
+	Slime: TODO: SLOW STATUS EFFECT
+		Slime essence (makes u super slow and vulnerable but heal)
+		TODO: Slime missile (Special: applies slow)
+		Slime facemask
+	Sand golem: TANK
+		Sandstone sword
+		Rusty helmet
+		Rusty chestplate
+	TODO: Sand spirit: Fast, moves through other enemies
+		TODO: Only spawns if there's a player with level > 15
+		TODO: Spiritual cloak
+	TODO: Sand demon [sub-boss]
+		Sandstorm amulet [speed]
+		Desert ring [atk boost - but nerf it pls]
+	Cursed cactus [boss]
+		Cactus blade [fast shots, high dps low damage]
+		Cursed cactus eye [charm, magic boost]

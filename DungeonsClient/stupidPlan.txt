@@ -1,0 +1,116 @@
+General overview
+There is a main map
+There is a spawn point, with dungeon entraces further out, along treacherous paths
+
+The map is tile-based.
+The movement is non tile-based
+
+Battle mechanic is simple:
+ You click on an enemy you wish to target and you autofire at them.
+ Enemies do the same. They are either stationary with an attack radius or
+  move towards a player with the same attack thing.
+ Some enemies may be able to target multiple players at once, or have attacks that hit all in radius
+
+Dungeon mechanic:
+ Dungeons are capped at 4 people per dungeon
+ The players progress through the dungeon, defeating or skipping enemies, until they reach a boss room.
+ The boss room blocks the entrance to the rest of the dungeon.
+ Dungeons have a few different types, with different rarities. Non final list:
+  Cave, Volcanic crater, Abyss (water), Temple ruins, Glacier
+ Types lead on to other types randomly, E.g.
+  Cave -> Cave boss -> Spider cave drops -> Spider boss -> Soul pit drops -> Soul boss
+ OR
+  Cave -> Cave boss -> Slime pit drops -> Slime boss
+
+ Once all the dungeon's FIRST BOSSES are defeated (players could continue deeper to harder stuff),
+ The main boss appears in the overworld, in the center of spawn. The map is flooded by enemies. Ok, AFK people die but its not a permadeath game.
+ The whole group can exit dungeons and fight the boss.
+ When it dies, a portal opens to MAP II
+ The dungeons spawn again, they are defeated again, and Main Boss II appears.
+ This continues until
+  1) The whole group is wiped out by the main boss or
+  2) The TIMER runs out, resetting back to MAP I
+  3) The group defeat MAP I, II, III, IV, and V. They all get big bonuses.
+
+Death
+ When a character dies, they are removed from the dungeon and replaced at the spawn.
+ THEY CANNOT THEN REENTER THE DUNGEON
+ That dungeon is off-limits until the boss is defeated (?) or until the map is cleared.
+ Anyway, it adds some risk for the people going in first. Also encourages people to go to different dungeons.
+
+Chat
+ People should be able to talk from within dungeons. 
+ Should also be able to talk just to their dungeon.
+
+GLOBAL STUFF
+ On
+
+Practical considerations:
+Basics
+ IF I make it so that movement is also tile-based,
+  1) collision detection becomes easy peasy
+  2) syncing with the server becomes easier
+  3) movement looks worse, but to hell with that
+  4) could make it so players cant share tiles, that would be cool and prevent safe spotting
+
+The map
+ If generated from a seed, then we would only need to send this seed to the players.
+ No teleportation so they generate as they move
+ This is the best option.
+ However, the map is probably too large to fit entirely in memory?
+
+Tiles themselves
+ Two approaches.
+  1) Drawing things onto a rendertexture
+  2) Many RectangleShape objects, stored in a ... vector or somethin
+     Or perhaps a set sorted by Y, and we only draw those in Y range
+
+Attacking
+ Players send target requests. The target remains until another target is sent. The request is (TARGET_REQ, MONSTER ID)
+ The player shows themselves attacking when in range. The server attacks when in range, too.
+ If damage is guaranteed, we need not create projectile objects at the server end.
+
+
+Movement
+ I press right.
+ It sends 'RIGHT' to server.
+ I lerp to the right with a speed (its a stat)
+ Once I get there, I will be able to send RIGHTs again.
+ Its a good idea to make the player sliightly slower on the client side
+ Technically, my tile remains the same until I am there.
+
+ Weird situation:
+  I press right, there is no player in front of me.
+  Someone arrives in front of me.
+  The server receives my right request.
+  The server DOES NOT move me forwards.
+  In the next update, I see that I in fact have moved. I lerp quickly to that position.
+  If they are mid movement, then it should also give us a 
+
+PLAYER UPDATE SYNTAX::::::
+ Number of players
+  Position (2 shorts)
+  Move direction (1 byte)
+  Float, how far along that move dir they are
+  Move ID (1 byte)
+
+About 15 bytes / player
+30 players = 450 bytes per update. 
+10 Updates per second = 4500 bytes/sec = 4.5kB/sec
++ 30 enemies and other information, lets say 9kB/sec
+
+Other players and enemies movement
+ Get their tile position. Lerp them to that tile, moving only along horizontals and verticals.
+ (horizontal first, then vertical)
+
+Practical overview of the game (client);
+ 1) All assets loaded into memory.
+ 2) Client connects to server
+ 3) Client moves around tile by tile. Player is quite small so that tiles arent too annoying.
+    Position is synced from server: 
+
+
+
+Every time we move, we send a moveID along with it.
+This moveID is a short 0..32000
+

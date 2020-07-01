@@ -1,0 +1,65 @@
+Total base stat bonus points should amass to around the best gear in total.
+Best gear will have around +25 to various stats, at most +30.
+Base stats should max out, and you should only be able to max 3 and a bit.
+
+Lets say you get 1 stat point per level.
+Can apply 30/30/30/10
+
+You get 1 stat point from 1..10
+You get 0.5 otherwise
+You get 1 stat points from 90..100
+
+1 stat point every level.
+But also premium currency rewards every few levels.
+
+Rewards :
+ Level 1..9 = 1 stat point
+ Level 10 = 2 stat points, 5 gems, level 10 skin
+ Level 15 = 0 stat points, 5 gems
+ Legel 20 = 2 stat points, level 20 skin
+ Level 25 = 0 stat points, 10 gems
+ Level 30 = 2 stat points,
+ Level 50 = 5 stat points, 20 gems
+
+Every multiple of 5 gives you some gems.
+Every ..5 gives you gems and no stat points.
+Every ..0 gives you gems and 2 stat points, or 5 points at 50, or 5 points at 90, or 5 points at 100.
+
+Gem rewards
+	5  : 5g
+	10 : 5g
+	15 : 5g
+	20 : 5g
+	25 : 10g
+	30 : 5g
+	35 : 5g
+	40 : 5g
+	45 : 5g   - Earned 50g
+	50 : 20g  - Earned 70g
+	55 : 5g
+	60 : 5g
+	65 : 5g
+	70 : 5g
+	75 : 40g  - Earned 130g
+	80 : 5g
+	85 : 5g
+	90 : 40g  - Earned 180g
+	95 : 20g  - Earned 200g
+	100: 100g - Earned 300g
+
+Reaching level 100 gets you 300 premium currency.
+There should be something good available for 250g.
+Respending your stat points costs [your level] gems so you could reset at 50
+But also something for 1000g.
+
+Cool skins cost 200g.
+
+
+Things will typically cost 100g
+Expensive things will cost 300g
+Game changing pay to win things will cost 1000g
+
+
+
+
+
