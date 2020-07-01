@@ -19,7 +19,7 @@ EEnt::EEnt(pi pos_, ID_t id)
 #include "GameState.h"
 //#include "ELeafling.h"
 
-static const LootList Loot = { itemProb(I_EARTH_STAFF, 0.03f), itemProb(I_CORRUPT_AMULET, 0.035f), itemProb(I_VINE_HELMET, 0.2f) };
+static const LootList Loot = { itemProb(I_EARTH_STAFF, 0.035f), itemProb(I_CORRUPT_AMULET, 0.04f), itemProb(I_VINE_HELMET, 0.2f) };
 static const int xp = 1750;
 
 //static const int maxLeaflings = 1;

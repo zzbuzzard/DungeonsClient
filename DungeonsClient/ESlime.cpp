@@ -21,6 +21,7 @@ ESlime::ESlime(pi pos_)
 	: Enemy(E_SLIME, pos_, life, triggerRangee, xp) {
 	combatStats = stats;
 	loot = &Loot;
+
 }
 
 #include "GameState.h"

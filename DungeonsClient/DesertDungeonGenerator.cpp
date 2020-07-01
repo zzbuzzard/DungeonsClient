@@ -79,7 +79,7 @@ void DesertDungeonGenerator::drawBlocky(DNode *node) {
 
 	for (int x = X1 + 2; x <= X2 - 2; x++) {
 		for (int y = Y1 + 2; y <= Y2 - 2; y++) {
-			if (world->rand(0, 1) < 0.1f) {
+			if (world->rand(0, 1) < 0.08f) {
 				auto t = (world->rand(0, 1) < 0.3f ? TLTileType::CACTUS : TLTileType::ROCK);
 				world->addPermTopLayerTile(new TopLayerTile(pi(x, y), t));
 			}
@@ -103,6 +103,10 @@ void DesertDungeonGenerator::drawBarren(DNode *node) {
 	for (int x = X1 + 1; x <= X2 - 1; x++) {
 		for (int y = Y1 + 1; y <= Y2 - 1; y++) {
 			world->tiles[x + world->origin.x][y + world->origin.y] = Tile::DARK_SAND;
+
+			if (world->rand(0, 1) < 0.01f) {
+				world->addPermTopLayerTile(new TopLayerTile(pi(x, y), TLTileType::ROCK));
+			}
 		}
 	}
 }
@@ -128,7 +132,7 @@ void DesertDungeonGenerator::drawTankRoom(DNode *node) {
 	int K = 2;
 	if (tileNum > 200) K = 3;
 	Spawner *spawn = new DungeonSpawner(&tankRoomSpawns,
-		node->BL + pi(1, 1), node->BL + node->size - pi(2, 2), K, 75.0f);
+		node->BL + pi(1, 1), node->BL + node->size - pi(2, 2), K, 90.0f);
 	world->spawners.push_back(spawn);
 #endif
 }

@@ -5,7 +5,7 @@
 
 const static spawnVector plantRoomSpawns = { spawnPair(E_EYE_SPORE, 0.8f), spawnPair(E_MUNCHER, 1.0f), spawnPair(E_DARK_MUNCHER, 0.01f), spawnPair(E_LEAFLING, 0.5f) };
 const static spawnVector entRoomSpawns = { spawnPair(E_ENT, 1.0f) };
-const static spawnVector forestRoomSpawns = { spawnPair(E_ELF_KNIGHT, 0.8f), spawnPair(E_ELF_ARCHER, 1.0f), spawnPair(E_CURSED_ELF_KNIGHT, 0.001f) };
+const static spawnVector forestRoomSpawns = { spawnPair(E_ELF_KNIGHT, 0.8f), spawnPair(E_ELF_ARCHER, 1.0f), spawnPair(E_CURSED_ELF_KNIGHT, 0.005f) };
 const static spawnVector mudRoomSpawns = { spawnPair(E_SLIME, 1.0f), spawnPair(E_SPIDER, 0.8f) };
 const static EntitySpecies boss = E_MEGA_MUNCHER;
 
@@ -13,14 +13,15 @@ GrasslandsDungeonGenerator::GrasslandsDungeonGenerator(World *world)
 	: DungeonGenerator(world, BiomeType::GRASS)
 {
 	spawnRoomX = 21; spawnRoomY = 21;
-	roomXMin = 18; roomXMax = 25;
-	roomYMin = 18; roomYMax = 25;
-	bossRoomSize = 31;
+	roomXMin = 17; roomXMax = 24;
+	roomYMin = 17; roomYMax = 24;
+
+	bossRoomSize = 31; // If this is changed, make sure to update N for the maze generation in drawBoss()
 
 	// TODO: REMOVE THESE (was 30..35 but thats a bit much maybe anyways - turn down and reduce maxWrong to 4)
-	maxWrongRooms = 1;
-	roomsMin = 3;
-	roomsMax = 5;
+	maxWrongRooms = 4;
+	roomsMin = 25;
+	roomsMax = 30;
 
 	corridorLength = 10;
 

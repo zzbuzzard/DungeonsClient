@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "ECursedElfKnight.h"
 
-static const CombatStats stats(60, 0.5f, 3, T_SHARD, 7.5f, 14);
+static const CombatStats stats(55, 0.6f, 3, T_SHARD, 7.5f, 14);
 static const int life = 1350;
-static const int triggerRangee = 40;
+static const int triggerRangee = 30;
 
 #ifdef CLIENT
 ECursedElfKnight::ECursedElfKnight(pi pos_, ID_t id)

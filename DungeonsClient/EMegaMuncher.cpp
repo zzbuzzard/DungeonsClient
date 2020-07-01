@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "EMegaMuncher.h"
 
-static const CombatStats p1_stats(45, 0.25f, 2, T_SPINE, 3.8f, 18);
+static const CombatStats p1_stats(45, 0.25f, 2, T_SPINE, 3.9f, 18);
 static const CombatStats p2_stats(45, 0.5f, 2, T_THORN, 5.5f, 18);
 static const int life = 15000;
 static const int triggerRangee = 100;
@@ -20,7 +20,7 @@ EMegaMuncher::EMegaMuncher(pi pos_, ID_t id)
 #include "State.h"
 
 static const LootList Loot = { };
-static const int xp = 20000;
+static const int xp = 15000;
 
 EMegaMuncher::EMegaMuncher(pi pos_)
 	: Enemy(E_MEGA_MUNCHER, pos_, life, triggerRangee, xp, pi(2, 2)) {
