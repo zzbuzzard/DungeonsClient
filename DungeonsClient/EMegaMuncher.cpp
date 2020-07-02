@@ -19,7 +19,7 @@ EMegaMuncher::EMegaMuncher(pi pos_, ID_t id)
 #include "GameState.h"
 #include "State.h"
 
-static const LootList Loot = { };
+static const LootList Loot = { itemProb(I_BLESSED_SAPLING, 0.04f) };
 static const int xp = 15000;
 
 EMegaMuncher::EMegaMuncher(pi pos_)

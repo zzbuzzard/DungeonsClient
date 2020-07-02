@@ -123,7 +123,7 @@ void SHolyOrb::use(GameState *state, ID_t a, ID_t b) {
 
 
 SDamager::SDamager()
-	: Special("Damager", "Deals damage to an enemy", ItemRarity::UNCOMMON, T_DUST, Stats(0, 0, 0, 0, 5, 0, 0, 0), 50, 6, 3.0f, 1, true, false)
+	: Special("Dust storm", "Base damage: 150", ItemRarity::UNCOMMON, T_DUST, Stats(0, 0, 0, 0, 5, 0, 0, 0), 50, 6, 3.0f, 1, true, false)
 {
 }
 
@@ -135,7 +135,7 @@ void SDamager::use(GameState *state, ID_t a, ID_t b) {
 	Player *A = state->idToPlayer[a];
 	Enemy *B = state->idToEnemy[b];
 	float W = getWisM(A);
-	int damage = (int)(100 * W);
+	int damage = (int)(150 * W);
 #ifdef CLIENT
 	state->addEntity(new Projectile(T_FIREBALL, A->getPosWorldCentered(), B, damage));
 #else
@@ -146,7 +146,7 @@ void SDamager::use(GameState *state, ID_t a, ID_t b) {
 
 
 SBlessedSapling::SBlessedSapling()
-	: Special("Blessed sapling", "Spawns a healing pool", ItemRarity::UNCOMMON, T_BLESSED_SAPLING, Stats(0, 0, 0, 0, 0, 0, 0, 0), 90, 10, 6.0f, 1, false, true)
+	: Special("Blessed sapling", "Spawns a healing pool\nPool grows by 1 per 15 WIS", ItemRarity::UNCOMMON, T_BLESSED_SAPLING, Stats(0, 0, 0, 0, 0, 0, 0, 0), 90, 10, 6.0f, 1, false, true)
 {
 }
 
