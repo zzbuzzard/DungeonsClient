@@ -91,12 +91,13 @@ void OverworldSpawner::spawnEnemy(GameState *state) {
 	}
 
 	if (w) {
-		float d = 1 - util::dist((pf)pos, (pf)end) / maxDist;
+		float d = util::rand(-0.15f, 0.15f) + 1 - util::dist((pf)pos, (pf)end) / maxDist;
 
 		//cout << "Percentage through = " << d << endl;
 
-		float val = total * d * util::rand(0.8f, 1.2f);
+		float val = total * d;
 		if (val > total) val = total;
+		// if val<0 it returns first anyway
 
 		EntitySpecies spec = vec[vec.size() - 1].first;
 		int ii = 0;
