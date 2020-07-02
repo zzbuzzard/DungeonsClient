@@ -13,8 +13,8 @@ public:
 	Inventory();
 
 	void move(item_num_t a, item_num_t b);
-	void equip(item_num_t a);
-	void unequip(item_num_t a, item_num_t b);
+	void equip(item_num_t a, bool dungeonRules = false);
+	void unequip(item_num_t a, item_num_t b, bool dungeonRules = false);
 
 	int getFirstFree() const; // or -1 if full. does not check equipment slots.
 

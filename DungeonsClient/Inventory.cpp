@@ -34,10 +34,12 @@ void Inventory::move(item_num_t a, item_num_t b) {
 #endif
 }
 
-void Inventory::equip(item_num_t a) {
+void Inventory::equip(item_num_t a, bool dungeonRules) {
 	if (a < 0 || a >= INV_SIZE) return;
 	if (items[a] == I_NONE) return;
 	int equipSlot = (int)itemTypes[items[a]]->location;
+
+	if (dungeonRules && equipSlot == (int)Equipment::SPECIAL) return;
 
 	bool did = false;
 
@@ -79,10 +81,12 @@ int Inventory::getFirstFree() const {
 
 // 1) Move item in equipment -> empty inv slot
 // 2) Swap item in equipment with full inv slot if it has the right type
-void Inventory::unequip(item_num_t a, item_num_t b) {
+void Inventory::unequip(item_num_t a, item_num_t b, bool dungeonRules) {
 	if (a < 0 || a >= NUM_EQUIP_LOCS) return;
 	if (b < 0 || b >= INV_SIZE) return;
 	if (equips[a] == I_NONE) return;
+
+	if (dungeonRules && itemTypes[items[a]]->location == Equipment::SPECIAL) return;
 
 	bool did = false;
 
