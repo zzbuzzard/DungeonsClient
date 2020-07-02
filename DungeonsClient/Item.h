@@ -24,7 +24,7 @@ enum class ItemRarity {
 // Uses int16_t as int8_t would limit number of items to 127. Wouldn't be unreasonable to exceed this.
 // Order of these MUST NOT BE CHANGED EVER
 // (once we start storing items on the server)
-#define NUM_ITEMS 36
+#define NUM_ITEMS 37
 enum ITEM : int16_t {
 	// Helmets
 	I_HELMET,
@@ -71,6 +71,7 @@ enum ITEM : int16_t {
 	// Specials
 	I_HOLY_ORB,
 	I_DAMAGER,
+	I_BLESSED_SAPLING,
 
 	// New stuff
 
@@ -153,7 +154,8 @@ public:
 		float cooldown_, target_count_t num_targets_, bool targetsEnemies_, bool targetsPlayers_);
 
 	virtual void use(GameState *state, ID_t a, ID_t b) = 0;
-	float getWisM(GameState *state, Player *A);
+	float getWisM(Player *A);
+	stat_t getWis(Player *A);
 
 	bool targetsEnemies, targetsPlayers;
 
@@ -173,5 +175,11 @@ public:
 class SDamager : public Special {
 public:
 	SDamager();
+	void use(GameState *state, ID_t a, ID_t b);
+};
+
+class SBlessedSapling : public Special {
+public:
+	SBlessedSapling();
 	void use(GameState *state, ID_t a, ID_t b);
 };

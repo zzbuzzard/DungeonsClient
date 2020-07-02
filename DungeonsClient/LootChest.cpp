@@ -11,7 +11,7 @@
 TEXTURE lootChestRarities[NUM_ITEM_RARITIES] = { T_CHEST_1, T_CHEST_2, T_CHEST_3, T_CHEST_4 };
 
 LootChest::LootChest(pi pos_) 
-	: Entity(E_NONE, ET_TOP_LAYER_TILE, pos_)
+	: Entity(E_NONE, ET_NONE, pos_)
 {
 	// TODO : Change sprite based on rarity
 	setBoxSize();

@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <stack>
+
+#include "TopLayerTile.h"
+
 #include "Spawner.h"
 #include "OverworldGenerator.h"
 #include "DungeonGenerator.h"
@@ -211,14 +214,40 @@ bool World::addTempTopLayerTile(Entity* entity) {
 	pi p = entity->getPos();
 	p += origin;
 
+	// Either 1) tile is free 2) tile not free but we are more important 3) tile not free but we're not a ET_TOP_LAYER_TILE
+	bool w = false;
 	if (topLayerTileArray[p.x][p.y] == nullptr) {
+		w = true;
+	}
+	else {
+		if (entity->type == ET_TOP_LAYER_TILE) {
+			TopLayerTile *tl1 = (TopLayerTile*)entity;
+
+			Entity *e = topLayerTileArray[p.x][p.y];
+
+			if (e->type == ET_TOP_LAYER_TILE) {
+				TopLayerTile *tl2 = (TopLayerTile*)e;
+
+				if (tl1->getData()->priority > tl2->getData()->priority) {
+					w = true;
+					delete topLayerTileArray[p.x][p.y];
+				}
+			}
+		}
+		else {
+			// Wtf better not cancel it
+			// (client side - could be loot chest)
+			w = true;
+		}
+	}
+
+	if (w) {
 		topLayerTileArray[p.x][p.y] = entity;
 		TLset2.insert(p - origin);
-		return true;
 	}
 	else {
 		//cout << "Failed to place temporary TL tile : Place was taken" << endl;
 		delete entity;
-		return false;
 	}
+	return w;
 }

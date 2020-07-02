@@ -8,23 +8,25 @@
 //       lava would be walkable=true damaging=true and actually a DamageTileType
 class TLTileData {
 public:
-	TLTileData(TEXTURE texture_, bool walkable_, bool damaging_ = false, float lifeTime_ = -1);
+	TLTileData(TEXTURE texture_, int priority, bool walkable_, bool damaging_ = false, float lifeTime_ = -1);
 
 	const TEXTURE texture;
 	const bool damaging;
 	const bool walkable;
 	const float lifetime;
+
+	const int priority;
 };
 
 class DamageTileData : public TLTileData {
 public:
-	DamageTileData(TEXTURE texture_, float damageCool_, damage_t damage_, float lifetime_ = -1);
+	DamageTileData(TEXTURE texture_, int priority, float damageCool_, damage_t damage_, float lifetime_ = -1);
 
 	const float damageCool;
 	const damage_t damage;
 };
 
-#define NUM_TL_TILES 6
+#define NUM_TL_TILES 7
 enum class TLTileType : uint8_t {
 	ROCK,
 	CACTUS,
@@ -34,6 +36,7 @@ enum class TLTileType : uint8_t {
 
 	SPIKE_FLOOR,
 	SPIKY_TREE,
+	HEALING_POOL,
 };
 
 extern TLTileData *tileTypes[NUM_TL_TILES];

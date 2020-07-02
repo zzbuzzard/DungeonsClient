@@ -2,6 +2,7 @@
 #include "GrasslandsDungeonGenerator.h"
 #include "World.h"
 #include "Spawner.h"
+#include "TopLayerTile.h"
 
 const static spawnVector plantRoomSpawns = { spawnPair(E_EYE_SPORE, 0.8f), spawnPair(E_MUNCHER, 1.0f), spawnPair(E_DARK_MUNCHER, 0.01f), spawnPair(E_LEAFLING, 0.5f) };
 const static spawnVector entRoomSpawns = { spawnPair(E_ENT, 1.0f) };

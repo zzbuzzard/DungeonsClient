@@ -656,7 +656,6 @@ bool GameState::addTempTopLayerTile(Entity* entity, bool sendPacket) {
 	// Client places regardless
 	if (!currentWorld->canWalk(pos)) return false;
 #endif
-
 	if (currentWorld->addTempTopLayerTile(entity)) {
 #ifndef CLIENT
 		if (sendPacket) {

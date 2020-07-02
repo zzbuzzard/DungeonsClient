@@ -68,6 +68,7 @@ std::string texturePaths[NUM_TEXTURES] = {
 	"Textures/Tiles/lava_pool.png",
 	"Textures/Tiles/spiky_tree.png",
 	"Textures/Tiles/bush.png",
+	"Textures/Tiles/healing_pool.png",
 
 	"Textures/Tiles/grass_dungeon_entrance.png",
 	"Textures/Tiles/desert_dungeon_entrance.png",
@@ -111,6 +112,7 @@ std::string texturePaths[NUM_TEXTURES] = {
 	"Textures/Items/spider_fang_dagger.png",
 
 	"Textures/Items/holy_orb.png",
+	"Textures/Items/blessed_sapling.png",
 
 	"Textures/Chests/chest_1.png",
 	"Textures/Chests/chest_2.png",

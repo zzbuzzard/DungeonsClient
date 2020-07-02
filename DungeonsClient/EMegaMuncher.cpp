@@ -100,7 +100,7 @@ void EMegaMuncher::update(GameState *state) {
 					pi p2;
 					for (int i = 0; i < 4; i++) {
 						p2 = p + dirOffset[i];
-						if (state->currentWorld->canWalk(p2) && state->getTLTile(p2) == nullptr) {
+						if (state->currentWorld->canWalk(p2)) {
 							news.push_back(p2);
 						}
 					}
@@ -108,7 +108,7 @@ void EMegaMuncher::update(GameState *state) {
 
 				// Spawn new one
 				if (p1_front.size() < p1_minTrees) {
-					if (state->currentWorld->canWalk(pos) && state->getTLTile(pos) == nullptr) {
+					if (state->currentWorld->canWalk(pos)) {
 						news.push_back(pos);
 					}
 				}

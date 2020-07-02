@@ -135,15 +135,27 @@ namespace util {
 		std::vector<pi> vec;
 		vec.reserve(100);
 
-		for (int width = width1; width <= width2; width++) {
-			int x1 = center.x - width, x2 = center.x + tileSize.x + width - 1;
-			int y1 = center.y - width, y2 = center.y + tileSize.y + width - 1;
+		int x, y, x1, y1, x2, y2;
 
-			for (int x = x1; x <= x2; x++) {
+		for (int width = width1; width <= width2; width++) {
+			if (width < 0) continue;
+
+			if (width == 0) {
+				vec.push_back(center);
+				continue;
+			}
+
+			x1 = center.x - width;
+			x2 = center.x + tileSize.x + width - 1;
+
+			y1 = center.y - width;
+			y2 = center.y + tileSize.y + width - 1;
+
+			for (x = x1; x <= x2; x++) {
 				vec.push_back(pi(x, y1));
 				vec.push_back(pi(x, y2));
 			}
-			for (int y = y1 + 1; y <= y2 - 1; y++) {
+			for (y = y1 + 1; y <= y2 - 1; y++) {
 				vec.push_back(pi(x1, y));
 				vec.push_back(pi(x2, y));
 			}

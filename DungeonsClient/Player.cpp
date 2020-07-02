@@ -82,12 +82,14 @@ void Player::update(GameState *state) {
 		// INTENTIONALLY pos and not getCollisionPos()
 		Entity *e = state->getTLTile(pos);
 		if (e != nullptr) {
-			if (e->type == ET_TOP_LAYER_TILE_DMG) {
+			if (e->type == ET_TOP_LAYER_TILE) {
 				TopLayerTile *x = (TopLayerTile*)e;
-				DamageTileData *dtd = (DamageTileData*)x->getData();
-				
-				state->addEntity(new DamageText(this, pf(0, -0.5f * PIXEL_PER_UNIT), dtd->damage));
-				TLdmgCool = dtd->damageCool;
+				if (x->getData()->damaging) {
+					DamageTileData *dtd = (DamageTileData*)x->getData();
+
+					state->addEntity(new DamageText(this, pf(0, -0.5f * PIXEL_PER_UNIT), dtd->damage));
+					TLdmgCool = dtd->damageCool;
+				}
 			}
 		}
 	}
@@ -161,17 +163,19 @@ void Player::update(GameState *state) {
 		// INTENTIONALLY pos and not getCollisionPos()
 		Entity *e = state->getTLTile(pos);
 		if (e != nullptr) {
-			if (e->type == ET_TOP_LAYER_TILE_DMG) {
+			if (e->type == ET_TOP_LAYER_TILE) {
 				TopLayerTile *x = (TopLayerTile*)e;
-				DamageTileData *dtd = (DamageTileData*)x->getData();
+				if (x->getData()->damaging) {
+					DamageTileData *dtd = (DamageTileData*)x->getData();
 
-				// TODO: Check dtd's lifetime==-1, cast to TimedTopLayerTile
-				if (dtd->lifetime != -1 && ((TimedTopLayerTile*)x)->livedFor < 0.1f) {
-					cout << "Sparing a player because the tiles been alive < 0.1s" << endl;
-				}
-				else {
-					takeDamagePierce(dtd->damage, -1);
-					TLdmgCool = dtd->damageCool;
+					// TODO: Check dtd's lifetime==-1, cast to TimedTopLayerTile
+					if (dtd->lifetime != -1 && ((TimedTopLayerTile*)x)->livedFor < 0.1f) {
+						cout << "Sparing a player because the tiles been alive < 0.1s" << endl;
+					}
+					else {
+						takeDamagePierce(dtd->damage, -1);
+						TLdmgCool = dtd->damageCool;
+					}
 				}
 			}
 		}

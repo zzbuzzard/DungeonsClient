@@ -43,6 +43,7 @@ Item *itemTypes[NUM_ITEMS] = {
 	// Details in class constructor
 	new SHolyOrb(),
 	new SDamager(),
+	new SBlessedSapling(),
 };
 
 Item::Item() {
@@ -82,7 +83,7 @@ Special::Special(std::string name_, std::string desc_, ItemRarity rarity_, TEXTU
 #include "Projectile.h"
 #include "Stats.h"
 
-float Special::getWisM(GameState *state, Player *A) {
+float Special::getWisM(Player *A) {
 #ifdef CLIENT
 	return Stats::getWisMultiplierOf(A->wis);
 #else
@@ -90,9 +91,17 @@ float Special::getWisM(GameState *state, Player *A) {
 #endif
 }
 
+stat_t Special::getWis(Player *A) {
+#ifdef CLIENT
+	return A->wis;
+#else
+	return A->pInfo.getOverallStats().stats[static_cast<int>(Stat::WIS)];
+#endif
+}
+
 
 SHolyOrb::SHolyOrb()
-	: Special("Sunny orb", "Heals a target player\nBase heal: 50", ItemRarity::UNCOMMON, T_HOLY_ORB, Stats(30, 0, 0, 0, 0, 0, 0, 0), 70, 10, 3.0f, 1, false, true)
+	: Special("Sun's orb", "Heals a target player\nBase heal: 50", ItemRarity::UNCOMMON, T_HOLY_ORB, Stats(30, 0, 0, 0, 0, 0, 0, 0), 70, 10, 3.0f, 1, false, true)
 {
 }
 
@@ -103,7 +112,7 @@ void SHolyOrb::use(GameState *state, ID_t a, ID_t b) {
 		state->idToPlayer.find(b) == state->idToPlayer.end()) return;
 	Player *A = state->idToPlayer[a];
 	Player *B = state->idToPlayer[b];
-	float W = getWisM(state, A);
+	float W = getWisM(A);
 	int heal = (int)(50 * W);
 #ifdef CLIENT
 	state->addEntity(new Projectile(T_HEAL_DUST, A->getPosWorldCentered(), B, -heal));
@@ -125,7 +134,7 @@ void SDamager::use(GameState *state, ID_t a, ID_t b) {
 		state->idToEnemy.find(b) == state->idToEnemy.end()) return;
 	Player *A = state->idToPlayer[a];
 	Enemy *B = state->idToEnemy[b];
-	float W = getWisM(state, A);
+	float W = getWisM(A);
 	int damage = (int)(100 * W);
 #ifdef CLIENT
 	state->addEntity(new Projectile(T_FIREBALL, A->getPosWorldCentered(), B, damage));
@@ -134,6 +143,35 @@ void SDamager::use(GameState *state, ID_t a, ID_t b) {
 #endif
 }
 
+
+
+SBlessedSapling::SBlessedSapling()
+	: Special("Blessed sapling", "Spawns a healing pool", ItemRarity::UNCOMMON, T_BLESSED_SAPLING, Stats(0, 0, 0, 0, 0, 0, 0, 0), 90, 10, 6.0f, 1, false, true)
+{
+}
+
+// The server uses this to spawn in the tiles
+// The client, however, will hear about these tiles from the server, so just shows some random projectile thing
+void SBlessedSapling::use(GameState *state, ID_t a, ID_t b) {
+	// Player on player
+	if (a < 0 || b < 0) return;
+	if (state->idToPlayer.find(a) == state->idToPlayer.end() ||
+		state->idToPlayer.find(b) == state->idToPlayer.end()) return;
+	Player *A = state->idToPlayer[a];
+	Player *B = state->idToPlayer[b];
+#ifdef CLIENT
+	state->addEntity(new Projectile(T_BLESSED_SAPLING, A->getPosWorldCentered(), B, 0));
+#else
+	stat_t wis = getWis(A);
+	int size = 0;
+	if (wis >= 15) size = 1;
+	if (wis >= 30) size = 2;
+	if (wis >= 45) size = 3;
+
+	auto pis = util::borderPoints(B->getCollisionPos(), pi(1, 1), 0, size);
+	state->sendTLtilesPacket(TLTileType::HEALING_POOL, pis);
+#endif
+}
 
 
 
