@@ -7,7 +7,7 @@ Comments:
 
 Implemented Items:
 Head:
-	Elven helmet, vine helmet  :  Overtakes desert totally
+	Elven helmet, vine helmet, forest hood  :  Overtakes desert totally
 Torso:
 	Plant armour, wooden armour, silk cape, beast hide armour  :  Scorpion scale good until beast hide overtakes directly...
 Weapons:
@@ -31,6 +31,7 @@ Grassy healy heal tho
 Enemies
 	Muncher: FAST + SHORT RANGE
 		Speed charm [nerf it though]
+		Forest hood
 	Dark muncher [rare]: FAST + SHORT RANGE
 		Corrupt amulet [glass cannon]
 	Eye spore: STATIONARY + RANGED
@@ -45,6 +46,7 @@ Enemies
 		Elven helmet
 	Leafling:
 		Vine helmet
+		Forest hood
 	Ent [2x2]: FIRES OUT TENDRILS OF SPAWNED SPIKY TREE TILES [its kinda cool]
 		Earth staff
 		Vine helmet

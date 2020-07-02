@@ -80,6 +80,7 @@ std::string texturePaths[NUM_TEXTURES] = {
 	"Textures/Items/cursed_elven_helmet.png",
 	"Textures/Items/vine_helmet.png",
 	"Textures/Items/sand_helmet.png",
+	"Textures/Items/forest_hood.png",
 
 	"Textures/Items/test_armour.png",
 	"Textures/Items/plant_armour.png",

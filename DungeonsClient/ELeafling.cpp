@@ -16,7 +16,7 @@ ELeafling::ELeafling(pi pos_, ID_t id)
 #else
 #include "GameState.h"
 
-static const LootList Loot = { itemProb(I_VINE_HELMET, 0.008f) };
+static const LootList Loot = { itemProb(I_VINE_HELMET, 0.008f), itemProb(I_FOREST_HOOD, 0.0333f) };
 static const int xp = 550;
 
 ELeafling::ELeafling(pi pos_)

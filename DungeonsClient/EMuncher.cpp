@@ -14,7 +14,7 @@ EMuncher::EMuncher(pi pos_, ID_t id)
 	setBoxTexture(T_MUNCHER);
 }
 #else
-LootList muncherLoot = { itemProb(I_SPEED_CHARM, 0.005f) };
+LootList muncherLoot = { itemProb(I_SPEED_CHARM, 0.005f), itemProb(I_FOREST_HOOD, 0.01f) };
 
 EMuncher::EMuncher(pi pos_)
 	: Enemy(E_MUNCHER, pos_, muncherLife, muncherTriggerRange, 200) {

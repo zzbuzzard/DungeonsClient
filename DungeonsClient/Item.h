@@ -24,7 +24,7 @@ enum class ItemRarity {
 // Uses int16_t as int8_t would limit number of items to 127. Wouldn't be unreasonable to exceed this.
 // Order of these MUST NOT BE CHANGED EVER
 // (once we start storing items on the server)
-#define NUM_ITEMS 38
+#define NUM_ITEMS 39
 enum ITEM : int16_t {
 	// Helmets
 	I_HELMET,
@@ -34,6 +34,7 @@ enum ITEM : int16_t {
 	I_CURSED_ELVEN_HELMET,
 	I_VINE_HELMET,
 	I_SAND_HELMET,
+	I_FOREST_HOOD,
 
 	// Torso stuff
 	I_CHESTPLATE,
