@@ -90,7 +90,7 @@ float Special::getWisM(GameState *state, Player *A) {
 
 
 SHolyOrb::SHolyOrb()
-	: Special("Holy orb", "Heals a target player", ItemRarity::UNCOMMON, T_HOLY_ORB, Stats(30, 0, 0, 0, 0, 0, 0, 0), 70, 10, 3.0f, 1, false, true)
+	: Special("Sunny orb", "Heals a target player\nBase heal: 50", ItemRarity::UNCOMMON, T_HOLY_ORB, Stats(30, 0, 0, 0, 0, 0, 0, 0), 70, 10, 3.0f, 1, false, true)
 {
 }
 

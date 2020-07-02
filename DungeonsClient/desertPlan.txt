@@ -13,6 +13,7 @@ Weapons:
 Accessory:
 	Slime essence, cursed cactus eye
 Specials:
+	Sunny orb
 
 Enemies
 	Enemy1:
@@ -22,9 +23,10 @@ Enemies
 	Scorpion: FAST
 		Scorpion dagger
 		Scorpion scale armour
-	Sand mage: SLOW, LONG RANGE
+	Fire mage: SLOW, LONG RANGE
 		Fire staff
 		Mage robe (texture = Warm cloak)
+		Sunny orb
 	Sand archer: SLOW, MID RANGE
 		Bone bow
 	Slime: TODO: SLOW STATUS EFFECT
