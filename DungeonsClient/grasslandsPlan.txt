@@ -9,14 +9,14 @@ Implemented Items:
 Head:
 	Elven helmet, vine helmet  :  Overtakes desert totally
 Torso:
-	Plant armour, wooden armour, silk cape, beast hide armour  :  Scorpion scale form desert still a GOOD candidate
+	Plant armour, wooden armour, silk cape, beast hide armour  :  Scorpion scale good until beast hide overtakes directly...
 Weapons:
 	Spider fang dagger, Elven bow [useless?], elven sword [useless?], earth staff
 		: Cactus blade still the best short distance
 		Though spider fang is useful in cramped spaces
 		Earth staff overtakes fire staff as best ranged though.
 Accessory:
-	Speed charm, corrupt amulet
+	Speed charm, corrupt amulet, recovery charm
 	: Cursed cactus eye probably the best
 Specials:
 	Blessed sapling
@@ -35,6 +35,7 @@ Enemies
 		Corrupt amulet [glass cannon]
 	Eye spore: STATIONARY + RANGED
 		Plant armour [rare; balance]
+		Recovery charm
 	Elf archer: FAST + RANGED
 		Elven bow
 	Elf knight: MEDIUM SPD + TANK

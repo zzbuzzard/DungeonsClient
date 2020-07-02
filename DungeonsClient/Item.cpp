@@ -4,11 +4,12 @@
 Item *itemTypes[NUM_ITEMS] = {
 	new Item("Helmet", ItemRarity::COMMON, T_TEST_HELMET, Equipment::HEAD, Stats(50, 0, 4, -5, 0, 0, 0, 0)), // what
 	new Item("Cursed rags", ItemRarity::RARE, T_CURSED_RAGS, Equipment::HEAD, Stats(75, 0, 0, 8, 15, 0, 0, 0)), // what
-	new Item("Slime facemask", ItemRarity::COMMON, T_SLIME_FACEMASK, Equipment::HEAD, Stats(50, 0, 3, -5, 0, 0, 0, -10)),
+
+	new Item("Slime facemask", ItemRarity::COMMON, T_SLIME_FACEMASK, Equipment::HEAD, Stats(50, 0, 3, -10, 0, 0, 0, 0)),
 	new Item("Rusty helmet", ItemRarity::COMMON, T_RUSTY_HELMET, Equipment::HEAD, Stats(0, 0, 4, -3, 0, 0, 5, 0)),
 	new Item("Cursed elven helmet", ItemRarity::RARE, T_CURSED_ELVEN_HELMET, Equipment::HEAD, Stats(-50, 0, 0, 10, 10, 0, 0, 0)),
-	new Item("Vine helmet", ItemRarity::UNCOMMON, T_VINE_HELMET, Equipment::HEAD, Stats(75, 0, 4, 0, 0, 0, 10, 0)),
-	new Item("Sand helmet", ItemRarity::COMMON, T_SAND_HELMET, Equipment::HEAD, Stats(0, 0, 3, 0, 0, 0, 0, 0)),
+	new Item("Vine helmet", ItemRarity::UNCOMMON, T_VINE_HELMET, Equipment::HEAD, Stats(50, 0, 4, 0, 0, 0, 10, 0)),
+	new Item("Sand helmet", ItemRarity::COMMON, T_SAND_HELMET, Equipment::HEAD, Stats(0, 0, 3, -3, 0, 0, 0, 0)),
 
 	new Item("Chestplate", ItemRarity::COMMON, T_TEST_ARMOUR, Equipment::TORSO, Stats(0, 0, 7, -7, 0, 0, 5, 0)), // what
 	new Item("Plant armour", ItemRarity::UNCOMMON, T_PLANT_ARMOUR, Equipment::TORSO, Stats(40, 0, 5, 0, 0, 0, 10, 0)),

@@ -14,8 +14,8 @@ ESlime::ESlime(pi pos_, ID_t id)
 	setBoxTexture(T_SLIME);
 }
 #else
-static const LootList Loot = { itemProb(I_SLIME_ESSENCE, 0.005f), itemProb(I_SLIME_FACEMASK, 0.008f) };
-static const int xp = 150;
+static const LootList Loot = { itemProb(I_SLIME_ESSENCE, 0.005f), itemProb(I_SLIME_FACEMASK, 0.01f) };
+static const int xp = 200;
 
 ESlime::ESlime(pi pos_)
 	: Enemy(E_SLIME, pos_, life, triggerRangee, xp) {

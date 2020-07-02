@@ -15,7 +15,7 @@ Weapons:
 Accessory:
 	Slime essence, cursed cactus eye
 Specials:
-	Sunny orb
+	Sunny orb, Sandstorm [was damager]
 
 Enemies
 	Enemy1:
