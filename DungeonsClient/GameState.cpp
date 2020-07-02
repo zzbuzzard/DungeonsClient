@@ -74,7 +74,7 @@ GameState::GameState(BiomeType biome) : isOverworld(biome == BiomeType::NONE) {
 	int X = currentWorld->tiles.size();
 	int Y = currentWorld->tiles[0].size();
 
-	tileMarkerNum = std::vector<std::vector<int8_t> >(X, std::vector<int8_t>(Y, 0));
+	tileMarkerNum = std::vector<std::vector<int16_t> >(X, std::vector<int16_t>(Y, 0));
 	tileMarkerDir = std::vector<std::vector<Dir> >(X, std::vector<Dir>(Y, D_NONE));
 }
 
@@ -1619,7 +1619,7 @@ Dir GameState::BFSTowards(const pi a, const pi b, const range_t depth, const pi 
 	//    Use the last direction in there
 	// 2) We don't reach b, return D_NONE
 
-	if ((bfsNum + 1) < bfsNum) {
+	if ((int16_t)(bfsNum + 1) < bfsNum) {
 		cout << "Bfs wrapping" << endl;
 	}
 

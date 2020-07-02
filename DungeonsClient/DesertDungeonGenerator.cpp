@@ -4,9 +4,9 @@
 #include "Spawner.h"
 #include "TopLayerTile.h"
 
-const static spawnVector normalSpawns = { spawnPair(E_ENEMY1, 4), spawnPair(E_SCORPION, 2), spawnPair(E_ENEMY2, 1), spawnPair(E_SLIME, 1) };
-const static spawnVector tankRoomSpawns = { spawnPair(E_SAND_GOLEM, 1) };
-const static spawnVector blockRoomSpawns = { spawnPair(E_SCORPION, 2), spawnPair(E_ARCHER, 1), spawnPair(E_FIRE_MAGE, 0.8f) };
+const static spawnVector normalSpawns = { spawnPair(E_ENEMY1, 1.0f), spawnPair(E_SCORPION, 0.5f), spawnPair(E_ENEMY2, 0.25f), spawnPair(E_SLIME, 0.4f) };
+const static spawnVector tankRoomSpawns = { spawnPair(E_SAND_GOLEM, 1.0f) };
+const static spawnVector blockRoomSpawns = { spawnPair(E_SCORPION, 1.0f), spawnPair(E_ARCHER, 0.6f), spawnPair(E_FIRE_MAGE, 0.5f) };
 const static EntitySpecies boss = E_CURSED_CACTUS;
 
 DesertDungeonGenerator::DesertDungeonGenerator(World *world)
@@ -48,18 +48,11 @@ void DesertDungeonGenerator::drawRoom(DNode* node) {
 	else {
 		if (!node->isSpawn) { // No enemies in spawn room
 			float r = world->rand(0, 1);
-			if (r <= 0.1f) {
-				drawTankRoom(node);
-			}
-			if (r > 0.1f && r <= 0.3f) {
-				drawBarren(node);
-			}
-			if (r > 0.3f && r <= 0.55f) {
-				drawBlocky(node);
-			}
-			if (r > 0.55f) {
-				drawNormal(node);
-			}
+
+			if (r <= 0.1f)	drawTankRoom(node);                // 0.1
+			if (r > 0.1f && r <= 0.3f)  drawBarren(node);      // 0.2
+			if (r > 0.3f && r <= 0.65f) drawBlocky(node);      // 0.35
+			if (r > 0.65f) drawNormal(node);                   // 0.35
 		}
 	}
 }
