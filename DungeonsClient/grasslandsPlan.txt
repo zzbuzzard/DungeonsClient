@@ -9,7 +9,7 @@ Implemented Items:
 Head:
 	Elven helmet, vine helmet  :  Overtakes desert totally
 Torso:
-	Plant armour, wooden armour, silk cape  :  Scorpion scale form desert still a GOOD candidate
+	Plant armour, wooden armour, silk cape, beast hide armour  :  Scorpion scale form desert still a GOOD candidate
 Weapons:
 	Spider fang dagger, Elven bow [useless?], elven sword [useless?], earth staff
 		: Cactus blade still the best short distance
@@ -19,6 +19,7 @@ Accessory:
 	Speed charm, corrupt amulet
 	: Cursed cactus eye probably the best
 Specials:
+	Blessed sapling
 
 Best balanced set would probably be
 Vine helmet, Plant armour, Cactus sword / Earth staff, Cursed cactus eye
@@ -53,6 +54,7 @@ Enemies
 	MAYBE: Venomous spider: HOWEVER WE ALREADY HAVE DARK MUNCHER, CURSED ELF KNIGHT. PUT SIMILAR STUFF IN DESERT FIRST AT LEAST.
 		MAYBE: Toxic helmet
 	Mega muncher [boss]:
-		Vine whip super high dps, but low damage
+		Blessed sapling
+		Beast hide armour
 		
 

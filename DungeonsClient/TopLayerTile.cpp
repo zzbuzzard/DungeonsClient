@@ -14,12 +14,7 @@ TLTileData *tileTypes[NUM_TL_TILES] = {
 
 	new DamageTileData(T_TL_SPIKE_FLOOR, 0, 0.1f, 5, 5.5f),
 	new DamageTileData(T_TL_SPIKY_TREE, 50, 0.4f, 30, 1.0f),
-	new DamageTileData(T_TL_HEALING_POOL, 5, 0.4f, -5, 4.8f),
-
-	// Total heal of 60 (10 per heal, 8 heals, every 0.2s, 1.6s life)
-	// 5 per heal
-	// lifetime 5 seconds
-	// And total heal 60 : num heals = 12,
+	new DamageTileData(T_TL_HEALING_POOL, 6, 0.4f, -5, 4.8f), // total heal 72 = more than heal orb til 50 wis ... but costs more tbf
 };
 
 

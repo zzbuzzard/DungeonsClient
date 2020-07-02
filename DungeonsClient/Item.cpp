@@ -146,7 +146,7 @@ void SDamager::use(GameState *state, ID_t a, ID_t b) {
 
 
 SBlessedSapling::SBlessedSapling()
-	: Special("Blessed sapling", "Spawns a healing pool\nPool grows by 1 per 15 WIS", ItemRarity::UNCOMMON, T_BLESSED_SAPLING, Stats(0, 0, 0, 0, 0, 0, 0, 0), 90, 10, 6.0f, 1, false, true)
+	: Special("Blessed sapling", "Spawns a healing pool\nPool grows by 1 per 15 WIS", ItemRarity::RARE, T_BLESSED_SAPLING, Stats(0, 0, 0, 0, 0, 0, 0, 0), 120, 10, 6.0f, 1, false, true)
 {
 }
 
