@@ -12,7 +12,7 @@ Item *itemTypes[NUM_ITEMS] = {
 
 	new Item("Chestplate", ItemRarity::COMMON, T_TEST_ARMOUR, Equipment::TORSO, Stats(0, 0, 7, -7, 0, 0, 5, 0)), // what
 	new Item("Plant armour", ItemRarity::UNCOMMON, T_PLANT_ARMOUR, Equipment::TORSO, Stats(40, 0, 5, 0, 0, 0, 10, 0)),
-	new Item("Sand cape", ItemRarity::COMMON, T_SAND_CAPE, Equipment::TORSO, Stats(0, 40, 2, 5, 0, 0, 0, 0)),
+	new Item("Sand cape", ItemRarity::COMMON, T_SAND_CAPE, Equipment::TORSO, Stats(0, 0, 3, 5, 0, 0, 0, 0)),
 	new Item("Scorpion scale armour", ItemRarity::COMMON, T_SCORPION_SCALE_ARMOUR, Equipment::TORSO, Stats(0, 0, 5, 0, 4, 0, 0, 0)),
 	new Item("Rusty armour", ItemRarity::COMMON, T_RUSTY_ARMOUR, Equipment::TORSO, Stats(0, 0, 6, -8, 0, 0, 0, 0)),
 	new Item("Mage's robe", ItemRarity::COMMON, T_WARM_CLOAK, Equipment::TORSO, Stats(0, 75, 2, 0, 0, 10, 0, 10)),
