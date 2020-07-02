@@ -167,6 +167,13 @@ void GameMenu::update(GameState *state) {
 				}
 			}
 		}
+
+		// If dungeon
+		if (state->currentWorld != nullptr && !state->currentWorld->isOverworld && isDragging) {
+			if (draggingInd == (int)Equipment::SPECIAL && equipDragged) {
+				isDragging = false;
+			}
+		}
 	}
 
 	if (isDragging && mouseReleased) {
