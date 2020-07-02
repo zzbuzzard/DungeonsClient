@@ -1,11 +1,12 @@
 Desert
 
-Enemy1 is now Sand ghoul
-Enemy2 is now Desert ghoul
+Comments:
+	Enemy1 is now Sand ghoul
+	Enemy2 is now Desert ghoul
 
 Implemented Items:
 Head:
-	Slime facemask, rusty helmet
+	Slime facemask, rusty helmet, sand helmet
 Torso:
 	Sand cape, scorpion scale armour, mage robe, rusty chestplate
 Weapons:
@@ -19,7 +20,7 @@ Enemies
 	Enemy1:
 		Sand cape
 	Enemy2:
-		Sand cape
+		Sand helmet
 	Scorpion: FAST
 		Scorpion dagger
 		Scorpion scale armour

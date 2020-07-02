@@ -1,9 +1,11 @@
 Grasslands
-Should be more difficult than desert, but not by an immense amount.
 
-Muncher needs rename
+Comments:
+	Should be more difficult than desert, but not by an immense amount.
+	Muncher needs rename
+	A special that does what the ent's special does? That would be SICK but totally overpowered. Save it for a later boss.
 
-Planned Items:
+Implemented Items:
 Head:
 	Elven helmet, vine helmet
 Torso:
@@ -13,29 +15,6 @@ Weapons:
 Accessory:
 	Speed charm, corrupt amulet
 Specials:
-
-Ent phase 2: 
-	Moves faster towards closest players, spawning damaging tiles in a 2 thick square around it
-
-
-Tiles should be updated after
-
-Damaging tiles:
-	Code should run in the tile's object.
-	So in update()
-
-Entities have an OnScreen var
-If they're not on screen, just tp directly to their front most location
-And dont call update (?)
-
-To defeat solo:
-	Player enters ent room and lures the leaflings out
-	Returns to the room and tanks the ent's hits
-
-To defeat in a group:
-	Someone lures all leaflings out the room
-	The others attack the ent
-
 
 
 Enemies
@@ -54,7 +33,7 @@ Enemies
 		Elven helmet
 	Leafling:
 		Vine helmet
-	Ent [2x2]: SPAWNS IN LEAFLINGS IN TIMED GROUPS. MAX OF 10. RANGED DPS.
+	Ent [2x2]: FIRES OUT TENDRILS OF SPAWNED SPIKY TREE TILES [its kinda cool]
 		Earth staff
 		Vine helmet
 		Corrupt amulet
@@ -62,7 +41,8 @@ Enemies
 		Cobweb armour
 		Spider fang dagger
 	MAYBE: Venomous spider: HOWEVER WE ALREADY HAVE DARK MUNCHER, CURSED ELF KNIGHT. PUT SIMILAR STUFF IN DESERT FIRST AT LEAST.
-		Toxic helmet
+		MAYBE: Toxic helmet
 	Mega muncher [boss]:
 		Vine whip super high dps, but low damage
+		
 
