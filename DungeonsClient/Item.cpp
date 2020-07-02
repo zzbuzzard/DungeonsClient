@@ -167,6 +167,7 @@ void SBlessedSapling::use(GameState *state, ID_t a, ID_t b) {
 	if (wis >= 15) size = 1;
 	if (wis >= 30) size = 2;
 	if (wis >= 45) size = 3;
+	if (wis >= 60) size = 4;
 
 	auto pis = util::borderPoints(B->getCollisionPos(), pi(1, 1), 0, size);
 	state->sendTLtilesPacket(TLTileType::HEALING_POOL, pis);
