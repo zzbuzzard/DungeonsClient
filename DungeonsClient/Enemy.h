@@ -76,7 +76,7 @@ protected:
 	int triggerRange;
 
 	const LootList *loot = nullptr;
-	float bfsCooldown = -1;
+	float bfsCooldown;
 	float retargetCooldown = -1;
 
 private:

@@ -21,10 +21,12 @@ public:
 private:
 	ITEM currentlyDisplaying = I_NONE;
 	bool isVisible;
-	void setPos(sf::Vector2f pos);
+	void setPos(pf pos, float bottom);
 
 	sf::RectangleShape panel;
 	sf::Text titleText;
 	sf::Text statsText;
+
+	float height;
 };
 

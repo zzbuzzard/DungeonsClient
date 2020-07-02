@@ -11,6 +11,8 @@ Enemy::Enemy(EntitySpecies spec, pi pos_, int life, ID_t id, pi tileSize_)
 #include "State.h"
 #include "Packet.h"
 
+static const float bfsCooldownTime = 0.8f;
+
 ID_t Enemy::idd = -1;
 Enemy::Enemy(EntitySpecies spec, pi pos_, int life, int triggerRange_, exp_t exp_, pi tileSize_)
 	: LivingEntity(spec, ET_ENEMY, pos_, life, idd--, tileSize_), triggerRange(triggerRange_), exp(exp_)
@@ -18,6 +20,8 @@ Enemy::Enemy(EntitySpecies spec, pi pos_, int life, int triggerRange_, exp_t exp
 	// check for negative overflows : hopefully enemy with id -1 is dead by now (32,000 enemies later)
 	if (idd > 0) idd = -1;
 	spawnP = pos;
+
+	bfsCooldown = -1;
 }
 
 Enemy::~Enemy() {
@@ -27,13 +31,11 @@ Enemy::~Enemy() {
 	}
 }
 
-const float bfsCooldownTime = 0.8f;
-
 // Moves towards player
 // Or returns to spawn if it cannot move towards player
 // Also sets 1 target as the closest player.
 void Enemy::moveTowardsPlayer(GameState *state, bool returnsToSpawn, bool ignoreOtherEntities) {
-	if (currentMovement != D_NONE) return;
+	if (currentMovement != D_NONE || bfsCooldown > 0) return;
 
 	Player *p = state->getClosestPlayer(getCollisionPos());
 
@@ -45,50 +47,48 @@ void Enemy::moveTowardsPlayer(GameState *state, bool returnsToSpawn, bool ignore
 			worked = false;
 		}
 		else {
-			if (bfsCooldown <= 0) {
-				Dir d = D_NONE;
+			Dir d = D_NONE;
 
-				//static const float fullLifeDepthMultiplier = 0.75f;
+			//static const float fullLifeDepthMultiplier = 0.75f;
 
-				//int bfsDepth = triggerRange;
-				//if (lifeOn == maxLife) bfsDepth = (int)(bfsDepth * fullLifeDepthMultiplier);
+			//int bfsDepth = triggerRange;
+			//if (lifeOn == maxLife) bfsDepth = (int)(bfsDepth * fullLifeDepthMultiplier);
 
-				if (!ignoreOtherEntities) {
-					d = state->BFSTowards(pos, p->getCollisionPos(), triggerRange, tileSize);
-
-					if (d == D_NONE) {
-						d = state->BFSTowardsRanged(pos, p->getCollisionPos(), triggerRange, combatStats.range, tileSize);
-					}
-				}
+			if (!ignoreOtherEntities) {
+				d = state->BFSTowards(pos, p->getCollisionPos(), triggerRange, tileSize);
 
 				if (d == D_NONE) {
-					d = state->BFSTowardsNoEntities(pos, p->getCollisionPos(), triggerRange, tileSize);
+					d = state->BFSTowardsRanged(pos, p->getCollisionPos(), triggerRange, combatStats.range, tileSize);
 				}
+			}
 
-				if (d == D_NONE) {
-					if (targets.size() == 0)
-						worked = false;
-					else
-						bfsCooldown = bfsCooldownTime;
-				}
+			if (d == D_NONE) {
+				d = state->BFSTowardsNoEntities(pos, p->getCollisionPos(), triggerRange, tileSize);
+			}
 
-				else {
-					if (tileSize == pi(1, 1)) {
-						pi newPos = pos + dirOffset[d];
-						if (state->canMove(newPos)) {
-							currentMovement = d;
-						}
-						else {
-							bfsCooldown = bfsCooldownTime;
-						}
+			if (d == D_NONE) {
+				if (targets.size() == 0)
+					worked = false;
+				else
+					bfsCooldown = bfsCooldownTime;
+			}
+
+			else {
+				if (tileSize == pi(1, 1)) {
+					pi newPos = pos + dirOffset[d];
+					if (state->canMove(newPos)) {
+						currentMovement = d;
 					}
 					else {
-						if (state->canMoveDir(pos, tileSize, d)) {
-							currentMovement = d;
-						}
-						else {
-							bfsCooldown = bfsCooldownTime;
-						}
+						bfsCooldown = bfsCooldownTime;
+					}
+				}
+				else {
+					if (state->canMoveDir(pos, tileSize, d)) {
+						currentMovement = d;
+					}
+					else {
+						bfsCooldown = bfsCooldownTime;
 					}
 				}
 			}

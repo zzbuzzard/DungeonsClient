@@ -24,7 +24,7 @@ void ItemHoverUI::update(GameState *state) {
 
 void ItemHoverUI::draw(GameState *state, sf::RenderWindow *window) {
 	if (isVisible) {
-		setPos(state->getMousePosWorld());
+		setPos(state->getMousePosWorld(), state->getBottomRightWorld().y);
 
 		window->draw(panel);
 		window->draw(titleText);
@@ -79,12 +79,16 @@ void ItemHoverUI::display(ITEM itemType) {
 
 	statsText.setString(t);
 
-	float h = statsText.getGlobalBounds().height + 60.0f;
+	height = statsText.getGlobalBounds().height + 60.0f;
 	float w = std::max(statsText.getGlobalBounds().width, titleText.getGlobalBounds().width) + 20.0f;
-	panel.setSize(sf::Vector2f(w, h));
+	panel.setSize(sf::Vector2f(w, height));
 }
 
-void ItemHoverUI::setPos(sf::Vector2f pos) {
+const static float btmOffset = 5.0f;
+
+void ItemHoverUI::setPos(pf pos, float bottom) {
+	if (pos.y + height >= bottom - btmOffset) pos.y = bottom - height - btmOffset;
+
 	panel.setPosition(pos);
 	titleText.setPosition(pos + itemHoverTitleTextOffset);
 	statsText.setPosition(pos + itemHoverStatsTextOffset);
