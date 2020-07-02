@@ -4,7 +4,7 @@
 
 // Can change the order of these
 // (along as the path array order is changed too)
-#define NUM_TEXTURES 99
+#define NUM_TEXTURES 100
 enum TEXTURE {
 	T_PLAYER,
 
@@ -85,6 +85,7 @@ enum TEXTURE {
 	T_COBWEB_ARMOUR,
 	T_SILK_CAPE,
 	T_WOODEN_ARMOUR,
+	T_BEAST_HIDE_ARMOUR,
 
 	T_TEST_ACCESSORY,
 	T_RECOVERY_CHARM,

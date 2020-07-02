@@ -13,12 +13,13 @@ Item *itemTypes[NUM_ITEMS] = {
 	new Item("Chestplate", ItemRarity::COMMON, T_TEST_ARMOUR, Equipment::TORSO, Stats(0, 0, 7, -7, 0, 0, 5, 0)), // what
 	new Item("Plant armour", ItemRarity::UNCOMMON, T_PLANT_ARMOUR, Equipment::TORSO, Stats(40, 0, 5, 0, 0, 0, 10, 0)),
 	new Item("Sand cape", ItemRarity::COMMON, T_SAND_CAPE, Equipment::TORSO, Stats(0, 0, 3, 5, 0, 0, 0, 0)),
-	new Item("Scorpion scale armour", ItemRarity::COMMON, T_SCORPION_SCALE_ARMOUR, Equipment::TORSO, Stats(0, 0, 5, 0, 4, 0, 0, 0)),
+	new Item("Scorpion scale armour", ItemRarity::UNCOMMON, T_SCORPION_SCALE_ARMOUR, Equipment::TORSO, Stats(0, 0, 5, 0, 4, 0, 0, 0)),
 	new Item("Rusty armour", ItemRarity::COMMON, T_RUSTY_ARMOUR, Equipment::TORSO, Stats(0, 0, 6, -8, 0, 0, 0, 0)),
 	new Item("Mage's robe", ItemRarity::COMMON, T_WARM_CLOAK, Equipment::TORSO, Stats(0, 75, 2, 0, 0, 10, 0, 10)),
 	new Item("Cobweb armour", ItemRarity::COMMON, T_COBWEB_ARMOUR, Equipment::TORSO, Stats(0, 0, 6, 5, 0, 8, 0, 0)), // TODO get rid of... how the fuck do you even make armour out of cobwebs
 	new Item("Silk cape", ItemRarity::COMMON, T_SILK_CAPE, Equipment::TORSO, Stats(0, 0, 4, 8, 0, 0, 6, 0)),
 	new Item("Wooden armour", ItemRarity::COMMON, T_WOODEN_ARMOUR, Equipment::TORSO, Stats(0, 0, 7, -8, 0, 0, 0, 5)),
+	new Item("Beast hide armour", ItemRarity::UNCOMMON, T_BEAST_HIDE_ARMOUR, Equipment::TORSO, Stats(0, 0, 7, 5, 5, 0, 0, 0)),
 
 	new Item("Speed charm", ItemRarity::UNCOMMON, T_TEST_ACCESSORY, Equipment::ACCESSORY, Stats(0, 0, 0, 12, 0, 0, 0, 0)),
 	new Item("Sandstorm amulet", ItemRarity::UNCOMMON, T_SANDSTORM_AMULET, Equipment::ACCESSORY, Stats(0, 0, 4, 10, 0, 0, 0, 0)),
