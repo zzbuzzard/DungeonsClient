@@ -29,10 +29,6 @@ void PlayerInfo::pickUp(pi pos, item_num_t ind) {
 	int i = inv.getFirstFree();
 	if (i == -1) return;
 
-	ITEM grab = items[ind];
-	items.erase(items.begin() + ind);
-	inv.items[i] = grab;
-
 #ifdef CLIENT
 	cout << "Client sending a pickup request" << endl;
 
@@ -44,13 +40,18 @@ void PlayerInfo::pickUp(pi pos, item_num_t ind) {
 	packet.append(&ind, sizeof(item_num_t));
 
 	connection->send(packet);
-#endif
 
+#else
+	ITEM grab = items[ind];
+	items.erase(items.begin() + ind);
+	inv.items[i] = grab;
 
 	if (items.size() == 0) {
 		lootMap.erase(pos);
 	}
+#endif
 }
+
 
 ITEM PlayerInfo::dropItem(item_num_t ind) {
 	if (ind < 0 || ind >= INV_SIZE || inv.items[ind] == I_NONE)
@@ -111,6 +112,21 @@ exp_t PlayerInfo::getLeftoverXP() {
 
 
 #ifdef CLIENT
+void PlayerInfo::removeItem(pi pos, item_num_t ind) {
+	if (lootMap.find(pos) == lootMap.end()) return;
+	auto &items = lootMap[pos];
+	if (ind < 0 || ind >= items.size()) return;
+	int i = inv.getFirstFree();
+	if (i == -1) return;
+	ITEM grab = items[ind];
+	items.erase(items.begin() + ind);
+	inv.items[i] = grab;
+	if (items.size() == 0) {
+		lootMap.erase(pos);
+	}
+}
+
+
 #include "GameState.h"
 #include "DamageText.h"
 

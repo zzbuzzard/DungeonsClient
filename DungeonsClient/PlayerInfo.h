@@ -18,6 +18,8 @@ public:
 	const std::vector<ITEM> *getLootAt(pi pos);
 
 #ifdef CLIENT
+	void removeItem(pi pos, item_num_t ind);
+
 	// UI Stuff
 	void levelUpUI(GameState *state, level_t lev);
 	void gainXP(exp_t gain, GameState *state);

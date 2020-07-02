@@ -7,15 +7,25 @@ Comments:
 
 Implemented Items:
 Head:
-	Elven helmet, vine helmet
+	Elven helmet, vine helmet  :  Overtakes desert totally
 Torso:
-	Plant armour, cobweb armour
+	Plant armour, cobweb armour  :  Scorpion scale form desert still a GOOD candidate
 Weapons:
-	Spider fang dagger, Elven bow [useless?], elven sword [useless?], earth staff, vine whip
+	Spider fang dagger, Elven bow [useless?], elven sword [useless?], earth staff
+		: Cactus blade still the best short distance
+		Though spider fang is useful in cramped spaces
+		Earth staff overtakes fire staff as best ranged though.
 Accessory:
 	Speed charm, corrupt amulet
+	: Cursed cactus eye probably the best
 Specials:
 
+Best balanced set would probably be
+Vine helmet, Plant armour, Cactus sword / Earth staff, Cursed cactus eye
+
+Should give us a good special.
+Not just a heal.
+Grassy healy heal tho
 
 Enemies
 	Muncher: FAST + SHORT RANGE

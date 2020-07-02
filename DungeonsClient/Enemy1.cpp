@@ -18,7 +18,7 @@ Enemy1::Enemy1(pi pos_, ID_t id)
 }
 #else
 
-LootList enemy1Loot = { itemProb(I_SAND_CAPE, 0.01f) };
+LootList enemy1Loot = { itemProb(I_SAND_CAPE, 0.015f) };
 
 Enemy1::Enemy1(pi pos_)
 	: Enemy(E_ENEMY1, pos_, enemy1Life, enemy1TriggerRange, 50) {

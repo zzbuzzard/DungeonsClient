@@ -100,6 +100,10 @@ void ConnectionManager::checkForUpdates() {
 				if (g_gameState)
 					((GameState*)g_state)->handleTlTiles(data);
 				break;
+			case P_CONFIRM_ITEM:
+				if (g_gameState)
+					((GameState*)g_state)->handleConfirmedItem(data);
+				break;
 			}
 		}
 		else {

@@ -71,7 +71,7 @@ void LootUI::draw(sf::RenderWindow *window) {
 }
 
 void LootUI::update(GameState *state) {
-	if (state->getLocalPlayerPos() != currentPos) {
+	if (state->getLocalPlayerPos() != currentPos || state->lootChanged) {
 		setLootUI(state->getLocalPlayerPos());
 	}
 
@@ -80,7 +80,7 @@ void LootUI::update(GameState *state) {
 			if (itemButtons[i].mouseIsOver(state)) {
 				pInfo->pickUp(state->getLocalPlayerPos(), i);
 				setLootUI(state->getLocalPlayerPos());
-				state->lootChanged = true;
+				//state->lootChanged = true;
 				break;
 			}
 		}

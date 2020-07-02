@@ -56,6 +56,7 @@ public:
 	void handleChangeTile(const void *data);
 	void handleTlTile(const void *data);
 	void handleTlTiles(const void *data);
+	void handleConfirmedItem(const void *data);
 	void handleMyPos(pi p);
 
 	void draw(const sf::View *v);

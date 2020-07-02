@@ -119,8 +119,9 @@ public:
 //		Place a healing pool 3x3
 //   Distract enemy [decoy]
 //   Place block [target floor tile -> place temporary obstacle. perhaps only enemies cant walk on it]
-//      THIS MAY BE OP : EG GET 5 PPL WITH LOTS OF MP BUFFS AND RANGE AND ONE BLOCK PER BOSS' SIDE
+//      THIS IS OP : EG GET 5 PPL WITH LOTS OF MP BUFFS AND RANGE AND ONE BLOCK PER BOSS SIDE
 //      AND WHEN ONE DISAPPEARS THE 5TH PERSON PLACES THERE AGAIN
+//		E A S Y BOSS TRAP
 //      Really cool idea though, just needs proper thought to prevent it being game-breaking.
 //   You become untargetable for a few seconds
 //   Spawns in an ally enemy who attackes other enemies
@@ -129,7 +130,10 @@ public:
 //      Unusable but shows the boss as a red dot on the minimap
 //      Usable and adds a big area around the player to the minimap
 //      Unusable but shows all enemies [bad idea, as we hopefully won't always be transmitting all of that]
-//   Deal a fixed amount of damage to the enemy [armour pierce?]
+//   Offensive:
+//		Btec version of the Ent's TL tile attack
+//		Attack an enemy and it spawns a pool 5x5 of TL tiles around it so basically splash damage
+//		Deal a fixed amount of damage to the enemy [armour pierce?]
 //   Teleportation [would need lots of thought to prevent it being OP, or just immense MP cost]
 
 // Status effect based ideas:

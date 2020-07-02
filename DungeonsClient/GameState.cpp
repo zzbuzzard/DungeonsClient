@@ -122,7 +122,6 @@ void GameState::update() {
 	if (ready && currentWorld != nullptr && !isDead && currentWorld->initialised && myPlayer != nullptr && connection->isConnected()) {
 		gameMenu.update(this);
 
-		lootChanged = false;
 		lootUI.update(this);
 
 		Dir d = getCurrentDir();
@@ -342,6 +341,8 @@ void GameState::update() {
 		}
 
 	}
+
+	lootChanged = false;
 #endif
 
 	removeDead();
@@ -1269,6 +1270,18 @@ void GameState::handleTlTiles(const void *data) {
 		}
 	}
 }
+
+// x, y, ind
+void GameState::handleConfirmedItem(const void *data) {
+	cout << "Item pickup confirmed" << endl;
+
+	pos_t *P = (pos_t*)((Packet*)data + 1);
+	pi pos; pos.x = *P; P++; pos.y = *P; P++;
+	item_num_t ind = *((item_num_t*)P);
+	pInfo.removeItem(pos, ind);
+	lootChanged = true;
+};
+
 
 
 void GameState::handleMyPos(pi p) {
