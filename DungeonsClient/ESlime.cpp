@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ESlime.h"
 
-static const CombatStats stats(20, 0.8f, 6, T_GOO_BALL, 1.5f, 4);
+static const CombatStats stats(20, 0.8f, 5, T_GOO_BALL, 1.5f, 4);
 static const int life = 180;
 static const int triggerRangee = 20;
 
