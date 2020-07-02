@@ -1,7 +1,7 @@
 #pragma once
 #include "Media.h"
 
-#define NUM_TILES 12
+#define NUM_TILES 13
 enum class Tile {
 	NONE,
 	WALL,
@@ -15,7 +15,9 @@ enum class Tile {
 
 	GRASS2,
 	GRASS_DARK,
+	GRASS_DARK_BLOOD,
 	GRASS_BLOOD,
+
 	MUD,
 };
 

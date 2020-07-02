@@ -5,8 +5,11 @@
 TLTileData *tileTypes[NUM_TL_TILES] = {
 	new TLTileData(T_TL_ROCK, false),
 	new TLTileData(T_TL_CACTUS, false),
-	new DamageTileData(T_TL_SPIKE_FLOOR, 0.1f, 5, 5.5f),
+	new TLTileData(T_TL_BUSH, false),
+
 	new DamageTileData(T_TL_LAVA_POOL, 0.15f, 15),
+
+	new DamageTileData(T_TL_SPIKE_FLOOR, 0.1f, 5, 5.5f),
 	new DamageTileData(T_TL_SPIKY_TREE, 0.4f, 30, 1.0f),
 };
 

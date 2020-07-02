@@ -24,12 +24,15 @@ public:
 	const damage_t damage;
 };
 
-#define NUM_TL_TILES 5
+#define NUM_TL_TILES 6
 enum class TLTileType : uint8_t {
 	ROCK,
 	CACTUS,
-	SPIKE_FLOOR,
+	BUSH,
+
 	LAVA_POOL,
+
+	SPIKE_FLOOR,
 	SPIKY_TREE,
 };
 

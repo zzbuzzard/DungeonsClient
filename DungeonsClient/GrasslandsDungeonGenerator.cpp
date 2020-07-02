@@ -164,11 +164,9 @@ void GrasslandsDungeonGenerator::drawBoss(DNode *node) {
 			yi = y + world->origin.y;
 			float r = world->rand(0, 1);
 			if (r <= 0.1f)
-				world->tiles[xi][yi] = Tile::GRASS_BLOOD;
-			if (r > 0.1f && r <= 0.2f)
-				world->tiles[xi][yi] = Tile::GRASS2;
-			if (r > 0.2f)
-				world->tiles[xi][yi] = Tile::GRASS;
+				world->tiles[xi][yi] = Tile::GRASS_DARK_BLOOD;
+			if (r > 0.1f)
+				world->tiles[xi][yi] = Tile::GRASS_DARK;
 		}
 	}
 
@@ -309,6 +307,10 @@ void GrasslandsDungeonGenerator::drawPlantRoom(DNode *node) {
 				world->tiles[xi][yi] = Tile::GRASS2;
 			else
 				world->tiles[xi][yi] = Tile::GRASS;
+
+			if (x != X1 + 1 && x != X2 - 1 && y != Y1 + 1 && y != Y2 - 1 && world->rand(0, 1) < 0.05f) {
+				world->addPermTopLayerTile(new TopLayerTile(pi(x, y), TLTileType::BUSH));
+			}
 		}
 	}
 

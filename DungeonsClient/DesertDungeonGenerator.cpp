@@ -97,7 +97,7 @@ void DesertDungeonGenerator::drawBarren(DNode *node) {
 		for (int y = Y1 + 1; y <= Y2 - 1; y++) {
 			world->tiles[x + world->origin.x][y + world->origin.y] = Tile::DARK_SAND;
 
-			if (world->rand(0, 1) < 0.01f) {
+			if (x!=X1+1 && x!=X2-1 && y!=Y1+1 && y!=Y2-1 && world->rand(0, 1) < 0.01f) {
 				world->addPermTopLayerTile(new TopLayerTile(pi(x, y), TLTileType::ROCK));
 			}
 		}
