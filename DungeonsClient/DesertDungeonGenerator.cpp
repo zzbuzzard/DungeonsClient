@@ -6,7 +6,7 @@
 
 const static spawnVector normalSpawns = { spawnPair(E_ENEMY1, 1.0f), spawnPair(E_SCORPION, 0.5f), spawnPair(E_ENEMY2, 0.25f), spawnPair(E_SLIME, 0.4f) };
 const static spawnVector tankRoomSpawns = { spawnPair(E_SAND_GOLEM, 1.0f) };
-const static spawnVector blockRoomSpawns = { spawnPair(E_SCORPION, 1.0f), spawnPair(E_ARCHER, 0.6f), spawnPair(E_FIRE_MAGE, 0.5f) };
+const static spawnVector blockRoomSpawns = { spawnPair(E_SCORPION, 1.0f), spawnPair(E_ARCHER, 0.6f), spawnPair(E_FIRE_MAGE, 0.55f) };
 const static EntitySpecies boss = E_CURSED_CACTUS;
 
 DesertDungeonGenerator::DesertDungeonGenerator(World *world)

@@ -14,7 +14,7 @@ EFireMage::EFireMage(pi pos_, ID_t id)
 	setBoxTexture(T_FIRE_MAGE);
 }
 #else
-static const LootList Loot = { itemProb(I_FIRE_STAFF, 0.012f), itemProb(I_MAGE_ROBE, 0.033f), itemProb(I_HOLY_ORB, 0.05f) };
+static const LootList Loot = { itemProb(I_MAGE_ROBE, 0.02f), itemProb(I_FIRE_STAFF, 0.035f),  itemProb(I_HOLY_ORB, 0.05f) };
 static const int xp = 275;
 
 EFireMage::EFireMage(pi pos_)

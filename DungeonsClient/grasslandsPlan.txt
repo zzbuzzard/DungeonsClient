@@ -9,7 +9,7 @@ Head:
 Torso:
 	Plant armour, cobweb armour
 Weapons:
-	Spider fang dagger, Elven bow, elven sword, earth staff, vine whip
+	Spider fang dagger, Elven bow [useless?], elven sword [useless?], earth staff, vine whip
 Accessory:
 	Speed charm, corrupt amulet
 Specials:
@@ -63,6 +63,6 @@ Enemies
 		Spider fang dagger
 	MAYBE: Venomous spider: HOWEVER WE ALREADY HAVE DARK MUNCHER, CURSED ELF KNIGHT. PUT SIMILAR STUFF IN DESERT FIRST AT LEAST.
 		Toxic helmet
-	Triffid [boss]:
-		Vine whip
+	Mega muncher [boss]:
+		Vine whip super high dps, but low damage
 
