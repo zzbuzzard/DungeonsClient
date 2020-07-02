@@ -3,7 +3,7 @@
 #include "World.h"
 #include "Spawner.h"
 
-class OG_Node {
+static class OG_Node {
 public:
 	int depth;
 	BiomeType biome;
@@ -114,7 +114,7 @@ bool OverworldGenerator::generate() {
 	world->fillWith(world->origin, Tile::SAND, border);
 
 	for (int i = 0; i < branches; i++) {
-		drawFrom(&roots[i]);
+		drawFrom(&roots[i], roots[i].pos);
 	}
 
 	drawOutline();
@@ -214,17 +214,20 @@ void OverworldGenerator::generateFrom(OG_Node *node, float left, float right, in
 	}
 }
 
-#define numBases 3
+#define numBases 2
 BiomeType bases[numBases] = {
 	BiomeType::DESERT,
-	BiomeType::SNOW,
 	BiomeType::GRASS,
+// 	BiomeType::SNOW,
 };
 BiomeType OverworldGenerator::getBaseBiome() {
 	return bases[world->randint(0, numBases - 1)];
 }
 
-void OverworldGenerator::drawFrom(OG_Node *node) {
+pi OverworldGenerator::drawFrom(OG_Node *node, pi start) {
+	pi closest(0, 0);
+	float closestDist = 1000000;
+
 	for (OG_Node *n : node->children) {
 		BiomeType b = n->biome;
 		//cout << "Getting path " << node->pos << " ... " << n->pos << endl;
@@ -285,8 +288,18 @@ void OverworldGenerator::drawFrom(OG_Node *node) {
 		else
 			delete Edge;
 
+		pi end = drawFrom(n, start);
+
+		float dst = util::dist((pf)start, (pf)end);
+		if (dst <= closestDist) {
+			closestDist = dst;
+			closest = end;
+		}
+
 #ifndef CLIENT
-		Spawner *spawn = new OverworldSpawner(b, allPoints, std::min(1.0f, node->depth / util::rand(3.0f, 4.0f)));
+		float maxDist = util::dist((pf)start, (pf)end);
+
+		Spawner *spawn = new OverworldSpawner(b, allPoints, end, maxDist);
 		world->spawners.push_back(spawn);
 #endif
 
@@ -300,9 +313,10 @@ void OverworldGenerator::drawFrom(OG_Node *node) {
 		//		}
 		//	}
 		//}
-
-		drawFrom(n);
 	}
+
+	if (closest == pi(0, 0)) return node->pos;
+	return closest;
 }
 
 

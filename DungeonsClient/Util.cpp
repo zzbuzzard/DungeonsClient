@@ -165,7 +165,27 @@ namespace util {
 		if (util::rand(0, 1) <= t) return below + 1;
 		return below;
 	}
+
+	msgpair getCommand(std::string msg) {
+		if (msg.size() == 0 || msg[0] != '/') {
+			return msgpair("", "");
+		}
+
+		// command length
+		int ln = msg.size() - 1;
+
+		for (int i = 1; i < msg.size(); i++) {
+			if (msg[i] == ' ') {
+				ln = i-1;
+				break;
+			}
+		}
+
+		return msgpair(msg.substr(1, ln), (ln==msg.size()-1?"":msg.substr(ln + 1)));
+	}
 }
+
+
 
 
 

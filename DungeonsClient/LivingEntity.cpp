@@ -207,9 +207,9 @@ using std::cout; using std::endl;
 
 void LivingEntity::moveNormally() {
 	moved += combatStats.spd * deltaTime *
-// (I hope God forgives me for this atrocity)
+// (forgive me for this atrocity)
 #ifdef CLIENT
-	(local ? 0.95f : 1.0f);
+	(local ? 0.95f : 1.0f); // local char moves slower to prevent movement requests stacking up on server
 #else
 	1.0f;
 #endif

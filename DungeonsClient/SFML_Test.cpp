@@ -9,12 +9,13 @@
 
 // Client controls
 //   Left click - Target enemy
+//   Right click - Target special
 //   E - Enter dungeon
 //   Enter - Open chat
-// Todo
-//   Right click - Target special
+//   Click another player - view gear etc.
 //   Space - Use special
-//   G - Hover over another player to see their gear
+//   H - Show/hide inventory
+//   1, 2, 3 - Change loadout
 
 using std::cout;
 using std::endl;
@@ -23,7 +24,7 @@ int main()
 {
 	Media::PreLoad();
 
-	auto style = sf::Style::Default; // DEBUG ONLY
+	auto style = sf::Style::Default; // TODO: FULLSCREEN WHEN RELEASING : BUT WE ALSO NEED A QUIT BUTTON IN A MENU
 	//auto style = sf::Style::Fullscreen;
 	sf::RenderWindow window(sf::VideoMode(500, 500), "Dungeons", style);
 	window.setVerticalSyncEnabled(true);

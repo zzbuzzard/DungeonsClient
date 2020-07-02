@@ -2,7 +2,7 @@
 #include "EScorpion.h"
 #include "State.h"
 
-static const CombatStats stats(30, 1.5f, 5, T_SPINE, 5.2f, 8);
+static const CombatStats stats(30, 1.5f, 4, T_SPINE, 5.2f, 8);
 static const int life = 200;
 static const int triggerRangee = 20;
 
@@ -15,7 +15,7 @@ EScorpion::EScorpion(pi pos_, ID_t id)
 	setBoxTexture(T_SCORPION);
 }
 #else
-static const LootList Loot = { itemProb(I_SCORPION_ARMOUR, 0.0075f), itemProb(I_SCORPION_DAGGER, 0.04f) };
+static const LootList Loot = { itemProb(I_SCORPION_ARMOUR, 0.0075f), itemProb(I_SCORPION_DAGGER, 0.15f) };
 static const int xp = 325;
 
 EScorpion::EScorpion(pi pos_)

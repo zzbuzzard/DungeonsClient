@@ -15,7 +15,7 @@ public:
 	bool generate();
 private:
 	void generateFrom(OG_Node *node, float left, float right, int *dungeons, bool last);
-	void drawFrom(OG_Node *node);
+	pi drawFrom(OG_Node *node, pi start);
 	BiomeType getBaseBiome();
 	void drawOutline();
 	void deallocateFrom(OG_Node *node);

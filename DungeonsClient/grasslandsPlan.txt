@@ -14,26 +14,6 @@ Accessory:
 	Speed charm, corrupt amulet
 Specials:
 
-Balance
-  - Dark muncher
-  - Elf archer
-  - Elf knight
-  - Cursed elf knight
-  - Leafling
-  - Ent
-  - Spider
-Balance items and drop rates
-Create boss, triffid
-
-Ent will walk slowly towards the player.
-When it gets in range 10 or something, it spawns leaflings with no loot.
-
-  - The player deals w the leaflings
-
-The ent shoots BIG leaves that aren't that damaging but apply SLOW
-The ent continues advancing slowly towards the player. Trigger range is very low, however, so it will return to spawn.
-
-
 Ent phase 2: 
 	Moves faster towards closest players, spawning damaging tiles in a 2 thick square around it
 

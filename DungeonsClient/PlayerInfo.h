@@ -12,6 +12,7 @@ public:
 
 	bool lootExists(pi pos);
 	void pickUp(pi pos, item_num_t ind);
+	ITEM dropItem(item_num_t ind);
 	void createLoot(pi pos, const std::vector<ITEM> &items);
 	void clearLoot();
 	const std::vector<ITEM> *getLootAt(pi pos);

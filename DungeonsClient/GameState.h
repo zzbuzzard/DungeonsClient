@@ -73,7 +73,7 @@ public:
 	GameState(BiomeType biome);
 	~GameState();
 
-	const bool isBase;
+	const bool isOverworld;
 	bool isAlive() const;
 
 	void getUpdatePacket(sf::Packet &packet);

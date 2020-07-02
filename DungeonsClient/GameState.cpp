@@ -59,13 +59,13 @@ void GameState::resize(const sf::View *v) {
 }
 #else
 //#include "Enemy1.h"
-GameState::GameState(BiomeType biome) : isBase(biome == BiomeType::NONE) {
+GameState::GameState(BiomeType biome) : isOverworld(biome == BiomeType::NONE) {
 	takenPos = new std::set<pi, piComp>();
 	newTakenPos = new std::set<pi, piComp>();
 
 	currentWorld = new World();
 
-	if (isBase) {
+	if (isOverworld) {
 		currentWorld->generateMap((seed_t)(time(0)));
 	}
 	else {
@@ -85,7 +85,7 @@ GameState::~GameState() {
 }
 
 bool GameState::isAlive() const {
-	if (isBase) return true;
+	if (isOverworld) return true;
 	if (currentWorld->bossDefeated) {
 		if (idToPlayer.size() == 0) {
 			return false;

@@ -52,6 +52,25 @@ void PlayerInfo::pickUp(pi pos, item_num_t ind) {
 	}
 }
 
+ITEM PlayerInfo::dropItem(item_num_t ind) {
+	if (ind < 0 || ind >= INV_SIZE || inv.items[ind] == I_NONE)
+		return I_NONE;
+	ITEM item = inv.items[ind];
+	inv.items[ind] = I_NONE;
+
+#ifdef CLIENT
+	inv.sends++;
+
+	// TODO Send P_DROP_ITEM ind
+	sf::Packet packet;
+	packet.append(&P_DROP_ITEM, sizeof(Packet));
+	packet.append(&ind, sizeof(item_num_t));
+	connection->send(packet);
+#endif
+	return item;
+}
+
+
 void PlayerInfo::createLoot(pi pos, const std::vector<ITEM> &items) {
 	if (lootMap.find(pos) != lootMap.end()) {
 		for (ITEM i : items) lootMap[pos].push_back(i);
@@ -101,6 +120,8 @@ void PlayerInfo::levelUpUI(GameState *state, level_t lev) {
 }
 
 void PlayerInfo::gainXP(exp_t gain, GameState *state) {
+	if (gain <= 0) return;
+
 	level_t a = getPlayerLevel();
 	XP += gain;
 	level_t b = getPlayerLevel();

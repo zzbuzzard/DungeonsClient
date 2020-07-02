@@ -77,8 +77,8 @@ void World::generateMap(seed_t seed_) {
 	OverworldGenerator gen(this);
 	gen.generate();
 
-	makeDungeon(pi(1, 0), BiomeType::DESERT);
-	makeDungeon(pi(-1, 0), BiomeType::GRASS);
+	//makeDungeon(pi(1, 0), BiomeType::DESERT);
+	//makeDungeon(pi(-1, 0), BiomeType::GRASS);
 
 	initialised = true;
 }

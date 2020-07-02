@@ -45,15 +45,16 @@ private:
 
 class OverworldSpawner : public Spawner {
 public:
-	OverworldSpawner(BiomeType biome_, const std::vector<pi> &spawnPoints_, float diff_);
+	OverworldSpawner(BiomeType biome_, const std::vector<pi> &spawnPoints_, pi end_, float maxDist_);
 
 	BiomeType biome;
 	std::vector<pi> spawnPoints;
-	float diff;
-	// 0..1, meaning the percentage difficulty of this branch up to the max for this biome. always 1 if a dungeon is at the end.
-
+	pi end;
+	float maxDist;
 protected:
 	void spawnEnemy(GameState *state);
+private:
+	float total;
 };
 
 

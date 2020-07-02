@@ -170,7 +170,7 @@ void GameMenu::update(GameState *state) {
 	}
 
 	if (isDragging && mouseReleased) {
-		int ind = -1;
+		int ind = -1; // get clicked index and if it was an equip
 		bool eq;
 
 		for (int i = 0; i < INV_SIZE; i++) {
@@ -192,7 +192,15 @@ void GameMenu::update(GameState *state) {
 		// Dragged into nowhere
 		// TODO : DROP IF X > PANEL
 		if (ind == -1) {
+			if (!equipDragged) {
+				pf pos = state->getMousePosWorld();
+				pf tl = state->getTopLeftWorld();
 
+				float x = pos.x - tl.x;
+				if (x >= WIDTH) {
+					state->pInfo.dropItem(draggingInd);
+				}
+			}
 		}
 		else {
 			// We dragged an equip

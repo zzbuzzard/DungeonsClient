@@ -27,7 +27,8 @@ const Packet
 	P_USE_STAT = 21,     // Stat to be spent on
 	P_CHANGE_TILE = 22,  // x, y, newtile
 	P_TL_TILE = 23,      // x, y, TopLayerTileType
-	P_TL_TILES = 24;     // type, num, xys
+	P_TL_TILES = 24,     // type, num, xys
+	P_DROP_ITEM = 25;    // index in inventory. adds to loot pool. replies with P_LOOT
 
 // Each GameState has its own update packet, which it sends to all its participants.
 // When a movement thing is received, it is forwarded to the appropriate GameState

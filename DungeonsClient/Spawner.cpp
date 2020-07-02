@@ -40,12 +40,16 @@ void Spawner::update(GameState *state) {
 // OverworldSpawner
 
 const float overworldnemyDensity = 0.015f;
-float overworldRespawnRate = 20.0f;
-OverworldSpawner::OverworldSpawner(BiomeType biome_, const std::vector<pi> &spawnPoints_, float diff_)
+float overworldRespawnRate = 35.0f;
+OverworldSpawner::OverworldSpawner(BiomeType biome_, const std::vector<pi> &spawnPoints_, pi end_, float maxDist_)
 	: Spawner((int)(overworldnemyDensity*spawnPoints_.size()), overworldRespawnRate),
-	biome(biome_), spawnPoints(spawnPoints_), diff(diff_)
+	biome(biome_), spawnPoints(spawnPoints_), maxDist(maxDist_), end(end_)
 {
-
+	const auto &vec = biomes[(int)biome].spawns;
+	total = 0;
+	for (const auto &p : vec) {
+		total += p.second;
+	}
 }
 
 #define NUM_RETRIES 50
@@ -54,22 +58,22 @@ void OverworldSpawner::spawnEnemy(GameState *state) {
 	const auto &vec = biomes[(int)biome].spawns;
 	if (vec.size() == 0) return;
 
-	float low = diff * 2.0f / 3.0f;
-	float up = low + 1.0f / 3.0f;
+	//float low = diff * 2.0f / 3.0f;
+	//float up = low + 1.0f / 3.0f;
 
-	int L = util::randomRound(low * vec.size());
-	int H = util::randomRound(up * vec.size());
+	//int L = util::randomRound(low * vec.size());
+	//int H = util::randomRound(up * vec.size());
 
-	// Sanity check
-	if (L < 0) L = 0;
-	if (L >= vec.size()) L = vec.size() - 1;
-	if (H < 0) H = 0;
-	if (H >= vec.size()) H = vec.size() - 1;
-	if (H < L) H = L;
+	//// Sanity check
+	//if (L < 0) L = 0;
+	//if (L >= vec.size()) L = vec.size() - 1;
+	//if (H < 0) H = 0;
+	//if (H >= vec.size()) H = vec.size() - 1;
+	//if (H < L) H = L;
 
-	EntitySpecies spec = randomEntityFromVector(vec, L, H);
+	//EntitySpecies spec = randomEntityFromVector(vec, L, H);
 
-	Entity *e = spawnEntityID(spec, 0, pi(0, 0));
+	//Entity *e = spawnEntityID(spec, 0, pi(0, 0));
 
 	// Try random a number of times, else reset the cooldown
 
@@ -80,23 +84,44 @@ void OverworldSpawner::spawnEnemy(GameState *state) {
 	for (int i = 0; i < NUM_RETRIES; i++) {
 		ind = util::randint(0, spawnPoints.size() - 1);
 		pos = spawnPoints[ind];
-		if (state->canMove(pos, e->tileSize)) {
+		if (state->canMove(pos, pi(3, 3))) {
 			w = true;
 			break;
 		}
 	}
 
 	if (w) {
-		e->setPos(pos);
-		((Enemy*)e)->spawnP = pos;
-		state->addEntity(e);
-		((Enemy*)e)->decrementVar = enemyCounter;
+		float d = 1 - util::dist((pf)pos, (pf)end) / maxDist;
+
+		//cout << "Percentage through = " << d << endl;
+
+		float val = total * d * util::rand(0.8f, 1.2f);
+		if (val > total) val = total;
+
+		EntitySpecies spec = vec[vec.size() - 1].first;
+		int ii = 0;
+		for (const spawnPair &p : vec) {
+			val -= p.second;
+			if (val <= 0) {
+				spec = p.first;
+				break;
+			}
+			ii++;
+		}
+
+		//cout << "Gave us index = " << ii << " / " << vec.size() << endl;
+
+		Entity *e = spawnEntityID(spec, 0, pos);
 
 		(*enemyCounter)++;
+
+		e->setPos(pos);
+		((Enemy*)e)->spawnP = pos;
+		((Enemy*)e)->decrementVar = enemyCounter;
+		state->addEntity(e);
 	}
 	else {
 		cout << "Overworld failed to place an enemy" << endl;
-		delete e;
 	}
 }
 
