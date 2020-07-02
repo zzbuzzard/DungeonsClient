@@ -14,7 +14,7 @@ ESpider::ESpider(pi pos_, ID_t id)
 	setBoxTexture(T_SPIDER);
 }
 #else
-static const LootList Loot = { itemProb(I_SPIDER_FANG_DAGGER, 0.015f), itemProb(I_COBWEB_ARMOUR, 0.04f) };
+static const LootList Loot = { itemProb(I_SPIDER_FANG_DAGGER, 0.015f), itemProb(I_SILK_CAPE, 0.04f) };
 static const int xp = 400;
 
 ESpider::ESpider(pi pos_)

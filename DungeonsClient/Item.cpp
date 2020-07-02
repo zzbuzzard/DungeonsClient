@@ -16,7 +16,9 @@ Item *itemTypes[NUM_ITEMS] = {
 	new Item("Scorpion scale armour", ItemRarity::COMMON, T_SCORPION_SCALE_ARMOUR, Equipment::TORSO, Stats(0, 0, 5, 0, 4, 0, 0, 0)),
 	new Item("Rusty armour", ItemRarity::COMMON, T_RUSTY_ARMOUR, Equipment::TORSO, Stats(0, 0, 6, -8, 0, 0, 0, 0)),
 	new Item("Mage's robe", ItemRarity::COMMON, T_WARM_CLOAK, Equipment::TORSO, Stats(0, 75, 2, 0, 0, 10, 0, 10)),
-	new Item("Cobweb armour", ItemRarity::COMMON, T_COBWEB_ARMOUR, Equipment::TORSO, Stats(0, 0, 6, 5, 0, 8, 0, 0)),
+	new Item("Cobweb armour", ItemRarity::COMMON, T_COBWEB_ARMOUR, Equipment::TORSO, Stats(0, 0, 6, 5, 0, 8, 0, 0)), // TODO get rid of... how the fuck do you even make armour out of cobwebs
+	new Item("Silk cape", ItemRarity::COMMON, T_SILK_CAPE, Equipment::TORSO, Stats(0, 0, 4, 8, 0, 0, 6, 0)),
+	new Item("Wooden armour", ItemRarity::COMMON, T_WOODEN_ARMOUR, Equipment::TORSO, Stats(0, 0, 7, -8, 0, 0, 0, 5)),
 
 	new Item("Speed charm", ItemRarity::UNCOMMON, T_TEST_ACCESSORY, Equipment::ACCESSORY, Stats(0, 0, 0, 12, 0, 0, 0, 0)),
 	new Item("Sandstorm amulet", ItemRarity::UNCOMMON, T_SANDSTORM_AMULET, Equipment::ACCESSORY, Stats(0, 0, 4, 10, 0, 0, 0, 0)),
@@ -34,9 +36,9 @@ Item *itemTypes[NUM_ITEMS] = {
 	new Weapon("Sandstone sword", ItemRarity::COMMON, T_SAND_SWORD, Stats(0,0,5,-3,0,0,0,0), 80, 3, 0.2f, T_SAND_SPIKE, 1),
 	new Weapon("Cactus sword", ItemRarity::RARE, T_CACTUS_SWORD, Stats(0,0,3,0,0,0,0,0), 70, 4, 0.12f, T_THORN, 1),
 	new Weapon("Scorpion dagger", ItemRarity::COMMON, T_SCORPION_DAGGER, Stats(0,0,0,8,0,0,5,0), 50, 3, 0.28f, T_SPINE, 1),
-	new Weapon("Elven blade", ItemRarity::COMMON, T_ELVEN_BLADE, Stats(0,30,5,8,0,0,0,0), 75, 4, 0.175f, T_SHARD, 1),
+	new Weapon("Elven blade", ItemRarity::COMMON, T_ELVEN_BLADE, Stats(0,30,5,8,0,0,0,0), 75, 4, 0.165f, T_SHARD, 1),
 	new Weapon("Elven bow", ItemRarity::COMMON, T_ELVEN_BOW, Stats(0,0,0,10,0,0,8,8), 80, 7, 0.45f, T_ARROW, 1),
-	new Weapon("Spider fang dagger", ItemRarity::COMMON, T_SPIDER_FANG_DAGGER, Stats(0,0,0,7,0,0,8,8), 65, 3, 0.2f, T_SHARD, 2),
+	new Weapon("Spider fang dagger", ItemRarity::UNCOMMON, T_SPIDER_FANG_DAGGER, Stats(0,0,0,7,0,0,8,8), 65, 3, 0.18f, T_SHARD, 2),
 
 	// Details in class constructor
 	new SHolyOrb(),

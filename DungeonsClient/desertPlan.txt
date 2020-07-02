@@ -3,6 +3,7 @@ Desert
 Comments:
 	Enemy1 is now Sand ghoul
 	Enemy2 is now Desert ghoul
+	Desert ring needs a home, so does sandstorm amulet.
 
 Implemented Items:
 Head:

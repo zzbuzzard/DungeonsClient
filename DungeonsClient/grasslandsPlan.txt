@@ -9,7 +9,7 @@ Implemented Items:
 Head:
 	Elven helmet, vine helmet  :  Overtakes desert totally
 Torso:
-	Plant armour, cobweb armour  :  Scorpion scale form desert still a GOOD candidate
+	Plant armour, wooden armour, silk cape  :  Scorpion scale form desert still a GOOD candidate
 Weapons:
 	Spider fang dagger, Elven bow [useless?], elven sword [useless?], earth staff
 		: Cactus blade still the best short distance
