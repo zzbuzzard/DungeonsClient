@@ -167,7 +167,7 @@ private:
 	proc_moves_t serverProc = 0;
 	double lastDownTime;
 #else
-	std::vector<std::vector<int8_t> > tileMarkerNum;
+	std::vector<std::vector<int16_t> > tileMarkerNum;
 	std::vector<std::vector<Dir> > tileMarkerDir;
 #endif
 	std::set<pi, piComp> *newTakenPos;

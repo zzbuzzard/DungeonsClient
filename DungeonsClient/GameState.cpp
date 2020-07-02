@@ -1603,7 +1603,7 @@ std::vector<Player*> GameState::getClosestPlayers(pi pos, int k) {
 	return V;
 }
 
-int8_t bfsNum = 0;
+int16_t bfsNum = 0;
 Dir GameState::BFSTowards(const pi a, const pi b, const range_t depth, const pi tileSize) {
 	if (a == b || util::taxicab(a,b)>depth) return D_NONE;
 	//cout << "BFS" << endl;
@@ -1618,6 +1618,10 @@ Dir GameState::BFSTowards(const pi a, const pi b, const range_t depth, const pi 
 	//    Follow path back to the start
 	//    Use the last direction in there
 	// 2) We don't reach b, return D_NONE
+
+	if ((bfsNum + 1) < bfsNum) {
+		cout << "Bfs wrapping" << endl;
+	}
 
 	bfsNum++;
 
