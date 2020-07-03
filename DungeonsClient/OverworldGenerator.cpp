@@ -33,8 +33,8 @@ int indices[] = { 0,4,8,13,18,24,30 };
 #define spawnRadiusLower 20
 #define spawnRadiusUpper 30
 
-#define edgeWidthLower 3
-#define edgeWidthUpper 5
+#define edgeWidthLower 2
+#define edgeWidthUpper 4
 
 #define PAD_X 30
 #define PAD_Y 30
@@ -258,19 +258,36 @@ pi OverworldGenerator::drawFrom(OG_Node *node, pi start) {
 
 		for (int i = 0; i < count; i++) {
 			newEdge->clear();
+			Tile currentTile;
+			pi p, ind;
+			pi b;
+
 			for (pi j : *Edge) {
-				for (int i = 0; i < 4; i++) {
-					pi p = j + dirOffset[i];
-					pi ind = p + world->origin;
-					if (ind.x >= 0 && ind.x < world->tiles.size()) {
-						if (ind.y >= 0 && ind.y < world->tiles[0].size()) {
-							if (world->tiles[ind.x][ind.y] == Tile::NONE) {
-								world->tiles[ind.x][ind.y] = t;
-								newEdge->push_back(p);
+				b = j;
+
+				int repeats = 1;
+				float r = world->rand(0, 1);
+				if (r < 0.3f) repeats = 2;
+				if (r < 0.075f) repeats = 3;
+
+				for (int ii = 0; ii < repeats; ii++) {
+					for (int i = 0; i < 4; i++) {
+						p = b + dirOffset[i];
+						ind = p + world->origin;
+						if (ind.x >= 0 && ind.x < world->tiles.size()) {
+							if (ind.y >= 0 && ind.y < world->tiles[0].size()) {
+
+								currentTile = world->tiles[ind.x][ind.y];
+								if (currentTile == Tile::NONE || currentTile == overworldCenterTile) {
+									world->tiles[ind.x][ind.y] = t;
+									newEdge->push_back(p);
+
+									b += dirOffset[i];
 
 #ifndef CLIENT
-								allPoints.push_back(p);
+									allPoints.push_back(p);
 #endif
+								}
 							}
 						}
 					}
@@ -334,4 +351,20 @@ void OverworldGenerator::drawOutline() {
 			if (c > 0) world->tiles[i][j] = Tile::WALL;
 		}
 	}
+
+	// Get rid of sharp edges
+	std::vector<pi> p;
+	for (int i = 1; i < world->tiles.size() - 1; i++) {
+		for (int j = 1; j < world->tiles[0].size() - 1; j++) {
+			if (world->tiles[i][j] != Tile::NONE) continue;
+			int8_t c = 0;
+			for (int8_t k = 0; k < 4; k++) {
+				Tile t = world->tiles[i + dirOffset[k].x][j + dirOffset[k].y];
+				if (t == Tile::WALL) c++;
+			}
+			if (c >= 2) p.push_back(pi(i, j));
+		}
+	}
+
+	for (pi pp : p) world->tiles[pp.x][pp.y] = Tile::WALL;
 }

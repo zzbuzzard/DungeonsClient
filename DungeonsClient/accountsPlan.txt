@@ -1,0 +1,87 @@
+Lots of data is stored on players, mainly 1:1
+
+What is stored?
+1) Inventory and equips, as a list of 16 numbers. Stored sillily in a string. "0,-1,1,5,2,5,7,3,1,0,9,5" and -1 for empty
+2) Base stats. Stored as a silly old string again. "150,100,10,10,10"
+3) XP. Stored as a BIGINT or whatever.
+4) A username and password [3 columns: ID, username, password]
+
+There will be a table for each.
+
+---------------------
+| ID |      XP       |
+---------------------
+| 0  |    124,532    |
+| 1  |    200,530    |
+| 2  |      53       |
+| 3  |     9000      |
+
+The server has INTERNAL functions for 
+getXP, getBaseStats, getInventory
+
+The server has an EXTERNAL function [with no privacy!] for
+getData(ID) ->
+"0,-1,1,5,2,-1,-1,-1,-1\n150,100,10,10,10\n532,352"
+
+
+TABLES
+	LoginDetails: ID, Username, Password, [email]
+	XPTable: ID, XP
+	InvTable: ID, equips/inventory string
+	BaseStatsTable: ID, Base stats string
+	LoggedInTable: ID, loginID, [server IP]
+	Servers: Name, IP address
+
+How will multiple servers work?
+	Following the LoginState, the player will be taken to the ServerSelectState
+	This will request the servers from the web server.
+	And we will then set the IP that we wish to connect to, and send the token over.
+
+	Will look something like this: My laptop lol 81.102.0.202
+
+
+Logging in:
+	1) Client types in username and password (or they are loaded from storage)
+	2) The client sends an HTTPS request to xmpp.bobinthehob.com with its username and password
+	3) A loading thing is shown that goes round and round or whatever, while another thread deals with the web request.
+	4) Eventually, it receives the player's ID + a login token. This is a randomly generated string, stored in a temporary table: ID -> TOKEN
+		4.2) Or, it receives NO + REASON NUMBER: 0 meaning wrong login, *1 meaning player already logged in*
+	5) We then connect to the game server.
+		And we immediately send P_CLIENT_HELLO
+		ID, TOKEN
+	6) The server receives the hello and adds them to the pending list, with their supposed ID.
+		We send a request to the server, encrypted:
+		isTokenCorrect(ID, TOKEN)
+	7) The web server replies yes or no.
+		If the answer is yes, it also attaches the data from getData(ID) to the output
+	8.1) If the answer is yes, we create the Player object and process the data, setting its XP, inventory, and base stats.
+		Send off P_SERVER_HELLO and the game begins.
+	8.2) If the answer is no, we reply with a P_LOGIN_FAILED.
+
+Logging out:
+	1) Player disconnects
+	2) PlayerLoggedOut(ID) called to remove from login table.
+	ISSUE: If the server crashes, everyone stays logged in, and cannot log in again.
+	SOLUTION: Every 5min
+
+Server to web server confirmation:
+	1) When we get someones data, it includes their
+
+Okay ummmmmmmmmmmm
+We send setInventory(ID, data string)
+
+ 1) We need a check variable
+ 2) The check variable needs to depend on more than just the ID and data string, or one valid input is always valid.
+    So the required check variable changes depending on some shit.
+
+The check variable will be a HASH of a string.
+The string will be a secret password AND
+	a string representing the number of web requests involving this ID.
+
+Saving progress:
+	1) Every time something changes, send an update
+		- Every time updateInventory = true, we need to send a setInventory(ID, data string) 
+		- 
+
+
+I leave everything to the family
