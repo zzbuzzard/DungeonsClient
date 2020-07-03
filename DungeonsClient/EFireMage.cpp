@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "EFireMage.h"
 
-static const CombatStats stats(40, 2.0f, 9, T_FIREBALL, 3.0f, 10);
-static const int life = 80;
+static const CombatStats stats(34, 2.0f, 9, T_FIREBALL, 3.0f, 5);
+static const int life = 100;
 static const int triggerRangee = 20;
 
 #ifdef CLIENT

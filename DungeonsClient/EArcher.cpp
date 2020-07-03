@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "EArcher.h"
 
-static const CombatStats stats(15, 0.5f, 7, T_ARROW, 2.0f, 12);
+static const CombatStats stats(15, 0.5f, 7, T_ARROW, 2.0f, 6);
 static const int life = 350;
 static const int triggerRangee = 20;
 
@@ -14,7 +14,7 @@ EArcher::EArcher(pi pos_, ID_t id)
 	setBoxTexture(T_ARCHER);
 }
 #else
-static const LootList Loot = { itemProb(I_BONE_BOW, 0.05f) };
+static const LootList Loot = { itemProb(I_BONE_BOW, 0.06f) };
 static const int xp = 350;
 
 EArcher::EArcher(pi pos_)
@@ -25,7 +25,7 @@ EArcher::EArcher(pi pos_)
 
 void EArcher::update(GameState *state) {
 	if (currentMovement == D_NONE) {
-		targetClosestPlayers(state, 2);
+		targetClosestPlayer(state);
 		if (targetsOutOfRange(state)) {
 			moveTowardsPlayer(state);
 		}

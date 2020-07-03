@@ -86,7 +86,7 @@ void Inventory::unequip(item_num_t a, item_num_t b, bool dungeonRules) {
 	if (b < 0 || b >= INV_SIZE) return;
 	if (equips[a] == I_NONE) return;
 
-	if (dungeonRules && itemTypes[items[a]]->location == Equipment::SPECIAL) return;
+	if (dungeonRules && itemTypes[equips[a]]->location == Equipment::SPECIAL) return;
 
 	bool did = false;
 

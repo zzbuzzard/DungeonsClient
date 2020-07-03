@@ -15,7 +15,7 @@ EScorpion::EScorpion(pi pos_, ID_t id)
 	setBoxTexture(T_SCORPION);
 }
 #else
-static const LootList Loot = { itemProb(I_SCORPION_ARMOUR, 0.0075f), itemProb(I_SCORPION_DAGGER, 0.15f) };
+static const LootList Loot = { itemProb(I_SCORPION_ARMOUR, 0.01f), itemProb(I_SCORPION_DAGGER, 0.15f) };
 static const int xp = 325;
 
 EScorpion::EScorpion(pi pos_)
