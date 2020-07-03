@@ -1,7 +1,7 @@
 #pragma once
 #include "Media.h"
 
-#define NUM_TILES 13
+#define NUM_TILES 14
 enum class Tile {
 	NONE,
 	WALL,
@@ -19,6 +19,7 @@ enum class Tile {
 	GRASS_BLOOD,
 
 	MUD,
+	DIRT,
 };
 
 extern TEXTURE tileTextures[NUM_TILES];

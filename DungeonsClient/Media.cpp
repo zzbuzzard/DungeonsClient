@@ -49,7 +49,7 @@ std::string texturePaths[NUM_TEXTURES] = {
 	"Textures/Projectiles/shard.png",
 	"Textures/Projectiles/leaf.png",
 
-	"Textures/Tiles/sand.png",
+	"Textures/Tiles/nicked_sand.png", //sand.png my ugly original
 	"Textures/Tiles/wall.png",
 	"Textures/Tiles/grass.png",
 	"Textures/Tiles/snow.png",
@@ -61,6 +61,7 @@ std::string texturePaths[NUM_TEXTURES] = {
 	"Textures/Tiles/grass_long_blood.png",
 	"Textures/Tiles/grass2.png",
 	"Textures/Tiles/mud.png",
+	"Textures/Tiles/dirt.png",
 
 	"Textures/Tiles/cactus.png",
 	"Textures/Tiles/rock.png",

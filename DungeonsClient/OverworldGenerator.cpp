@@ -39,6 +39,8 @@ int indices[] = { 0,4,8,13,18,24,30 };
 #define PAD_X 30
 #define PAD_Y 30
 
+static Tile overworldCenterTile = Tile::DIRT;
+
 
 //     F(Node* myNode, leftAng, rightAng, int *dungeons)
 //       (if we branch into 2, there must be at least 2 dungeons in dungeons. 
@@ -111,7 +113,7 @@ bool OverworldGenerator::generate() {
 		border.insert(path.begin(), path.end());
 	}
 
-	world->fillWith(world->origin, Tile::SAND, border);
+	world->fillWith(world->origin, overworldCenterTile, border);
 
 	for (int i = 0; i < branches; i++) {
 		drawFrom(&roots[i], roots[i].pos);

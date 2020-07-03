@@ -17,25 +17,35 @@ Idea issues:
 
 Just some ideas:
 	Level caps on areas.
-	You cannot enter the thing until thing.
+		You can't enter the grass area til you hit level 10.
+		But we don't want to make it super linear:
+		You should unlock multiple places at level 10
+		Then another 2 at level 25, kinda thing. Thats probably it though, 5 base biomes.
+		Could have a super rare one for level 35+ or something but thats mean
 
-ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-ooo                                                                         ooo
-ooo                                                                         ooo
-ooo                                                                         ooo
-ooo                                                                         ooo
-ooo                                                                         ooo
-ooo                                                                         ooo
-ooo                                 Bruh                                    ooo
-ooo                                                                         ooo
-ooo                                                                         ooo
-ooo                                                                         ooo
-ooo                                                                         ooo
-ooo                                                                         ooo
-ooo                                                                         ooo
-ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+
+
+
+
+
+
+		ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+		ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+		ooo                                                                         ooo
+		ooo                                                                         ooo
+		ooo                                                                         ooo
+		ooo                                                                         ooo
+		ooo                                                                         ooo
+		ooo                                                                         ooo
+		ooo                                 Bruh                                    ooo
+		ooo                                                                         ooo
+		ooo                                                                         ooo
+		ooo                                                                         ooo
+		ooo                                                                         ooo
+		ooo                                                                         ooo
+		ooo                                                                         ooo
+		ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+		ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 
 
 

@@ -26,6 +26,7 @@ TEXTURE tileTextures[NUM_TILES] = {
 	T_TILE_GRASS_BLOOD,
 
 	T_TILE_MUD,
+	T_TILE_DIRT,
 };
 
 
@@ -46,6 +47,7 @@ bool tileWalkable[NUM_TILES] = {
 	true,
 
 	true,
+	true,
 };
 
 sf::Color tileMinimapColour[NUM_TILES] = {
@@ -65,4 +67,5 @@ sf::Color tileMinimapColour[NUM_TILES] = {
 	sf::Color(80, 5, 5),
 
 	sf::Color(100, 50, 0),
+	sf::Color(170, 120, 20),
 };
