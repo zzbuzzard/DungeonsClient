@@ -120,8 +120,9 @@ void GameState::update() {
 		currentMinimap->update(this);
 
 	if (ready && currentWorld != nullptr && !isDead && currentWorld->initialised && myPlayer != nullptr && connection->isConnected()) {
-		gameMenu.update(this);
+		adjustTileBox();
 
+		gameMenu.update(this);
 		lootUI.update(this);
 
 		Dir d = getCurrentDir();
@@ -141,7 +142,6 @@ void GameState::update() {
 
 					int newX = myPlayer->getPos().x + dirOffset[d].x;
 					int newY = myPlayer->getPos().y + dirOffset[d].y;
-					adjustTileBox();
 
 					pi newPos = myPlayer->getCollisionPos();
 					if (currentWorld->dungeonEntrances.find(newPos) != currentWorld->dungeonEntrances.end()) {
@@ -506,7 +506,9 @@ void GameState::loadWorld(World *world) {
 
 
 void GameState::adjustTileBox() {
-	pi pos = myPlayer->getCollisionPos();
+	pf p = myPlayer->getPosWorld() / (float)PIXEL_PER_UNIT;
+	//pi pos = myPlayer->getCollisionPos();
+	pi pos = pi(util::round(p.x), util::round(p.y));
 
 	tileBox.adjust(pos.x - XVIEW, pos.x + XVIEW, pos.y - YVIEW, pos.y + YVIEW, currentWorld);
 	if (currentMinimap != nullptr)
@@ -825,7 +827,7 @@ void GameState::draw(const sf::View *v) {
 
 sf::Vector2f GameState::whereToCenter() {
 	if (myPlayer != nullptr) {
-		return myPlayer->getPosWorld();
+		return myPlayer->getPosWorldCentered();
 	}
 	return sf::Vector2f(0, 0);
 	//if (myPlayer == nullptr) 
@@ -939,6 +941,8 @@ void GameState::handleUpdate(const void *data) {
 
 	if (waitingToRespawn && imInUpdate) {
 		pi x = myPlayer->getCollisionPos();
+
+		cout << "Respawned pos = " << x << endl;
 
 		waitingToRespawn = false;
 		isDead = false;
@@ -1284,6 +1288,11 @@ void GameState::handleConfirmedItem(const void *data) {
 
 
 void GameState::handleMyPos(pi p) {
+	if (waitingToRespawn) {
+		myPlayer->setPos(p);
+		myPlayer->currentMovement = D_NONE;
+		return;
+	}
 
 	// Server has processed 0..proc
 	// So we need to apply moves proc+1...end
@@ -1333,12 +1342,12 @@ void GameState::handleMyPos(pi p) {
 
 		cout << "JERKING PLAYER" << endl;
 
-		//cout << "Start of queue move = " << (int)queueMoveNum << endl;
-		//cout << "Server processed to " << (int)serverProc << endl;
+		cout << "Start of queue move = " << (int)queueMoveNum << endl;
+		cout << "Server processed to " << (int)serverProc << endl;
 
-		//cout << "We applied " << moves.size() << " moves to " << p << " to get " << posP << endl;
-		//cout << "Which aint the same as " << myPlayer->getCollisionPos() << " (moving from " << myPlayer->getPos() << ")" << endl;
-		//cout << "and we removed " << count << " queue items" << endl << endl;
+		cout << "We applied " << moves.size() << " moves to " << p << " to get " << posP << endl;
+		cout << "Which aint the same as " << myPlayer->getCollisionPos() << " (moving from " << myPlayer->getPos() << ")" << endl;
+		cout << "and we removed " << count << " queue items" << endl << endl;
 		
 		// Situation: 
 		//  We press up [add to queue]
@@ -1346,7 +1355,6 @@ void GameState::handleMyPos(pi p) {
 		//  We receive input that says boo
 		
 		myPlayer->jerk(posP);
-		adjustTileBox();
 	}
 
 	// TODO: Unsure about this. Not actually helping anything - just in the event of a super unlikely bug where a packet is lost entirely.

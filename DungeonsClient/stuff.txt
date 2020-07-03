@@ -1,0 +1,42 @@
+Playtest
+Todo
+Implementation issues:
+	ITEM DISAPPEAR SYSTEM BAD
+	Can't see your life when an enemy is beneath you
+	Boss room should *fully* reset after death - so scorpions should die.
+
+Idea issues:
+	It was boring after a while. 
+		More items?
+		More rare spawns? Rare rooms and structures? 
+		Overworld events?
+		Or, balance to be less hard [I have done] and then maybe they can move on to grass
+	Same items again and again - but no point of getting an item twice
+		Merging items - Would be a huge commitment but could be cool. Level an item up like feeding pets in rotmg
+		Selling items - Much less rewarding but better than dropping excess
+
+Just some ideas:
+	Level caps on areas.
+	You cannot enter the thing until thing.
+
+ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+ooo                                                                         ooo
+ooo                                                                         ooo
+ooo                                                                         ooo
+ooo                                                                         ooo
+ooo                                                                         ooo
+ooo                                                                         ooo
+ooo                                 Bruh                                    ooo
+ooo                                                                         ooo
+ooo                                                                         ooo
+ooo                                                                         ooo
+ooo                                                                         ooo
+ooo                                                                         ooo
+ooo                                                                         ooo
+ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+
+
+
+

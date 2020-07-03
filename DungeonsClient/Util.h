@@ -56,6 +56,7 @@ namespace util {
 	std::vector<pi> borderPoints(pi center, pi tileSize, int width1 = 1, int width2 = 1);
 
 	int randomRound(float x); // e.g. 1.1 has 90% chance to become 1
+	int round(float x);
 
 	typedef std::pair<std::string, std::string> msgpair;
 	msgpair getCommand(std::string msg); // e.g. /setname james -> (setname, james)

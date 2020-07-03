@@ -152,22 +152,22 @@ void OverworldGenerator::generateFrom(OG_Node *node, float left, float right, in
 
 	// Dungeon spawn chance
 	// depth  1  => 0%
-	// depth  2  => 25%
-	// depth  3  => 65%
+	// depth  2  => 0%
+	// depth  3  => 100%
 	// depth >3  => 100%
 	if (!last && node->depth == 2) {
-		if (world->rand(0, 1) < 0.25f) {
+		//if (world->rand(0, 1) < 0.25f) {
 			world->makeDungeon(node->pos, node->biome);
 			return;
-		}
+		//}
 	}
-	if (!last && node->depth == 3) {
-		if (world->rand(0, 1) < 0.65f) {
-			world->makeDungeon(node->pos, node->biome);
-			return;
-		}
-	}
-	if (node->depth > 3) {
+	//if (!last && node->depth == 3) {
+	//	if (world->rand(0, 1) < 0.65f) {
+	//		world->makeDungeon(node->pos, node->biome);
+	//		return;
+	//	}
+	//}
+	if (node->depth > 2) {
 		world->makeDungeon(node->pos, node->biome);
 		return;
 	}

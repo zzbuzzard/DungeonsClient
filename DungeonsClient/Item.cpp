@@ -15,7 +15,7 @@ Item *itemTypes[NUM_ITEMS] = {
 	new Item("Plant armour", ItemRarity::UNCOMMON, T_PLANT_ARMOUR, Equipment::TORSO, Stats(40, 0, 5, 0, 0, 0, 10, 0)),
 	new Item("Sand cape", ItemRarity::COMMON, T_SAND_CAPE, Equipment::TORSO, Stats(0, 0, 3, 5, 0, 0, 0, 0)),
 	new Item("Scorpion scale armour", ItemRarity::UNCOMMON, T_SCORPION_SCALE_ARMOUR, Equipment::TORSO, Stats(0, 0, 5, 0, 4, 0, 0, 0)),
-	new Item("Rusty armour", ItemRarity::COMMON, T_RUSTY_ARMOUR, Equipment::TORSO, Stats(0, 0, 6, -8, 0, 0, 0, 0)),
+	new Item("Rusty armour", ItemRarity::COMMON, T_RUSTY_ARMOUR, Equipment::TORSO, Stats(0, 0, 6, -6, 0, 0, 0, 0)),
 	new Item("Mage's robe", ItemRarity::COMMON, T_WARM_CLOAK, Equipment::TORSO, Stats(0, 70, 2, 0, 0, 10, 0, 10)),
 	new Item("Cobweb armour", ItemRarity::COMMON, T_COBWEB_ARMOUR, Equipment::TORSO, Stats(0, 0, 6, 5, 0, 8, 0, 0)), // TODO get rid of... how the fuck do you even make armour out of cobwebs
 	new Item("Silk cape", ItemRarity::COMMON, T_SILK_CAPE, Equipment::TORSO, Stats(0, 0, 4, 8, 0, 0, 6, 0)),
@@ -31,13 +31,13 @@ Item *itemTypes[NUM_ITEMS] = {
 	new Item("Corrupt amulet", ItemRarity::UNCOMMON, T_CORRUPT_AMULET, Equipment::ACCESSORY, Stats(-25,0,-5,0,15,0,0,0)),
 
 	new Weapon("Wooden bow", ItemRarity::COMMON, T_TEST_BOW, Stats(0,0,0,0,0,0,0,0), 35, 6, 0.3f, T_ARROW, 1),
-	new Weapon("Bone bow", ItemRarity::COMMON, T_DESERT_BOW, Stats(0,0,2,0,0,0,0,0), 55, 7, 0.4f, T_ARROW, 1),
+	new Weapon("Bone bow", ItemRarity::COMMON, T_DESERT_BOW, Stats(0,0,0,0,0,0,0,0), 55, 7, 0.4f, T_ARROW, 1),
 	new Weapon("Golden bow", ItemRarity::UNCOMMON, T_GOLDEN_BOW, Stats(0,0,0,5,0,0,0,0), 25, 9, 0.1f, T_GOLD_ARROW, 2), // buff and move drop
 	new Weapon("Earth staff", ItemRarity::UNCOMMON, T_EARTH_STAFF, Stats(0,0,0,0,0,10,0,5), 60, 8, 0.35f, T_DUST, 2),
 	new Weapon("Fire staff", ItemRarity::UNCOMMON, T_FIRE_STAFF, Stats(0,0,0,0,0,10,0,0), 35, 8, 0.25f, T_FIREBALL, 2),
 	new Weapon("Sandstone sword", ItemRarity::COMMON, T_SAND_SWORD, Stats(0,0,5,-3,0,0,0,0), 80, 3, 0.2f, T_SAND_SPIKE, 1),
 	new Weapon("Cactus sword", ItemRarity::RARE, T_CACTUS_SWORD, Stats(0,0,3,0,0,0,0,0), 70, 4, 0.12f, T_THORN, 1),
-	new Weapon("Scorpion dagger", ItemRarity::COMMON, T_SCORPION_DAGGER, Stats(0,0,0,8,0,0,5,0), 55, 3, 0.28f, T_SPINE, 1),
+	new Weapon("Scorpion dagger", ItemRarity::COMMON, T_SCORPION_DAGGER, Stats(0,0,2,8,0,0,5,0), 55, 3, 0.28f, T_SPINE, 1),
 	new Weapon("Elven blade", ItemRarity::COMMON, T_ELVEN_BLADE, Stats(0,30,5,8,0,0,0,0), 75, 4, 0.165f, T_SHARD, 1),
 	new Weapon("Elven bow", ItemRarity::COMMON, T_ELVEN_BOW, Stats(0,0,0,10,0,0,8,8), 80, 7, 0.45f, T_ARROW, 1),
 	new Weapon("Spider fang dagger", ItemRarity::UNCOMMON, T_SPIDER_FANG_DAGGER, Stats(0,0,0,7,0,0,8,8), 65, 3, 0.18f, T_SHARD, 2),

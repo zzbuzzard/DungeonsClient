@@ -178,6 +178,15 @@ namespace util {
 		return below;
 	}
 
+	int round(float x) {
+		if (x < 0) return -round(-x);
+
+		int below = (int)x;
+		float t = x - below;
+
+		return (t < 0.5f ? below : below + 1);
+	}
+
 	msgpair getCommand(std::string msg) {
 		if (msg.size() == 0 || msg[0] != '/') {
 			return msgpair("", "");
