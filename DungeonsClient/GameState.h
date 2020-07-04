@@ -138,6 +138,8 @@ public:
 	World *overworld = nullptr;
 
 	bool lootChanged = false;
+
+	pi lastSeenPlayerPos;
 #endif
 	std::map<ID_t, Player*> idToPlayer; // public as main needs to access for socket shenanigans
 	std::map<ID_t, Enemy*> idToEnemy;

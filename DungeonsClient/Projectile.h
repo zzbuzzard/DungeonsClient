@@ -25,6 +25,8 @@ private:
 	LivingEntity *target;
 	ID_t targetID;
 
+	sf::Vector2f targetPos;
+
 	sf::Vector2f pos;
 
 	int projectileDamage;

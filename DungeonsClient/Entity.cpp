@@ -228,8 +228,8 @@ Entity::Entity(EntitySpecies spec_, EntityType type_, pi pos_, pi tileSize_)
 void Entity::draw(sf::RenderWindow *window, GameState *state) {
 	if (type == ET_NO_BOX) return;
 	box.setPosition(this->getPosWorld());
-	if (state->isInView(getCollisionPos()))
-		window->draw(box);
+	//if (state->isInView(getCollisionPos()))
+	window->draw(box);
 }
 
 void Entity::setBoxTexture(TEXTURE texture) {

@@ -85,3 +85,11 @@ void DamageText::draw(sf::RenderWindow *window, GameState *state) {
 		text.setPosition(wpos + follow->getPosWorldCentered());
 	window->draw(text);
 }
+
+
+pf DamageText::getPosWorldCentered() const {
+	if (follow == nullptr)
+		return wpos;
+	else
+		return wpos + follow->getPosWorldCentered();
+}

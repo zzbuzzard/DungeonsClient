@@ -77,7 +77,7 @@ public:
 	virtual pi getCollisionPos() const;
 	const virtual pi &getPos() const;
 	const virtual pf getPosWorld() const; // Centered assuming tileSize = pi(1, 1)
-	pf getPosWorldCentered() const; // Centered using variable tileSize
+	virtual pf getPosWorldCentered() const; // Centered using variable tileSize
 	virtual void setPos(const pi &pos_);
 	void moveBy(const pi &disp);
 

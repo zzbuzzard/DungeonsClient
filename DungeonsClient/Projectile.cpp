@@ -27,36 +27,47 @@ void Projectile::draw(sf::RenderWindow *window, GameState *state) {
 	window->draw(box, t);
 }
 
+// Every projectile calls a map.find operation 60 times a second.
+// This could be massively sped up using a shared_ptr for LivingEntity, or something...
+//  or store projectiles in a map then notify them (set target=nullptr) when something is removed from idToEnemy/idToPlayer
+// PROFILE THIS FIRST THOUGH: PROJECTILES PROBABLY NEGLIGIBLE % OF WORK DONE PER SEC
 void Projectile::update(GameState *state) {
 	if (!alive) return;
 
-	if ((targetID < 0 && state->idToEnemy.find(targetID) == state->idToEnemy.end()) ||
-		targetID >= 0 && state->idToPlayer.find(targetID) == state->idToPlayer.end()) {
-		alive = false;
-	}
-	else {
-		if (!state->isInView(target->getCollisionPos())) {
-			alive = false;
-			return;
+	// once its nullptr we move towards targetPos
+	if (target != nullptr) {
+		if ((targetID < 0 && state->idToEnemy.find(targetID) == state->idToEnemy.end()) ||
+			targetID >= 0 && state->idToPlayer.find(targetID) == state->idToPlayer.end()) {
+			target = nullptr;
 		}
+	}
 
-		sf::Vector2f P = target->getPosWorldCentered();
-		sf::Vector2f disp = P - pos;
-		float ang = util::ang(disp);
-		angleInDegrees = 180/PI * ang;
+	if (target != nullptr)
+		targetPos = target->getPosWorldCentered();
 
-		float mag = util::mag(disp);
-		pos += disp / mag * projSpd * deltaTime;
+	if (!state->isInView((pi)(targetPos / (float)PIXEL_PER_UNIT))) {
+		alive = false;
+		return;
+	}
 
-		if (mag <= PIXEL_PER_UNIT) {
-			alive = false;
+	sf::Vector2f disp = targetPos - pos;
+	float ang = util::ang(disp);
+	angleInDegrees = 180/PI * ang;
+
+	float mag = util::mag(disp);
+	pos += disp / mag * projSpd * deltaTime;
+
+	if (mag <= PIXEL_PER_UNIT) {
+		alive = false;
+
+		if (target != nullptr) {
 			int actualDamage = target->getDamageOf(projectileDamage);
-			float yOffset = - target->tileSize.y * 0.5f * (float)PIXEL_PER_UNIT;
+			float yOffset = -target->tileSize.y * 0.5f * (float)PIXEL_PER_UNIT;
 
-			//if (target->ID == state->getLocalPlayer()->ID)
-				state->addEntity(new DamageText(target, pf(0, yOffset), actualDamage));
-			//else
-			//	state->addEntity(new DamageText(target->getPosWorldCentered() + pf(0, yOffset), actualDamage));
+			state->addEntity(new DamageText(target, pf(0, yOffset), actualDamage));
+		}
+		else {
+			cout << "Target is nullptr" << endl;
 		}
 	}
 }

@@ -8,6 +8,7 @@ public:
 	void update(GameState *state);
 	void draw(sf::RenderWindow *window, GameState *state);
 	bool isAlive();
+	pf getPosWorldCentered() const;
 private:
 	void init();
 	float life;

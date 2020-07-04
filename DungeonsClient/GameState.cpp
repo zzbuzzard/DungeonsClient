@@ -140,10 +140,12 @@ void GameState::update() {
 					connection->send(packet);
 					moves.push_back(d);
 
-					int newX = myPlayer->getPos().x + dirOffset[d].x;
-					int newY = myPlayer->getPos().y + dirOffset[d].y;
+					//int newX = myPlayer->getPos().x + dirOffset[d].x;
+					//int newY = myPlayer->getPos().y + dirOffset[d].y;
 
-					pi newPos = myPlayer->getCollisionPos();
+					//pi newPos = myPlayer->getPos() + dirOffset[d];
+
+					//pi newPos = myPlayer->getCollisionPos();
 					if (currentWorld->dungeonEntrances.find(newPos) != currentWorld->dungeonEntrances.end()) {
 						currentDungeonEntrance = &currentWorld->dungeonEntrances[newPos];
 
@@ -442,8 +444,8 @@ pf GameState::getLocalPlayerPosWorld() {
 
 bool GameState::isInView(pi pos) {
 	pi player = getLocalPlayerPos();
-	if (pos.x >= player.x - XVIEW && pos.x <= player.x + XVIEW) {
-		if (pos.y >= player.y - YVIEW && pos.y <= player.y + YVIEW) {
+	if (pos.x >= player.x - XVIEW - 3 && pos.x <= player.x + XVIEW + 3) {
+		if (pos.y >= player.y - YVIEW - 3 && pos.y <= player.y + YVIEW + 3) {
 			return true;
 		}
 	}
@@ -792,6 +794,7 @@ void GameState::draw(const sf::View *v) {
 	window->clear(sf::Color::White);
 	tileBox.draw(window);
 
+	// Draw TL tiles that are on screen using binary search on the set
 	if (currentWorld != nullptr && currentWorld->initialised) {
 		int x1 = myPlayer->getCollisionPos().x - XVIEW;
 		int x2 = x1 + XVIEW * 2;
@@ -814,8 +817,11 @@ void GameState::draw(const sf::View *v) {
 	//	(*it)->draw(window, this);
 	//}
 
+	// Draw entities that are onscreen
 	for (auto it = entities.begin(); it != entities.end(); ++it) {
-		(*it)->draw(window, this);
+		if (isInView((pi)((*it)->getPosWorldCentered() / (float)PIXEL_PER_UNIT))) {
+			(*it)->draw(window, this);
+		}
 	}
 
 	lootUI.draw(window);
@@ -1288,6 +1294,8 @@ void GameState::handleConfirmedItem(const void *data) {
 
 
 void GameState::handleMyPos(pi p) {
+	lastSeenPlayerPos = p;
+
 	if (waitingToRespawn) {
 		myPlayer->setPos(p);
 		myPlayer->currentMovement = D_NONE;

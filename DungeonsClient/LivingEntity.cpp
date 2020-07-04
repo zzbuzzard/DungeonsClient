@@ -285,6 +285,16 @@ void LivingEntity::update(GameState *state) {
 	}
 #endif
 
+	// TODO: Use state->lastSeenPlayerPos instead of getCollisionPos() if its the local player
+	//  Or consider modifying Player::getCollisionPos() itself - first CTRL SHIFT F to find out what this will break [movement wise?]
+	//   - easy to check if stuffs broken by playing tho, and try turning off wifi
+
+#ifdef CLIENT
+	pi myPos = (local ? state->lastSeenPlayerPos : getCollisionPos());
+#else
+	pi myPos = getCollisionPos();
+#endif
+
 	if (reloadOn > 0)
 		reloadOn -= deltaTime;
 	if (reloadOn <= 0 && targets.size() > 0) {
@@ -302,18 +312,18 @@ void LivingEntity::update(GameState *state) {
 
 				// Skip this target if they're a boss and we're tryna snipe them from outside the boss room
 				if (enemy->isBoss) {
-					if (!state->currentWorld->isBossRoom(getCollisionPos()))
+					if (!state->currentWorld->isBossRoom(myPos))
 						continue;
 				}
 				// Use their tileSize in the taxicab because we are a player so have tilesize(1, 1)
 #ifdef CLIENT
 				float range = combatStats.range;
 				//if (currentMovement != D_NONE) range += combatStats.spd * 0.2f;
-				if (util::taxicabSize(enemy->getCollisionPos(), getCollisionPos(), enemy->tileSize) <= range) {
+				if (util::taxicabSize(enemy->getCollisionPos(), myPos, enemy->tileSize) <= range) {
 					state->addEntity(new Projectile(combatStats.t, getPosWorldCentered(), enemy, combatStats.damage));
 				}
 #else
-				if (util::taxicabSize(enemy->getCollisionPos(), getCollisionPos(), enemy->tileSize) <= combatStats.range) {
+				if (util::taxicabSize(enemy->getCollisionPos(), myPos, enemy->tileSize) <= combatStats.range) {
 					enemy->takeDamage(combatStats.damage, ID);
 				}
 #endif
@@ -327,13 +337,15 @@ void LivingEntity::update(GameState *state) {
 
 				Player *p = state->idToPlayer[t_id];
 #ifdef CLIENT
+				pi theirPos = (p->local ? state->lastSeenPlayerPos : p->getCollisionPos());
+
 				float range = combatStats.range;
 				//if (currentMovement != D_NONE) range += combatStats.spd * 0.2f;
-				if (util::taxicabSize(getCollisionPos(), p->getCollisionPos(), tileSize) <= range) {
+				if (util::taxicabSize(getCollisionPos(), theirPos, tileSize) <= range) {
 					state->addEntity(new Projectile(combatStats.t, getPosWorldCentered(), p, combatStats.damage));
 				}
 #else
-				if (util::taxicabSize(getCollisionPos(), p->getCollisionPos(), tileSize) <= combatStats.range) {
+				if (util::taxicabSize(myPos, p->getCollisionPos(), tileSize) <= combatStats.range) {
 					p->takeDamage(combatStats.damage, ID);
 				}
 #endif
