@@ -15,7 +15,12 @@ public:
 	// void login();
 	// bool authenticated = false;
 
+	void handleToken(std::string token);
+	bool tokenReady();
+
 private:
+	std::string token = "";
+
 	sf::TcpSocket socket;
 	pi myPos;
 	bool connected = false;

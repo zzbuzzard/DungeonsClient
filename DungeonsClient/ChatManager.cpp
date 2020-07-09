@@ -102,7 +102,7 @@ void ChatManager::sendMessage() {
 	connection->send(p);
 }
 
-bool sendButtonPressed = false;
+bool sendButtonPressed = true;
 
 void ChatManager::update(GameState *state) {
 	inputText.update((State*)state);

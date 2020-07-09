@@ -101,7 +101,7 @@ void EEnt::update(GameState *state) {
 				timeTilUpdate -= deltaTime;
 				if (timeTilUpdate <= 0) {
 					timeTilUpdate += 0.05f;
-					cout << "Ent updating the front" << endl;
+					//cout << "Ent updating the front" << endl;
 
 					std::vector<pi> newFront;
 

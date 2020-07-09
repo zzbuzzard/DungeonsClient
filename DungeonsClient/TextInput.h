@@ -7,6 +7,7 @@ class TextInput
 {
 public:
 	TextInput(int maxChars_);
+	~TextInput();
 
 	void update(State *state);
 	void draw(sf::RenderWindow *window);
@@ -26,6 +27,8 @@ public:
 	std::string getString();
 
 	bool isInFocus();
+	void setPasswordMode();
+	//bool mouseIsOver();
 private:
 	void recenter();
 	void calculateSizes();
@@ -41,5 +44,6 @@ private:
 	sf::RectangleShape caret;
 
 	float caretMoveCool;
+	bool passwordMode = false;
 };
 

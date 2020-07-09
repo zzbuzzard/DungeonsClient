@@ -128,3 +128,14 @@ void ConnectionManager::send(sf::Packet packet) {
 ID_t ConnectionManager::getMyID() {
 	return myID;
 }
+
+void ConnectionManager::handleToken(std::string token_) {
+	cout << "Handling token " << token_ << endl;
+	token = token_;
+}
+
+bool ConnectionManager::tokenReady() {
+	return token != "";
+}
+
+

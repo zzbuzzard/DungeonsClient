@@ -15,6 +15,7 @@ There will be a table for each.
 | 1  |    200,530    |
 | 2  |      53       |
 | 3  |     9000      |
+----------------------
 
 The server has INTERNAL functions for 
 getXP, getBaseStats, getInventory
@@ -24,22 +25,107 @@ getData(ID) ->
 "0,-1,1,5,2,-1,-1,-1,-1\n150,100,10,10,10\n532,352"
 
 
+---------------------------------------------------------------------------------------------------
+OVERVIEW:
+1) Loading state leads to the login state
+2) Login state gets the username and password, which are sent off in a token request. Token is stored in ConnectionManager
+3) Login state leads to the server select state
+4) Once a server is selected, we connect to the server and go to GameState [unless it fails]
+
+TODO:
+1) LoginState
+	- Sends web request, do some threading
+	- 'Loading' UI
+	- Save credentials
+2) Research web requests and make some SHARED infastructure for them
+3) Write PHP scripts
+	3.0) Get VS code. Make a test script that says hello
+	3.1) Get token (input username password)
+	3.2) Get data (ID)
+	3.3) Check token (ID, token)
+4) Create tables on the pi
+	4.1) Login table (ID, username, hashed pwd)
+	4.2) Pending token table (ID, token, bro)
+
+5) LoginState sends web request to the server to get token.
+	5.1) This token is stored by connection manager
+	5.2) Send ID+TOKEN in the P_CLIENT_HELLO
+	5.3) Server gets token and prints
+	5.4) Server uses web req to do the thing
+
+6) Player already logged in system
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+Issues
+	How will we do server confirmation?
+	How will we prevent a player logging in twice,
+		On the same server? : they shouldn't get this far. if they do, quietly fail with a warning print
+		On two different servers?
+	Apparently we should be using POST instead of GET.
+		This is because of shared hosting privacy issues, and the fact that all GET urls are stored in the logs
+		[Confirmed; I can read all the passwords of people on ZMessage. Whoops!]
+		[Gotta 1) Work out what POST is 2) Check that I can't read it on HTTPS POST]
+
+Planned solutions:
+Server confirmation:
+	- Note that HTTPS POST cannot be read by 3rd parties, so they wouldn't see the web request
+	- Regardless, the password should change regularly and depend on the data.
+
+	1) Both servers store the secret password
+	2) The input is hashed with the secret password to give a special thing.
+
+Logging in twice:
+	- What should happen?
+	- New logger inner gets rejected.
+	Logging in:
+		1) We request our token. The server checks the onlineTable and refuses to give us a token.
+
+	Logging in first time:
+		1) We request our token and we're added to the onlineTable.
+
+	Loggin out:
+		1.1) Choosing to log out / disconnecting etc.
+			Server detects it and sends an authenticated player_logged_out.php thing
+		1.2) A server crashes. This is the problematic part...
+			????????????????????????????????????????????????????????????????????????
+			- Server sends a web request proving it still exists every 5 min.
+				If nothing is received for 6 min, we destroy everyone connected to that server
+			- Clients need to send new tokens after 1h. If they are logged in over an hour ago, they are assumed to be logged out.
+
+---------------------------------------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------------------------------------
 TABLES
 	LoginDetails: ID, Username, Password, [email]
 	XPTable: ID, XP
 	InvTable: ID, equips/inventory string
 	BaseStatsTable: ID, Base stats string
-	LoggedInTable: ID, loginID, [server IP]
-	Servers: Name, IP address
+	OnlineTable: ID, Login ID, Server ID
+	Servers: Server ID, Name, IP address
+---------------------------------------------------------------------------------------------------
 
+
+
+---------------------------------------------------------------------------------------------------
 How will multiple servers work?
+
 	Following the LoginState, the player will be taken to the ServerSelectState
 	This will request the servers from the web server.
 	And we will then set the IP that we wish to connect to, and send the token over.
 
 	Will look something like this: My laptop lol 81.102.0.202
+---------------------------------------------------------------------------------------------------
 
 
+
+
+
+
+---------------------------------------------------------------------------------------------------
 Logging in:
 	1) Client types in username and password (or they are loaded from storage)
 	2) The client sends an HTTPS request to xmpp.bobinthehob.com with its username and password
@@ -57,15 +143,28 @@ Logging in:
 	8.1) If the answer is yes, we create the Player object and process the data, setting its XP, inventory, and base stats.
 		Send off P_SERVER_HELLO and the game begins.
 	8.2) If the answer is no, we reply with a P_LOGIN_FAILED.
+---------------------------------------------------------------------------------------------------
 
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------
 Logging out:
 	1) Player disconnects
 	2) PlayerLoggedOut(ID) called to remove from login table.
 	ISSUE: If the server crashes, everyone stays logged in, and cannot log in again.
 	SOLUTION: Every 5min
+---------------------------------------------------------------------------------------------------
 
-Server to web server confirmation:
-	1) When we get someones data, it includes their
+
+
+
+
+
+---------------------------------------------------------------------------------------------------
 
 Okay ummmmmmmmmmmm
 We send setInventory(ID, data string)
@@ -77,11 +176,19 @@ We send setInventory(ID, data string)
 The check variable will be a HASH of a string.
 The string will be a secret password AND
 	a string representing the number of web requests involving this ID.
+---------------------------------------------------------------------------------------------------
 
+
+
+
+
+
+---------------------------------------------------------------------------------------------------
 Saving progress:
 	1) Every time something changes, send an update
 		- Every time updateInventory = true, we need to send a setInventory(ID, data string) 
 		- 
+---------------------------------------------------------------------------------------------------
 
 
 I leave everything to the family

@@ -7,13 +7,20 @@
 #include "Util.h"
 
 const float caretWidth = 3.0f;
-const float caretMoveTime = 0.1f;
+const float caretMoveTime = 0.12f;
 
 TextInput::TextInput(int maxChars_) : maxChars(maxChars_) {
 	rText.setFont(g_pixelFont);
 	calculateSizes();
 	recenter();
 }
+
+TextInput::~TextInput() {
+	if (isInFocus()) {
+		loseFocus();
+	}
+}
+
 
 void TextInput::update(State *state) {
 	if (caretMoveCool > 0) caretMoveCool -= deltaTime;
@@ -22,7 +29,7 @@ void TextInput::update(State *state) {
 		if (typedChar != 0) {
 			char c = typedChar;
 
-			// Space, other normal characters
+			// Space, other normal ASCII characters
 			if (c >= 32) {
 				if (text.size() < maxChars) {
 					//text.push_back(c);
@@ -35,7 +42,7 @@ void TextInput::update(State *state) {
 				}
 			}
 			else {
-				// TODO: Handle backspace, arrowkeys
+				// Backspace
 				if (c == 8) {
 					if (text.size() > 0 && caretPos > 0) {
 						text.erase(text.begin() + caretPos - 1);
@@ -50,7 +57,14 @@ void TextInput::update(State *state) {
 			}
 		}
 
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left) &&
+			!sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+			caretMoveCool = -1;
+			movedCaret = false;
+		}
+
 		if (caretMoveCool <= 0) {
+
 			int disp = 0;
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) disp--;
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) disp++;
@@ -63,17 +77,29 @@ void TextInput::update(State *state) {
 				if (caretPos > text.size()) caretPos = text.size();
 
 				movedCaret = true;
-			}
-			else movedCaret = false;
 
-			caretMoveCool = caretMoveTime * (shortOne ? 0.25f : 1.0f);
+				caretMoveCool = caretMoveTime * (shortOne ? 0.25f : 1.0f);
+			}
+			else
+				movedCaret = false;
 		}
 	}
 }
 
 void TextInput::draw(sf::RenderWindow *window) {
+	// Turn hello into *****
+	if (passwordMode) {
+		std::string t = "";
+		t.reserve(text.size());
+		for (int i = 0; i < text.size(); i++) t.push_back('*');
+		rText.setString(t);
+	}
+
 	if (isInFocus()) {
-		caret.setPosition(rText.findCharacterPos(caretPos) + sf::Vector2f(0, caret.getSize().y));
+		if (rText.getString().getSize() == 0)
+			caret.setPosition(rText.getPosition());// +sf::Vector2f(0, caret.getSize().y));
+		else
+			caret.setPosition(rText.findCharacterPos(caretPos) + sf::Vector2f(0, caret.getSize().y));
 
 		//auto rect = rText.getGlobalBounds();
 		//caret.setPosition(sf::Vector2f(rect.left + rect.width, rText.getPosition().y));
@@ -81,6 +107,8 @@ void TextInput::draw(sf::RenderWindow *window) {
 	}
 
 	window->draw(rText);
+	if (passwordMode)
+		rText.setString(text);
 }
 
 void TextInput::setPos(sf::Vector2f pos) {
@@ -157,4 +185,13 @@ bool TextInput::isInFocus() {
 void TextInput::recenter() {
 	auto textRect = rText.getLocalBounds();
 	rText.setOrigin(textRect.left, fixedHeight); // textRect.top
+}
+
+
+//bool TextInput::mouseIsOver() {
+//
+//}
+
+void TextInput::setPasswordMode() {
+	passwordMode = true;
 }

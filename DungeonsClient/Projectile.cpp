@@ -66,9 +66,6 @@ void Projectile::update(GameState *state) {
 
 			state->addEntity(new DamageText(target, pf(0, yOffset), actualDamage));
 		}
-		else {
-			cout << "Target is nullptr" << endl;
-		}
 	}
 }
 

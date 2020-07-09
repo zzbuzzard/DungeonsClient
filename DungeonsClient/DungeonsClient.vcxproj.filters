@@ -213,6 +213,12 @@
     <ClInclude Include="EMegaMuncher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LoginState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WebReq.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -405,6 +411,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EMegaMuncher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WebReq.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -24,8 +24,7 @@ extern double totalTime;
 class State
 {
 public:
-	~State();
-
+	virtual ~State();
 	virtual void update();
 
 #ifdef CLIENT

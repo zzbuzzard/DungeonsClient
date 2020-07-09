@@ -2,7 +2,7 @@
 #include "Media.h"
 #include "Controller.h"
 #include "LoadingState.h"
-#include "GameState.h"
+#include "LoginState.h"
 
 const float loadBarHeight = 200, xMargin = 100, yMargin = -200, textY = -150;
 
@@ -28,7 +28,7 @@ void LoadingState::update() {
 
 		sf::RenderWindow *w = window;
 		deleteState();
-		g_state = new GameState(w);
+		g_state = new LoginState(w);
 		return;
 	}
 	resizeProg();

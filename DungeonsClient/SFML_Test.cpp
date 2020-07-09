@@ -22,6 +22,8 @@ using std::endl;
 
 int main()
 {
+	connection = new ConnectionManager(); // does nothing until connection->connect() called later
+
 	Media::PreLoad();
 
 	auto style = sf::Style::Default; // TODO: FULLSCREEN WHEN RELEASING : BUT WE ALSO NEED A QUIT BUTTON IN A MENU
@@ -35,12 +37,15 @@ int main()
 	window.setView(view);
 
 	sf::Clock clock;
+	sf::Clock clock2; // for debugging stuff only [profiling]
 
 	g_state = new LoadingState(&window);
 
 	int totFrames = 0;
 	const float fpsPrintTime = 10;
 	float fpsPrintTimeRemain = fpsPrintTime;
+
+	float updateTime = 0, drawTime1 = 0, drawTime2 = 0, serverUpdateTime = 0;
 
 	// Main loop
 	while (window.isOpen()) {
@@ -49,11 +54,23 @@ int main()
 
 		totFrames++;
 		fpsPrintTimeRemain -= deltaTime;
+
 		if (fpsPrintTimeRemain < 0) {
-			float fps = totFrames / (fpsPrintTime - fpsPrintTimeRemain);
-			cout << "FPS: " << fps << endl;
-			totFrames = 0;
 			fpsPrintTimeRemain = fpsPrintTime;
+
+			float fps = totFrames / fpsPrintTime;
+			cout << "\nFPS: " << util::floatToString(fps, 2) << "\n";
+
+			cout << "Updates: " << util::floatToString(100 * updateTime / fpsPrintTime, 1) << "%\n";
+			cout << "Drawing func: " << util::floatToString(100 * drawTime1 / fpsPrintTime, 1) << "%\n";
+			cout << "Drawing wind: " << util::floatToString(100 * drawTime2 / fpsPrintTime, 1) << "%\n";
+			cout << "Server proc: " << util::floatToString(100 * serverUpdateTime / fpsPrintTime, 1) << "%\n\n";
+
+			totFrames = 0;
+			updateTime = 0;
+			drawTime1 = 0;
+			drawTime2 = 0;
+			serverUpdateTime = 0;
 		}
 
 		typedChar = 0;
@@ -86,17 +103,22 @@ int main()
 			}
 		}
 
-		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))window.close();
 
+		clock2.restart();
 		g_state->update();
+		updateTime += clock2.restart().asSeconds();
+
 		view.setCenter(g_state->whereToCenter());
 		window.setView(view);
 		g_state->draw(&view);
+		drawTime1 += clock2.restart().asSeconds();
 		window.display();
+		drawTime2 += clock2.restart().asSeconds();
 
 		// nullptr during loading screen
 		if (connection != nullptr)
 			connection->checkForUpdates();
+		serverUpdateTime += clock2.restart().asSeconds();
 
 	}
 

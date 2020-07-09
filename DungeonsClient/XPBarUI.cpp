@@ -54,7 +54,7 @@ void XPBarUI::update(PlayerInfo *pInfo) {
 
 	xpBar.setSize(pf(xpBarWidth * mul, xpBarHeight));
 
-	std::cout << "updating" << endl;
+	//std::cout << "updating" << endl;
 
 	levelText.setString("Level " + std::to_string(lev));
 	xpProgressText.setString(std::to_string(remain) + " / " + std::to_string(tot));
