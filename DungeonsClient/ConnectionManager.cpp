@@ -13,6 +13,11 @@ using std::endl;
 #define IP "81.106.47.202"
 
 void ConnectionManager::connect() {
+	if (!tokenReady()) {
+		cout << "Trying to connect but the token aint ready..." << endl;
+		return;
+	}
+
 	sf::Socket::Status status = socket.connect(IP, PORT);
 
 	if (status == sf::Socket::Done) {
@@ -33,7 +38,19 @@ void ConnectionManager::connect() {
 		}
 	}
 
-	socket.setBlocking(false);
+	if (connected) {
+		sf::Packet clientHello;
+		clientHello.append(&P_CLIENT_HELLO, sizeof(Packet));
+		int16_t num = token.size();
+		clientHello.append(&num, sizeof(int16_t));
+		for (char c : token)
+			clientHello.append(&c, sizeof(char));
+
+		cout << "Sending client hello" << endl;
+		socket.send(clientHello);
+
+		socket.setBlocking(false);
+	}
 }
 
 void ConnectionManager::checkForUpdates() {
