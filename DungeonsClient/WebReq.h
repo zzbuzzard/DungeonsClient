@@ -13,10 +13,12 @@ public:
 	~WebReq();
 
 	bool threadSend(std::string scriptName, std::string postData, void(*callback)(std::string));
-	void threadFinish(); // internal only
+	void threadDone(std::thread *t); // internal only
 private:
-	bool isSending;
-	std::thread *sendingThread;
+	std::vector<std::thread*> deleteThreads;
+
+	//bool isSending;
+	//std::thread *sendingThread;
 	// Takes a script name, the data to be POSTed, and a callback function pointer
 	// bool postSend(std::string scriptName, std::string postData, void(*callback)(std::string));
 };

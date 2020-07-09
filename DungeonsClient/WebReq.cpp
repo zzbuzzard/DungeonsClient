@@ -10,15 +10,16 @@
 WebReq webReq = WebReq();
 
 WebReq::WebReq()
-	: isSending(false)
+	//: isSending(false)
 {
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 }
 
 WebReq::~WebReq() {
-	if (sendingThread != nullptr) {
-		sendingThread->join();
-		delete sendingThread;
+	for (std::thread *p : deleteThreads) {
+		cout << "WebReq destructor deleting a thread" << endl;
+		p->join();
+		delete p;
 	}
 	curl_global_cleanup();
 }
@@ -37,7 +38,7 @@ static size_t callback(void* buffer, size_t size, size_t nmemb, void* param)
 
 static const std::string webServer = "https://xmpp.bobinthehob.com/Dungeons/";
 
-bool postSend(std::string scriptName, std::string postData, void(*resultCallback)(std::string), WebReq *wr) {
+bool postSend(std::string scriptName, std::string postData, void(*resultCallback)(std::string), WebReq *wr, std::thread *thisThread) {
 	cout << "Curling to " << webServer << scriptName << " with data = " << postData << endl;
 
 	bool worked = false;
@@ -74,36 +75,53 @@ bool postSend(std::string scriptName, std::string postData, void(*resultCallback
 	}
 
 	cout << "Thread terminates" << endl;
-	wr->threadFinish();
+	wr->threadDone(thisThread);
+
 	return worked;
 }
 
 
 
 bool WebReq::threadSend(std::string scriptName, std::string postData, void(*resultCallback)(std::string)) {
-	if (isSending) {
-		cout << "Trying to send but already sending" << endl;
-		return false;
+	//if (isSending) {
+	//	cout << "Trying to send but already sending" << endl;
+	//	return false;
+	//}
+
+	for (std::thread *p : deleteThreads) {
+		cout << "Deleting a thread" << endl;
+		p->join();
+		delete p;
 	}
+	deleteThreads.clear();
 
-	if (sendingThread != nullptr) {
-		cout << "Deleting the previous sending thread" << endl;
-		sendingThread->join();
-		delete sendingThread;
-		sendingThread = nullptr;
-	}
+	//if (sendingThread != nullptr) {
+	//	cout << "Deleting the previous sending thread" << endl;
+	//	sendingThread->join();
+	//	delete sendingThread;
+	//	sendingThread = nullptr;
+	//}
 
-
-	isSending = true;
+	// Okay... this is disgusting.
+	// The thread's memory is allocated first, then the thread begins
+	// It then adds its pointer to our vector once its done so we may deallocate it
 	cout << "Thread begins" << endl;
-	sendingThread = new std::thread(postSend, scriptName, postData, resultCallback, this);
+	std::thread *t = new std::thread;
+	std::thread *x = t;
+	*t = std::thread(postSend, scriptName, postData, resultCallback, this, x);
+
+	return true;
 }
 
-void WebReq::threadFinish() {
-	if (isSending) {
-		isSending = false;
-	}
-	else {
-		cout << "WebReq: threadFinish() called but no thread was finishing" << endl;
-	}
+//void WebReq::threadFinish() {
+//	if (isSending) {
+//		isSending = false;
+//	}
+//	else {
+//		cout << "WebReq: threadFinish() called but no thread was finishing" << endl;
+//	}
+//}
+
+void WebReq::threadDone(std::thread *t) {
+	deleteThreads.push_back(t);
 }

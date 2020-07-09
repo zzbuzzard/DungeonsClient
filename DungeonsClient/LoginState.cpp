@@ -10,6 +10,7 @@ const static int fontSize = 60;
 const static float boxW = 700, boxH = 70, tpad = 10, yoffset = -17,
 	usery = -55, pwdy = 55;
 
+// Called on another thread
 static void handleToken(std::string token) {
 	connection->handleToken(token);
 }
