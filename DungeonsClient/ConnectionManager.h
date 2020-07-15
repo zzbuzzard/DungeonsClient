@@ -15,6 +15,7 @@ public:
 	// void login();
 	// bool authenticated = false;
 
+	// Handles a response string from the token script: either a failure or ID [space] token
 	void handleToken(std::string token);
 	bool tokenReady();
 

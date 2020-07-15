@@ -43,6 +43,9 @@ void ConnectionManager::connect() {
 	if (connected) {
 		sf::Packet clientHello;
 		clientHello.append(&P_CLIENT_HELLO, sizeof(Packet));
+
+		clientHello.append(&myID, sizeof(ID_t));
+
 		int16_t num = token.size();
 		clientHello.append(&num, sizeof(int16_t));
 		for (char c : token)
@@ -150,6 +153,26 @@ ID_t ConnectionManager::getMyID() {
 
 void ConnectionManager::handleToken(std::string token_) {
 	cout << "Handling token " << token_ << endl;
+
+	std::string idNum = "";
+	int spaceInd = -1;
+	for (int i = 0; i < token_.size(); i++) {
+		if (token_[i] == ' ') {
+			spaceInd = i;
+			break;
+		}
+		if (token_[i] < '0' || token_[i] > '9') break; // invalid
+		idNum.push_back(token_[i]);
+	}
+
+	if (spaceInd == -1) {
+		cout << "Token was invalid" << endl;
+		return;
+	}
+
+	myID = std::stoi(idNum);
+	cout << "My id = " << myID << endl;
+
 	token = token_;
 }
 

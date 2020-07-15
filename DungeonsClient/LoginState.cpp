@@ -10,9 +10,16 @@ const static int fontSize = 60;
 const static float boxW = 700, boxH = 70, tpad = 10, yoffset = -17,
 	usery = -55, pwdy = 55;
 
+static bool sent = false;
+
 // Called on another thread
 static void handleToken(ID_t reqID, std::string token) {
 	connection->handleToken(token);
+	if (!connection->tokenReady()) {
+		// TODO: Error message
+		cout << "Login failed" << endl;
+		sent = false;
+	}
 }
 
 LoginState::LoginState(sf::RenderWindow *window) : State(window), usernameText(12), passwordText(30) {
@@ -57,8 +64,6 @@ bool tabClicked = true;
 
 
 void LoginState::update() {
-	static bool sent = false;
-
 	if (sent) {
 		if (connection->tokenReady()) {
 			cout << "Loading GameState" << endl;
@@ -115,6 +120,7 @@ void LoginState::update() {
 			sent = true;
 		}
 		else {
+			cout << "Failed to send login request" << endl;
 			sent = false; // TODO: remove and give an error on the screen
 		}
 
