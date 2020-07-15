@@ -163,8 +163,18 @@ void Inventory::appendToPacket(sf::Packet &packet) {
 	}
 }
 
-int Inventory::getNumTargets() {
+int Inventory::getNumTargets() const {
 	ITEM i = equips[(int)Equipment::WEAPON];
 	if (i == I_NONE) return 0;
 	return ((Weapon*)itemTypes[i])->num_targets;
+}
+
+void Inventory::setEquips(const ITEM items_[NUM_EQUIP_LOCS]) {
+	for (auto i = 0; i < NUM_EQUIP_LOCS; i++) equips[i] = items_[i];
+	updateEquipmentBonus();
+}
+
+void Inventory::setItems(const ITEM items_[INV_SIZE]) {
+	for (auto i = 0; i < INV_SIZE; i++) items[i] = items_[i];
+	updateEquipmentBonus();
 }

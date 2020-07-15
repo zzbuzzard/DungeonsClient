@@ -21,7 +21,10 @@ public:
 	bool loadFromData(const void *data); // returns true if the update was actually used [if received==sent]
 	void appendToPacket(sf::Packet &packet);
 
-	int getNumTargets();
+	int getNumTargets() const;
+
+	void setEquips(const ITEM items_[NUM_EQUIP_LOCS]);
+	void setItems(const ITEM items_[INV_SIZE]);
 
 	ITEM equips[NUM_EQUIP_LOCS];
 	ITEM items[INV_SIZE];

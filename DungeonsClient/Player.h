@@ -41,7 +41,7 @@ class GameState;
 class Player : public LivingEntity
 {
 public:
-	Player(pi pos_, sf::TcpSocket *sock);
+	Player(ID_t id_, pi pos_, sf::TcpSocket *sock);
 	void update(GameState *state);
 
 	void appendBaseInv(sf::Packet &packet);
@@ -67,7 +67,6 @@ public:
 private:
 	float TLdmgCool = 0;
 
-	static ID_t idd;
 	float timeToNextHeal = 0,
 		timeToNextMPHeal = 0;
 	target_count_t numTargets = 0;

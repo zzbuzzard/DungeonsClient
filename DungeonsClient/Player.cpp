@@ -6,11 +6,12 @@
 
 //CombatStats defaultStats = CombatStats(10, 0.4f, 8, T_ARROW);
 CombatStats noWeapon = CombatStats(0, 1.0f, 0, T_NONE, 1.0f, 0);
+static const int playerBaseLife = 150;
 
 #ifdef CLIENT
 #include "GameState.h"
 Player::Player(pi pos_, ID_t id)
-	: LivingEntity(E_PLAYER, ET_PLAYER, pos_, 100, id) {
+	: LivingEntity(E_PLAYER, ET_PLAYER, pos_, playerBaseLife, id) {
 	setBoxSize();
 	setBoxTexture(T_PLAYER);
 	combatStats = noWeapon;
@@ -140,9 +141,8 @@ void Player::resizeManaBar() {
 
 #else
 #include "GameState.h"
-ID_t Player::idd = 0;
-Player::Player(pi pos_, sf::TcpSocket *sock)
-	: LivingEntity(E_PLAYER, ET_PLAYER, pos_, 100, idd++), socket(sock) {
+Player::Player(ID_t id_, pi pos_, sf::TcpSocket *sock)
+	: LivingEntity(E_PLAYER, ET_PLAYER, pos_, playerBaseLife, id_), socket(sock) {
 	combatStats = noWeapon;
 }
 

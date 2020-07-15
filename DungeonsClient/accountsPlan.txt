@@ -107,10 +107,16 @@ Logging in twice:
 
 ---------------------------------------------------------------------------------------------------
 TABLES
-	LoginDetails: ID, Username, Password, [email]
+Made:
+	Tokens: playerID (INT), token (VARCHAR 100), timestamp (BIGINT)
+	Users: playerID (INT), username (VARCHAR 20), password (VARCHAR 100)
+
+Not made:
 	XPTable: ID, XP
 	InvTable: ID, equips/inventory string
 	BaseStatsTable: ID, Base stats string
+
+Not made, advanced, not sure:
 	OnlineTable: ID, Login ID, Server ID
 	Servers: Server ID, Name, IP address
 ---------------------------------------------------------------------------------------------------
