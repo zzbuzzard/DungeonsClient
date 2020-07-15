@@ -173,7 +173,7 @@ void ConnectionManager::handleToken(std::string token_) {
 	myID = std::stoi(idNum);
 	cout << "My id = " << myID << endl;
 
-	token = token_;
+	token = token_.substr(spaceInd+1);
 }
 
 bool ConnectionManager::tokenReady() {
