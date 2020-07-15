@@ -12,7 +12,9 @@ public:
 	WebReq();
 	~WebReq();
 
-	bool threadSend(std::string scriptName, std::string postData, void(*callback)(std::string));
+	// Starts a new thread which sends a web request. When the web request completes,
+	//  It calls resultCallback(requestID, string returned by web request)
+	bool threadSend(std::string scriptName, std::string postData, void(*resultCallback)(ID_t, std::string), ID_t requestID);
 	void threadDone(std::thread *t); // internal only
 private:
 	std::vector<std::thread*> deleteThreads;

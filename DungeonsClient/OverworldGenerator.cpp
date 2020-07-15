@@ -3,7 +3,7 @@
 #include "World.h"
 #include "Spawner.h"
 
-static class OG_Node {
+struct OG_Node {
 public:
 	int depth;
 	BiomeType biome;

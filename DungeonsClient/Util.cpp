@@ -15,7 +15,7 @@
 const float VIEW_HEIGHT = 1080.0f;
 // NORMALLY 85
 const int PIXEL_PER_UNIT = 85; // 20 good for map debugging, 30fps. 30 good for debugging too, 50fps.
-const float PI = M_PI;
+const float PI = (float)M_PI;
 
 pi dirOffset[5] = { pi(0, -1), pi(1, 0), pi(0, 1), pi(-1, 0), pi(0, 0) };
 sf::Keyboard::Key dirKeys[4] = { sf::Keyboard::W, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::A };

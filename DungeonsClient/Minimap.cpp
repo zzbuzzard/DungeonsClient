@@ -79,8 +79,6 @@ void Minimap::draw(GameState *state, sf::RenderWindow *window) {
 		texture.loadFromImage(image);
 		shape.setTexture(&texture);
 
-		sf::RectangleShape;
-
 		shape.setTextureRect(sf::IntRect(x+o.x - gap/2, y+o.y - gap/2, view, view));
 
 		changed = false;

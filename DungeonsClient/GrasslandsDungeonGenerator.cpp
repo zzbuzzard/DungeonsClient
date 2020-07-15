@@ -73,7 +73,7 @@ void GrasslandsDungeonGenerator::drawRoom(DNode* node) {
 }
 
 // right/down meaning can we move right/down
-static struct BRNode {
+struct BRNode {
 	BRNode() : right(true), down(true) {
 	}
 	bool right, down;

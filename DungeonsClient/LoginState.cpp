@@ -11,7 +11,7 @@ const static float boxW = 700, boxH = 70, tpad = 10, yoffset = -17,
 	usery = -55, pwdy = 55;
 
 // Called on another thread
-static void handleToken(std::string token) {
+static void handleToken(ID_t reqID, std::string token) {
 	connection->handleToken(token);
 }
 
@@ -111,7 +111,7 @@ void LoginState::update() {
 		std::string password = passwordText.getString();
 
 		cout << "Sending web request" << endl;
-		if (webReq.threadSend("get_token.php", "username=" + username + "&password=" + password, handleToken)) {
+		if (webReq.threadSend("get_token.php", "username=" + username + "&password=" + password, handleToken, (ID_t)0)) {
 			sent = true;
 		}
 		else {

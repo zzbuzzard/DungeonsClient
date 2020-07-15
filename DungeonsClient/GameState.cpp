@@ -35,9 +35,7 @@ bool specialButtonPressed = false;
 GameState::GameState(sf::RenderWindow *window) : State(window), tileBox(2*XVIEW+1, 2*YVIEW+1), lootUI(&pInfo) {
 	g_gameState = true;
 
-	cout << "Connecting to server..." << endl;
 	connection->connect();
-	cout << "Connected!" << endl;
 
 	myPlayer = nullptr;
 	resize(&window->getView());

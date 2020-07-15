@@ -38,7 +38,7 @@ static size_t callback(void* buffer, size_t size, size_t nmemb, void* param)
 
 static const std::string webServer = "https://xmpp.bobinthehob.com/Dungeons/";
 
-bool postSend(std::string scriptName, std::string postData, void(*resultCallback)(std::string), WebReq *wr, std::thread *thisThread) {
+bool postSend(std::string scriptName, std::string postData, void(*resultCallback)(ID_t, std::string), ID_t requestID, WebReq *wr, std::thread *thisThread) {
 	cout << "Curling to " << webServer << scriptName << " with data = " << postData << endl;
 
 	bool worked = false;
@@ -71,7 +71,7 @@ bool postSend(std::string scriptName, std::string postData, void(*resultCallback
 
 	if (worked) {
 		cout << "Success: calling result callback" << endl;
-		resultCallback(result);
+		resultCallback(requestID, result);
 	}
 
 	cout << "Thread terminates" << endl;
@@ -82,7 +82,7 @@ bool postSend(std::string scriptName, std::string postData, void(*resultCallback
 
 
 
-bool WebReq::threadSend(std::string scriptName, std::string postData, void(*resultCallback)(std::string)) {
+bool WebReq::threadSend(std::string scriptName, std::string postData, void(*resultCallback)(ID_t, std::string), ID_t requestID) {
 	//if (isSending) {
 	//	cout << "Trying to send but already sending" << endl;
 	//	return false;
@@ -108,7 +108,7 @@ bool WebReq::threadSend(std::string scriptName, std::string postData, void(*resu
 	cout << "Thread begins" << endl;
 	std::thread *t = new std::thread;
 	std::thread *x = t;
-	*t = std::thread(postSend, scriptName, postData, resultCallback, this, x);
+	*t = std::thread(postSend, scriptName, postData, resultCallback, requestID, this, x);
 
 	return true;
 }

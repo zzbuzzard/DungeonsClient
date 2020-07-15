@@ -18,6 +18,8 @@ void ConnectionManager::connect() {
 		return;
 	}
 
+	cout << "Connecting to server..." << endl;
+
 	sf::Socket::Status status = socket.connect(IP, PORT);
 
 	if (status == sf::Socket::Done) {

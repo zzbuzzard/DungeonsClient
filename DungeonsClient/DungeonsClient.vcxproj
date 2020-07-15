@@ -93,12 +93,12 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\Users\Z\source\repos\SFML_Test\sfml\include;C:\Users\Z\source\repos\Libraries\curlpp-master\curlpp-master\include;C:\Users\Z\source\repos\Libraries\curl\Debug32\include\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Z\source\repos\Libraries\sfml\include;C:\Users\Z\source\repos\Libraries\curl\Debug32\include\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Z\source\repos\SFML_Test\sfml\lib;C:\Users\Z\source\repos\Libraries\curlpp-master\curlpp-master\include;C:\Users\Z\source\repos\Libraries\curl\Debug32\lib;%(AdditionalIncludeDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Z\source\repos\Libraries\sfml\lib;C:\Users\Z\source\repos\Libraries\curl\Debug32\lib;%(AdditionalIncludeDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-window-d.lib;Normaliz.lib;Ws2_32.lib;Wldap32.lib;Crypt32.lib;advapi32.lib;C:\Users\Z\source\repos\Libraries\curl\Debug32\lib\libcurl_a_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -111,12 +111,12 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\Users\Z\source\repos\SFML_Test\sfml\include;C:\Users\Z\source\repos\Libraries\curlpp-master\curlpp-master\include;C:\Users\Z\source\repos\Libraries\curl\Debug64\include\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Z\source\repos\Libraries\sfml\include;C:\Users\Z\source\repos\Libraries\curl\Debug64\include\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Z\source\repos\SFML_Test\sfml\lib;C:\Users\Z\source\repos\Libraries\curlpp-master\curlpp-master\include;C:\Users\Z\source\repos\Libraries\curl\Debug64\include\curl;%(AdditionalIncludeDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Z\source\repos\Libraries\sfml\lib;C:\Users\Z\source\repos\Libraries\curl\Debug64\include\curl;%(AdditionalIncludeDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Normaliz.lib;Ws2_32.lib;Wldap32.lib;Crypt32.lib;advapi32.lib;C:\Users\Z\source\repos\Libraries\curl\Debug64\lib\libcurl_a_debug;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -131,14 +131,14 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\Users\Z\source\repos\SFML_Test\sfml\include;C:\Users\Z\source\repos\Libraries\curlpp-master\curlpp-master\include;C:\Users\Z\source\repos\Libraries\curl\Release32\include\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Z\source\repos\Libraries\sfml\include;C:\Users\Z\source\repos\Libraries\curl\Release32\include\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Z\source\repos\SFML_Test\sfml\lib;C:\Users\Z\source\repos\Libraries\curlpp-master\curlpp-master\include;C:\Users\Z\source\repos\Libraries\curl\Release32\include\curl;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Z\source\repos\Libraries\sfml\lib;C:\Users\Z\source\repos\Libraries\curl\Release32\include\curl;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system.lib;sfml-graphics.lib;sfml-audio.lib;sfml-network.lib;sfml-window.lib;Normaliz.lib;Ws2_32.lib;Wldap32.lib;Crypt32.lib;advapi32.lib;C:\Users\Z\source\repos\Libraries\curl\Release32\lib\libcurl_a.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -153,14 +153,14 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\Users\Z\source\repos\SFML_Test\sfml\include;C:\Users\Z\source\repos\Libraries\curlpp-master\curlpp-master\include;C:\Users\Z\source\repos\Libraries\curl\Release64\include\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Z\source\repos\Libraries\sfml\include;C:\Users\Z\source\repos\Libraries\curl\Release64\include\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Z\source\repos\SFML_Test\sfml\lib;C:\Users\Z\source\repos\Libraries\curlpp-master\curlpp-master\include;C:\Users\Z\source\repos\Libraries\curl\Release64\include\curl;%(AdditionalIncludeDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Z\source\repos\Libraries\sfml\lib;C:\Users\Z\source\repos\Libraries\curl\Release64\include\curl;%(AdditionalIncludeDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Normaliz.lib;Ws2_32.lib;Wldap32.lib;Crypt32.lib;advapi32.lib;C:\Users\Z\source\repos\Libraries\curl\Release64\lib\libcurl_a.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
