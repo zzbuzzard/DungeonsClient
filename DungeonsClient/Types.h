@@ -29,3 +29,8 @@ typedef sf::Vector2f pf;
 
 typedef int32_t exp_t; // At level 100, your total XP = just over 10,000,000 = 10mil << 2bil
 typedef int8_t level_t; // Level is between 1 and 100
+
+enum class LoginFailure : uint8_t {
+	ALREADY_LOGGED_IN,
+	TOKEN_INCORRECT,
+};

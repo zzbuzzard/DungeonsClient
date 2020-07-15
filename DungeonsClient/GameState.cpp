@@ -864,6 +864,26 @@ void GameState::handleHello(const void *data) {
 	ID_t* ID_T = (ID_t*)((Packet*)data+1);
 	ID_t id = *ID_T;
 	ID_T++;
+
+	// We failed to log in!
+	if (id == -1) {
+		LoginFailure fail = *((LoginFailure*)ID_T);
+		std::string error = "";
+		switch (fail) {
+		case LoginFailure::ALREADY_LOGGED_IN:
+			error = "Failed to log in: Account already logged in";
+			break;
+		case LoginFailure::TOKEN_INCORRECT:
+			error = "Failed to log in: Authorisation failure";
+			break;
+		default:
+			error = "Failed to log in: Reason not recognised. What the hell?";
+		}
+
+		gameMenu.chat.displaySystemMessage(error, sf::Color::Red);
+		return;
+	}
+
 	pos_t *Pos_t = (pos_t*)ID_T;
 	pos_t x = *Pos_t;
 	Pos_t++;
