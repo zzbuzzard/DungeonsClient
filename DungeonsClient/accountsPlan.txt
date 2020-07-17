@@ -1,3 +1,81 @@
+---------------------------------------------------------------------------------------------------
+TODO:
+Web server
+  - Remove capitalization from usernames [should be all lowercase in table always]
+  - Plan tables
+  - Plan game server authorisation
+  - Set up tables
+     - Last online time table
+
+  - PHP scripts, using GET at first
+    - Authorised save progress script [set inv, set xp, set base stats]
+    - PlayerIsOnline script for multiple servers
+
+  - Apparently mysqli_real_escape_string isn't sufficient to prevent SQL injection attacks. There's a fairly easy alternative, check it out.
+  - Multiple game server infastructure [plan it first]
+  - Online table
+
+Game Client
+  - Loading UI
+  - Disconnecting returns you to the login screen
+  - Save login details
+  - Server select screen
+
+Game Server
+  - Improve the password situation
+  - Send web request and check token ok
+  - Send TOKEN INVALID if incorrect
+  - Send web requests to save an account's progress
+
+WebReq
+  - Some kind of timeout thing, or call the callback with an empty string if it fails, etc.
+    Maybe needs a boolean in the function call to say it failed, or a special string [use a pointer and pass nullptr?]
+
+
+OVERVIEW:
+  1) Loading state leads to the login state
+  2) Login state gets the username and password, which are sent off in a token request. Token is stored in ConnectionManager
+  3) Login state leads to the server select state
+  4) Once a server is selected, we connect to the server and go to GameState [unless it fails]
+
+Okay,
+Y
+400 XP
+Stats 150,130,4,4,3,2,3,6
+Items 0,6,3,7,8,2,3,9,10,6,3
+
+Y400 150,130,4,4,3,2,3,6 -1,-1,-1,-1,50,39,22,27,11,15,6,16,3,1,-1,-1,-1,-1,-1,-1
+
+Set XP
+	Every time a player is awarded new XP : DONE NEEDS TESTING
+Set Stats
+	Every time a player sends P_UPDATE_STAT
+Set Inventory
+	Any updateInventory thing
+	Any pick up item thing [covered by update inventory?]
+
+
+XP table [ID, XP]
+Stat table [ID, Stat string]
+Item table [ID, Item string]
+
+Internal: get items, get stats, get xp
+
+
+Authorisation:
+	Send off a password.
+	The password changes every minute.
+	If access is denied, we retry.
+
+SHA56 hash
+
+---------------------------------------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------------------------------------
+Notes
+
 Lots of data is stored on players, mainly 1:1
 
 What is stored?
@@ -6,60 +84,16 @@ What is stored?
 3) XP. Stored as a BIGINT or whatever.
 4) A username and password [3 columns: ID, username, password]
 
-There will be a table for each.
-
----------------------
-| ID |      XP       |
----------------------
-| 0  |    124,532    |
-| 1  |    200,530    |
-| 2  |      53       |
-| 3  |     9000      |
-----------------------
-
 The server has INTERNAL functions for 
 getXP, getBaseStats, getInventory
 
 The server has an EXTERNAL function [with no privacy!] for
 getData(ID) ->
 "0,-1,1,5,2,-1,-1,-1,-1\n150,100,10,10,10\n532,352"
-
-
-
-WHATS ACTUALLY GOING ON::::::::
-  THE SERVER NEEDS CURL, BUT FIRST MAKE SURE SFML IS ACC SET UP CORRECTLY IN ALL BUILDS. THEN WE CAN JUST COPY PROPERTIES
-
-
 ---------------------------------------------------------------------------------------------------
-OVERVIEW:
-1) Loading state leads to the login state
-2) Login state gets the username and password, which are sent off in a token request. Token is stored in ConnectionManager
-3) Login state leads to the server select state
-4) Once a server is selected, we connect to the server and go to GameState [unless it fails]
 
-TODO:
-1) LoginState
-	- Sends web request, do some threading
-	- 'Loading' UI
-	- Save credentials
-2) Research web requests and make some SHARED infastructure for them
-3) Write PHP scripts
-	3.0) Get VS code. Make a test script that says hello
-	3.1) Get token (input username password)
-	3.2) Get data (ID)
-	3.3) Check token (ID, token)
-4) Create tables on the pi
-	4.1) Login table (ID, username, hashed pwd)
-	4.2) Pending token table (ID, token, bro)
 
-5) LoginState sends web request to the server to get token.
-	5.1) This token is stored by connection manager
-	5.2) Send ID+TOKEN in the P_CLIENT_HELLO
-	5.3) Server gets token and prints
-	5.4) Server uses web req to do the thing
 
-6) Player already logged in system
----------------------------------------------------------------------------------------------------
 
 
 ---------------------------------------------------------------------------------------------------
@@ -108,11 +142,11 @@ TABLES
 Made:
 	Tokens: playerID (INT), token (VARCHAR 100), timestamp (BIGINT)
 	Users: playerID (INT), username (VARCHAR 20), password (VARCHAR 100)
+	XPTable: playerID (INT), xp (BIGINT)
+	Stats: playerID (INT), stats (VARCHAR 64)
+	Inventory: playerID (INT), inventory (VARCHAR 128)
 
 Not made:
-	XPTable: ID, XP
-	InvTable: ID, equips/inventory string
-	BaseStatsTable: ID, Base stats string
 
 Not made, advanced, not sure:
 	OnlineTable: ID, Login ID, Server ID

@@ -60,4 +60,6 @@ namespace util {
 
 	typedef std::pair<std::string, std::string> msgpair;
 	msgpair getCommand(std::string msg); // e.g. /setname james -> (setname, james)
+
+	pi getNextNum(const std::string &st, int start=0); // returns (the number, the index where the string continues)
 }

@@ -25,6 +25,10 @@ public:
 	void gainXP(exp_t gain, GameState *state);
 #else
 	void gainXP(exp_t gain);
+
+	void saveXP(ID_t myID);
+	void saveInv(ID_t myID);
+	void saveStats(ID_t myID);
 #endif
 	exp_t getXP();
 	Stats getBaseStats();

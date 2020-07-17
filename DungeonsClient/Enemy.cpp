@@ -279,6 +279,8 @@ void Enemy::onDie(GameState *state) {
 
 		//cout << "They get +" << gain << "XP" << endl;
 		p->pInfo.gainXP(gain);
+		if (gain > 0)
+			p->pInfo.saveXP(p->ID);
 
 		if (theirItems.size() > 0) {
 			p->pInfo.createLoot(getCollisionPos(), theirItems);

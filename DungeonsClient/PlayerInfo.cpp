@@ -5,6 +5,8 @@
 #include "ConnectionManager.h"
 #include "Controller.h"
 #include "Packet.h"
+#else
+#include "WebReq.h"
 #endif
 
 Stats PlayerInfo::getOverallStats() {
@@ -165,6 +167,46 @@ void PlayerInfo::gainXP(exp_t gain) {
 		cout << "Stat points = " << statPoints << endl;
 	}
 }
+
+static int callbackFails = 0;
+static void callback(ID_t id, std::string response) {
+	cout << "Got a saving callback response: " << response << endl;
+	if (response.size() == 0 || response[0] != 'Y') {
+		cout << "\n\nFATAL ERROR: GAME SERVER FAILED TO SAVE DATA TO WEB SERVER\n\n";
+		callbackFails++;
+	}
+}
+
+// Don't actually store it in memory as a variable
+#define AUTH "#sv{FI*xNg;$EV6<7%WaNi<[}l>mSl#T_O#zU/Q;uFXwMNuE$@rj:uumLj"
+
+void PlayerInfo::saveXP(ID_t myID) {
+	cout << "Saving " << myID << " xp" << endl;
+	webReq.threadSend("set_xp.php", "id=" + std::to_string(myID) + "&xp=" + std::to_string(XP) + "&auth=" + AUTH, callback, 0);
+}
+void PlayerInfo::saveInv(ID_t myID) {
+	std::string invString = "";
+	for (int i = 0; i < NUM_EQUIP_LOCS; i++) {
+		invString += std::to_string(inv.equips[i]) + ",";
+	}
+	for (int i = 0; i < INV_SIZE; i++) {
+		invString += std::to_string(inv.items[i]) + (i == INV_SIZE - 1 ? "" : ",");
+	}
+
+	cout << "Saving " << myID << " inventory: " << invString << endl;
+	webReq.threadSend("set_inv.php", "id=" + std::to_string(myID) + "&inv=" + invString + "&auth=" + AUTH, callback, 0);
+}
+void PlayerInfo::saveStats(ID_t myID) {
+	std::string statsScript = "";
+	for (int i = 0; i < NUM_STATS; i++) {
+		statsScript += std::to_string(baseStats.stats[i]) + (i == NUM_STATS - 1 ? "" : ",");
+	}
+
+	cout << "Saving " << myID << " stats: " << statsScript << endl;;
+	webReq.threadSend("set_stats.php", "id=" + std::to_string(myID) + "&stats=" + statsScript + "&auth=" + AUTH, callback, 0);
+}
+
+
 #endif
 
 exp_t PlayerInfo::getXP() {

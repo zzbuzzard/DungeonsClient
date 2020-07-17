@@ -204,6 +204,26 @@ namespace util {
 
 		return msgpair(msg.substr(1, ln), (ln==msg.size()-1?"":msg.substr(ln + 1)));
 	}
+
+	pi getNextNum(const std::string &st, int start) {
+		std::string numS = "";
+		int i = start;
+		for (; i < st.size(); i++) {
+			char c = st[i];
+			if ((c >= '0' && c <= '9') || c == '-') {
+				numS.push_back(c);
+			}
+			else {
+				break;
+			}
+		}
+
+		if (numS.size() == 0) {
+			cout << "util::getNextNum couldn't find a number" << endl;
+			return pi(0, i);
+		}
+		return pi(std::stoi(numS), i);
+	}
 }
 
 

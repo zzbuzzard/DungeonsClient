@@ -1,9 +1,15 @@
 #include "pch.h"
 #define CURL_STATICLIB
 #include "WebReq.h"
+#include "CSMode.h"
+#ifdef CLIENT
 #include "curl.h"
+#else
+#include "../../Libraries/curl/Debug32/include/curl/curl.h"
+#endif
 #include "Util.h"
 #include <thread>
+
 
 //bool WebReq::isSending = false;
 
