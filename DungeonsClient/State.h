@@ -17,7 +17,7 @@ extern int dataSent;
 extern int totalUpdateSends;
 extern int totalFrames;
 #endif
-
+extern int webRequests, failedWebRequests;
 extern float deltaTime;
 extern double totalTime;
 

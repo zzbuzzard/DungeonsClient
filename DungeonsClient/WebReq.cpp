@@ -9,6 +9,7 @@
 #endif
 #include "Util.h"
 #include <thread>
+#include "State.h"
 
 
 //bool WebReq::isSending = false;
@@ -45,7 +46,8 @@ static size_t callback(void* buffer, size_t size, size_t nmemb, void* param)
 static const std::string webServer = "https://xmpp.bobinthehob.com/Dungeons/";
 
 bool postSend(std::string scriptName, std::string postData, void(*resultCallback)(ID_t, std::string), ID_t requestID, WebReq *wr, std::thread *thisThread) {
-	cout << "Curling to " << webServer << scriptName << " with data = " << postData << endl;
+	//cout << "Curling to " << webServer << scriptName << " with data = " << postData << endl;
+	webRequests++;
 
 	bool worked = false;
 
@@ -79,6 +81,8 @@ bool postSend(std::string scriptName, std::string postData, void(*resultCallback
 		cout << "Success: calling result callback" << endl;
 		resultCallback(requestID, result);
 	}
+	else
+		failedWebRequests++;
 
 	cout << "Thread terminates" << endl;
 	wr->threadDone(thisThread);

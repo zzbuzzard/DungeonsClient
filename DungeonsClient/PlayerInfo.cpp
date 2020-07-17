@@ -7,6 +7,7 @@
 #include "Packet.h"
 #else
 #include "WebReq.h"
+#include "State.h"
 #endif
 
 Stats PlayerInfo::getOverallStats() {
@@ -168,12 +169,11 @@ void PlayerInfo::gainXP(exp_t gain) {
 	}
 }
 
-static int callbackFails = 0;
 static void callback(ID_t id, std::string response) {
 	cout << "Got a saving callback response: " << response << endl;
 	if (response.size() == 0 || response[0] != 'Y') {
 		cout << "\n\nFATAL ERROR: GAME SERVER FAILED TO SAVE DATA TO WEB SERVER\n\n";
-		callbackFails++;
+		failedWebRequests++;
 	}
 }
 

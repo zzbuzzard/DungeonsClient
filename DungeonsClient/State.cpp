@@ -4,6 +4,8 @@
 double totalTime = 0;
 float deltaTime;
 
+int webRequests, failedWebRequests;
+
 #ifdef CLIENT
 double serverLastHeard = 0;
 
