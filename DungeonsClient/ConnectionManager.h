@@ -19,8 +19,13 @@ public:
 	void handleToken(std::string token);
 	bool tokenReady();
 
+	void setUsername(const std::string &username);
+	const std::string &getUsername();
+
 private:
 	std::string token = "";
+
+	std::string myUsername;
 
 	sf::TcpSocket socket;
 	pi myPos;

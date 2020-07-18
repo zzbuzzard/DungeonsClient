@@ -126,6 +126,10 @@ void ConnectionManager::checkForUpdates() {
 				if (g_gameState)
 					((GameState*)g_state)->handleConfirmedItem(data);
 				break;
+			case P_PLAYER_USERNAME:
+				if (g_gameState)
+					((GameState*)g_state)->handleRequestedUsername(data);
+				break;
 			}
 		}
 		else {
@@ -181,3 +185,10 @@ bool ConnectionManager::tokenReady() {
 }
 
 
+void ConnectionManager::setUsername(const std::string &username) {
+	myUsername = username;
+}
+
+const std::string &ConnectionManager::getUsername() {
+	return myUsername;
+}

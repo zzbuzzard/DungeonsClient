@@ -65,8 +65,8 @@ void ECursedCactus::update(GameState *state) {
 			PHASE = 2;
 			
 			combatStats = p2_stats;
-			p2_isMoving = false;
-			p2_moveTime = p2_notMovingTime;
+			p2_isMoving = true;
+			p2_moveTime = -1;
 
 			update(state);
 			return;

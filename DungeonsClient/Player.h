@@ -3,12 +3,18 @@
 #include "SFML/Network.hpp"
 
 #ifdef CLIENT
+#include <map>
+#include <set>
 #include "Item.h"
+
+extern std::map<ID_t, std::string> idToName;
+extern std::set<ID_t> nameRequested;
+
 class Player : public LivingEntity
 {
 public:
 	Player(pi pos_, ID_t id);
-	std::string name;
+	bool nameSet = false;
 
 	void jerk(pi pos);
 	void update(GameState *state);
@@ -16,11 +22,16 @@ public:
 
 	void draw(sf::RenderWindow *window, GameState *state);
 
+	void setName(const std::string &username);
+	const std::string &getName();
+
 	ITEM equips[NUM_EQUIP_LOCS];
 	mp_t mpOn, maxMP;
 	stat_t wis;
 	level_t level = 1;
 private:
+	std::string name;
+
 	// static as there is only one local player
 	//static sf::Vector2f jerkingTowards, jerkPos;
 	static pf jerkMover, jerkPos;

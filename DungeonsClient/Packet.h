@@ -30,7 +30,9 @@ const Packet
 	P_TL_TILES = 24,     // type, num, xys
 	P_DROP_ITEM = 25,    // index in inventory. adds to loot pool. replies with P_LOOT
 	P_CONFIRM_ITEM = 26, // x, y, item_ind (confirm it was picked up)
-	P_CLIENT_HELLO = 27; // num chars, token one char at a time
+	P_CLIENT_HELLO = 27, // num chars, token one char at a time
+	P_REQUEST_USERNAME = 28, // playerID
+	P_PLAYER_USERNAME = 29; // playerID, num chars, username
 
 // Each GameState has its own update packet, which it sends to all its participants.
 // When a movement thing is received, it is forwarded to the appropriate GameState

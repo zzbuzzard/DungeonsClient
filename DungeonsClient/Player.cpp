@@ -10,6 +10,13 @@ static const int playerBaseLife = 150;
 
 #ifdef CLIENT
 #include "GameState.h"
+#include "Controller.h"
+#include "ConnectionManager.h"
+#include "Packet.h"
+
+std::map<ID_t, std::string> idToName;
+std::set<ID_t> nameRequested;
+
 Player::Player(pi pos_, ID_t id)
 	: LivingEntity(E_PLAYER, ET_PLAYER, pos_, playerBaseLife, id) {
 	setBoxSize();
@@ -105,6 +112,18 @@ void Player::update(GameState *state) {
 	float y = (tileSize.y - 0.5f) * PIXEL_PER_UNIT + manaBarYGap;
 	manabarbox.setPosition(getPosWorld() + sf::Vector2f(x, y));// +tileOffset);
 	manabar.setPosition(getPosWorld() + sf::Vector2f(x, y));// +tileOffset);
+
+	if (!local && !nameSet) {
+		if (nameRequested.find(ID) == nameRequested.end()) {
+			cout << "Requesting the username of ID = " << (int)ID << "\n";
+			nameRequested.insert(ID);
+
+			sf::Packet p;
+			p.append(&P_REQUEST_USERNAME, sizeof(Packet));
+			p.append(&ID, sizeof(ID_t));
+			connection->send(p);
+		}
+	}
 }
 
 const sf::Vector2f Player::getPosWorld() const {
@@ -137,6 +156,16 @@ void Player::resizeManaBar() {
 	manabar.setSize(sf::Vector2f(manaBarWidth * tileSize.x * mpOn / maxMP, manaBarHeight));
 	manabar.setOrigin(sf::Vector2f(0, manabar.getSize().y*0.5f));
 }
+
+void Player::setName(const std::string &username) {
+	name = username;
+	nameText.setString(name);
+}
+
+const std::string &Player::getName() {
+	return name;
+}
+
 
 
 #else

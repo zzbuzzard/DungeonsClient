@@ -117,6 +117,7 @@ void LoginState::update() {
 
 		cout << "Sending web request" << endl;
 		if (webReq.threadSend("get_token.php", "username=" + username + "&password=" + password, handleToken, (ID_t)0)) {
+			connection->setUsername(username);
 			sent = true;
 		}
 		else {

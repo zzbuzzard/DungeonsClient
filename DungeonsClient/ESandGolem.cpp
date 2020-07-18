@@ -14,7 +14,9 @@ ESandGolem::ESandGolem(pi pos_, ID_t id)
 	setBoxTexture(T_SAND_GOLEM);
 }
 #else
-LootList sandGolemLoot = { itemProb(I_DESERT_RING, 0.005f), itemProb(I_DAMAGER, 0.03f), itemProb(I_SANDSTONE_SWORD, 0.06f), itemProb(I_RUSTY_ARMOUR, 0.2f), itemProb(I_RUSTY_HELMET, 0.3f) };
+
+LootList sandGolemLoot = { itemProb(I_DESERT_RING, 0.005f), itemProb(I_DAMAGER, 0.03f), itemProb(I_SANDSTONE_SWORD, 0.05f),
+							itemProb(I_RUSTY_ARMOUR, 0.25f), itemProb(I_RUSTY_HELMET, 0.25f) };
 
 ESandGolem::ESandGolem(pi pos_)
 	: Enemy(E_SAND_GOLEM, pos_, sandGolemLife, sandGolemTriggerRange, 800, pi(2, 2)) {

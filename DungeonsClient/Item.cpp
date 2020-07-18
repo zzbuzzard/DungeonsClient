@@ -15,14 +15,14 @@ Item *itemTypes[NUM_ITEMS] = {
 	new Item("Plant armour", ItemRarity::UNCOMMON, T_PLANT_ARMOUR, Equipment::TORSO, Stats(40, 0, 5, 0, 0, 0, 10, 0)),
 	new Item("Sand cape", ItemRarity::COMMON, T_SAND_CAPE, Equipment::TORSO, Stats(0, 0, 3, 5, 0, 0, 0, 0)),
 	new Item("Scorpion scale armour", ItemRarity::UNCOMMON, T_SCORPION_SCALE_ARMOUR, Equipment::TORSO, Stats(0, 0, 5, 0, 4, 0, 0, 0)),
-	new Item("Rusty armour", ItemRarity::COMMON, T_RUSTY_ARMOUR, Equipment::TORSO, Stats(0, 0, 6, -6, 0, 0, 0, 0)),
+	new Item("Rusty armour", ItemRarity::COMMON, T_RUSTY_ARMOUR, Equipment::TORSO, Stats(0, 0, 6, -4, 0, 0, 0, 0)),
 	new Item("Mage's robe", ItemRarity::COMMON, T_WARM_CLOAK, Equipment::TORSO, Stats(0, 70, 2, 0, 0, 10, 0, 10)),
-	new Item("Cobweb armour", ItemRarity::COMMON, T_COBWEB_ARMOUR, Equipment::TORSO, Stats(0, 0, 6, 5, 0, 8, 0, 0)), // TODO get rid of... how the fuck do you even make armour out of cobwebs
+	new Item("Cobweb armour", ItemRarity::COMMON, T_COBWEB_ARMOUR, Equipment::TORSO, Stats(0, 0, 6, 5, 0, 8, 0, 0)), // TODO get rid of... how the fuck do you make armour out of cobwebs
 	new Item("Silk cape", ItemRarity::COMMON, T_SILK_CAPE, Equipment::TORSO, Stats(0, 0, 4, 8, 0, 0, 6, 0)),
-	new Item("Wooden armour", ItemRarity::COMMON, T_WOODEN_ARMOUR, Equipment::TORSO, Stats(0, 0, 7, -8, 0, 0, 0, 5)),
+	new Item("Wooden armour", ItemRarity::COMMON, T_WOODEN_ARMOUR, Equipment::TORSO, Stats(0, 0, 7, -6, 0, 0, 0, 5)),
 	new Item("Beast hide armour", ItemRarity::UNCOMMON, T_BEAST_HIDE_ARMOUR, Equipment::TORSO, Stats(0, 0, 7, 5, 5, 0, 0, 0)),
 
-	new Item("Speed charm", ItemRarity::UNCOMMON, T_TEST_ACCESSORY, Equipment::ACCESSORY, Stats(0, 0, 0, 12, 0, 0, 0, 0)),
+	new Item("Speed charm", ItemRarity::UNCOMMON, T_TEST_ACCESSORY, Equipment::ACCESSORY, Stats(0, 0, 0, 10, 0, 0, 0, 0)),
 	new Item("Sandstorm amulet", ItemRarity::UNCOMMON, T_SANDSTORM_AMULET, Equipment::ACCESSORY, Stats(0, 0, 4, 10, 0, 0, 0, 0)),
 	new Item("Recovery charm", ItemRarity::UNCOMMON, T_RECOVERY_CHARM, Equipment::ACCESSORY, Stats(0, 0, 0, 0, 0, 0, 12, 0)),
 	new Item("Desert ring", ItemRarity::UNCOMMON, T_DESERT_RING, Equipment::ACCESSORY, Stats(0,0,0,0,12,0,0,0)),
@@ -35,7 +35,7 @@ Item *itemTypes[NUM_ITEMS] = {
 	new Weapon("Golden bow", ItemRarity::UNCOMMON, T_GOLDEN_BOW, Stats(0,0,0,5,0,0,0,0), 25, 9, 0.1f, T_GOLD_ARROW, 2), // buff and move drop
 	new Weapon("Earth staff", ItemRarity::UNCOMMON, T_EARTH_STAFF, Stats(0,0,0,0,0,10,0,5), 60, 8, 0.35f, T_DUST, 2),
 	new Weapon("Fire staff", ItemRarity::UNCOMMON, T_FIRE_STAFF, Stats(0,0,0,0,0,10,0,0), 35, 8, 0.25f, T_FIREBALL, 2),
-	new Weapon("Sandstone sword", ItemRarity::COMMON, T_SAND_SWORD, Stats(0,0,5,-3,0,0,0,0), 80, 3, 0.2f, T_SAND_SPIKE, 1),
+	new Weapon("Sandstone sword", ItemRarity::UNCOMMON, T_SAND_SWORD, Stats(0,0,5,-3,0,0,0,0), 80, 3, 0.2f, T_SAND_SPIKE, 1),
 	new Weapon("Cactus sword", ItemRarity::RARE, T_CACTUS_SWORD, Stats(0,0,3,0,0,0,0,0), 70, 4, 0.12f, T_THORN, 1),
 	new Weapon("Scorpion dagger", ItemRarity::COMMON, T_SCORPION_DAGGER, Stats(0,0,2,8,0,0,5,0), 55, 3, 0.28f, T_SPINE, 1),
 	new Weapon("Elven blade", ItemRarity::COMMON, T_ELVEN_BLADE, Stats(0,30,5,8,0,0,0,0), 75, 4, 0.165f, T_SHARD, 1),

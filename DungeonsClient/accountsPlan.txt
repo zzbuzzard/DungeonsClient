@@ -73,6 +73,16 @@ SHA56 hash
 
 
 
+
+
+
+
+
+
+
+
+
+
 ---------------------------------------------------------------------------------------------------
 Notes
 
@@ -91,6 +101,15 @@ The server has an EXTERNAL function [with no privacy!] for
 getData(ID) ->
 "0,-1,1,5,2,-1,-1,-1,-1\n150,100,10,10,10\n532,352"
 ---------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 
 
@@ -137,6 +156,15 @@ Logging in twice:
 
 
 
+
+
+
+
+
+
+
+
+
 ---------------------------------------------------------------------------------------------------
 TABLES
 Made:
@@ -155,6 +183,12 @@ Not made, advanced, not sure:
 
 
 
+
+
+
+
+
+
 ---------------------------------------------------------------------------------------------------
 How will multiple servers work?
 
@@ -164,6 +198,8 @@ How will multiple servers work?
 
 	Will look something like this: My laptop lol 81.102.0.202
 ---------------------------------------------------------------------------------------------------
+
+
 
 
 
@@ -210,30 +246,8 @@ Logging out:
 
 
 ---------------------------------------------------------------------------------------------------
-
-Okay ummmmmmmmmmmm
-We send setInventory(ID, data string)
-
- 1) We need a check variable
- 2) The check variable needs to depend on more than just the ID and data string, or one valid input is always valid.
-    So the required check variable changes depending on some shit.
-
-The check variable will be a HASH of a string.
-The string will be a secret password AND
-	a string representing the number of web requests involving this ID.
----------------------------------------------------------------------------------------------------
-
-
-
-
-
-
----------------------------------------------------------------------------------------------------
 Saving progress:
 	1) Every time something changes, send an update
 		- Every time updateInventory = true, we need to send a setInventory(ID, data string) 
 		- 
 ---------------------------------------------------------------------------------------------------
-
-
-I leave everything to the family

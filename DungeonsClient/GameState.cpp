@@ -752,7 +752,7 @@ void GameState::removeDead() {
 				// TODO: BETTER SYSTEM FOR CHECKING DEATH VS DISCONNECT VS ENTER DUNGEON
 				// (we will need a P_PLAYER_DIED packet to replace P_YOU_DIED)
 				if (currentWorld->dungeonEntrances.find(p->getCollisionPos()) == currentWorld->dungeonEntrances.end())
-					gameMenu.chat.displaySystemMessage(p->name + " was killed", sf::Color::Yellow);
+					gameMenu.chat.displaySystemMessage(p->getName() + " was killed", sf::Color::Yellow);
 
 				idToPlayer.erase(idToPlayer.find(ID));
 #else
@@ -913,6 +913,7 @@ void GameState::handleHello(const void *data) {
 
 	myPlayer = createNewPlayer(id, x, y);
 	myPlayer->local = true;
+	myPlayer->setName(connection->getUsername());
 
 	initialiseOverworld(overworldSeed, worldID);
 
@@ -1204,7 +1205,7 @@ void GameState::handleMessage(const void *data) {
 	}
 
 	if (id != -1) {
-		std::string name = idToPlayer[id]->name;
+		std::string name = idToPlayer[id]->getName();
 		gameMenu.chat.displayMessage(name, st);
 	}
 	else {
@@ -1308,6 +1309,33 @@ void GameState::handleConfirmedItem(const void *data) {
 	lootChanged = true;
 };
 
+void GameState::handleRequestedUsername(const void *data) {
+	ID_t *ID_T = (ID_t*)((Packet*)data + 1);
+	ID_t id = *ID_T;
+	ID_T++;
+	int8_t *Int8_t = (int8_t*)ID_T;
+	int8_t count = *Int8_t;
+	Int8_t++;
+
+	char *c = (char*)Int8_t;
+	
+	std::string name = "";
+
+	for (int i = 0; i < count; i++) {
+		name.push_back(*c);
+		c++;
+	}
+
+	cout << "Got a requested username: ID " << (int)id << " : " << name << endl;
+	idToName[id] = name;
+	nameRequested.erase(id);
+
+	if (idToPlayer.find(id) != idToPlayer.end()) {
+		Player *p = idToPlayer[id];
+		p->setName(name);
+		p->nameSet = true;
+	}
+}
 
 
 void GameState::handleMyPos(pi p) {

@@ -53,7 +53,7 @@ PlayerViewUI::PlayerViewUI() {
 void PlayerViewUI::setDisplay(Player *p) {
 	isVisible = true;
 
-	nameText.setString(p->name + ", Level " + std::to_string(p->level));
+	nameText.setString(p->getName() + ", Level " + std::to_string(p->level));
 	player.setTexture(&textures[T_PLAYER]); // TODO : SKINS
 
 	for (int i = 0; i < NUM_EQUIP_LOCS; i++) {
