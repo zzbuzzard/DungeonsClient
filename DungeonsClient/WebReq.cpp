@@ -98,10 +98,17 @@ bool WebReq::threadSend(std::string scriptName, std::string postData, void(*resu
 	//	return false;
 	//}
 
-	for (std::thread *p : deleteThreads) {
+	// Todo: the 'delete p;' line once called a std::system_error exception to be thrown. This took about 30 minutes of playing to find tho.
+	// I *believe* this is because another thread adding to the std::vector caused the std::vector to reallocate, thus invalidating p.
+	//for (std::thread *p : deleteThreads) {
+	// Changed to int i system ... this should work.
+	//  If this crashes again, try using a std::list.
+	//  If this crashes again, the issue will be something else, probably to do with this whole ropey system.
+
+	for (int i=0; i<deleteThreads.size(); i++) {
 		cout << "Deleting a thread" << endl;
-		p->join();
-		delete p;
+		deleteThreads[i]->join();
+		delete deleteThreads[i];
 	}
 	deleteThreads.clear();
 
