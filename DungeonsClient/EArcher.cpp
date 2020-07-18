@@ -14,7 +14,7 @@ EArcher::EArcher(pi pos_, ID_t id)
 	setBoxTexture(T_ARCHER);
 }
 #else
-static const LootList Loot = { itemProb(I_BONE_BOW, 0.06f) };
+static const LootList Loot = { itemProb(I_BONE_BOW, 0.15f) };
 static const int xp = 350;
 
 EArcher::EArcher(pi pos_)

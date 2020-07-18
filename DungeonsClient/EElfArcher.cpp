@@ -21,7 +21,7 @@ EElfArcher::EElfArcher(pi pos_, ID_t id)
 #include "GameState.h"
 #include "Player.h"
 
-static const LootList Loot = { itemProb(I_ELVEN_BOW, 0.035f) };
+static const LootList Loot = { itemProb(I_ELVEN_BOW, 0.05f) };
 static const int xp = 450;
 
 EElfArcher::EElfArcher(pi pos_)

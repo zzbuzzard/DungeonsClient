@@ -14,7 +14,7 @@ EElfKnight::EElfKnight(pi pos_, ID_t id)
 	setBoxTexture(T_ELF_KNIGHT);
 }
 #else
-static const LootList Loot = { itemProb(I_ELVEN_BLADE, 0.04f) };
+static const LootList Loot = { itemProb(I_ELVEN_BLADE, 0.05f) };
 static const int xp = 500;
 
 EElfKnight::EElfKnight(pi pos_)

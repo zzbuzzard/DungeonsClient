@@ -1798,7 +1798,7 @@ Dir GameState::BFSTowardsRanged(const pi a, const pi b, const range_t depth, con
 				bool pOnB = util::taxicabSize(p2, b, tileSize) <= range;
 				//bool pOnB = ((b.x - p2.x < tileSize.x && b.x >= p2.x) && (b.y - p2.y < tileSize.y && b.y >= p2.y));
 
-				if ((pOnB || tileFree) && (util::taxicabSize(a, p2, tileSize) <= depth)) {
+				if ((pOnB || tileFree) && (util::taxicabSize(p2, a, tileSize) <= depth)) {
 					tileMarkerNum[p2.x + currentWorld->origin.x][p2.y + currentWorld->origin.y] = bfsNum;
 					tileMarkerDir[p2.x + currentWorld->origin.x][p2.y + currentWorld->origin.y] = (Dir)((i + 2) % 4); // reverse direction
 
