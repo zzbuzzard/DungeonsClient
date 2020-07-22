@@ -5,7 +5,7 @@ weapons = [("Wooden bow", 35, 0.3, 1),
            ("Sandstone sword", 80, 0.2, 1),
            ("Cactus sword", 70, 0.12, 1),
            ("Scorpion dagger", 60, 0.25, 1),
-           ("Elven blade", 50, 0.08, 1),
+           ("Elven blade", 45, 0.075, 1),
            ("Elven bow", 80, 0.45, 1),
            ("Spider fang dagger", 65, 0.17, 2)]
 

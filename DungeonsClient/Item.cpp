@@ -41,7 +41,7 @@ Item *itemTypes[NUM_ITEMS] = {
 	new Weapon("Sandstone sword", ItemRarity::UNCOMMON, T_SAND_SWORD, Stats(0,0,5,-3,0,0,0,0), 80, 3, 0.2f, T_SAND_SPIKE, 1),
 	new Weapon("Cactus sword", ItemRarity::RARE, T_CACTUS_SWORD, Stats(0,0,3,0,0,0,0,0), 70, 3, 0.12f, T_THORN, 1),
 	new Weapon("Scorpion dagger", ItemRarity::COMMON, T_SCORPION_DAGGER, Stats(0,0,2,5,0,0,0,0), 60, 4, 0.25f, T_SPINE, 1),
-	new Weapon("Elven blade", ItemRarity::COMMON, T_ELVEN_BLADE, Stats(0,0,4,5,0,0,0,0), 50, 3, 0.08f, T_SHARD, 1),
+	new Weapon("Elven blade", ItemRarity::COMMON, T_ELVEN_BLADE, Stats(0,0,4,5,0,0,0,0), 45, 3, 0.075f, T_SHARD, 1),
 	new Weapon("Elven bow", ItemRarity::COMMON, T_ELVEN_BOW, Stats(0,0,0,6,0,0,0,0), 80, 7, 0.45f, T_ARROW, 1),
 	new Weapon("Spider fang dagger", ItemRarity::UNCOMMON, T_SPIDER_FANG_DAGGER, Stats(0,0,0,7,0,0,5,0), 65, 3, 0.17f, T_SHARD, 2),
 
