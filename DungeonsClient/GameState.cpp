@@ -1676,6 +1676,8 @@ std::vector<Player*> GameState::getClosestPlayers(pi pos, int k) {
 	return V;
 }
 
+typedef std::pair<int, pi> ppi;
+
 int16_t bfsNum = 0;
 Dir GameState::BFSTowards(const pi a, const pi b, const range_t depth, const pi tileSize) {
 	if (a == b || util::taxicab(a,b)>depth) return D_NONE;
@@ -1698,8 +1700,8 @@ Dir GameState::BFSTowards(const pi a, const pi b, const range_t depth, const pi 
 
 	bfsNum++;
 
-	std::queue<pi> Q;
-	Q.push(a);
+	std::queue<ppi> Q;
+	Q.push(ppi(0, a));
 	tileMarkerNum[a.x + currentWorld->origin.x][a.y + currentWorld->origin.y] = bfsNum;
 
 	bool oneTile = (tileSize == pi(1, 1));
@@ -1709,7 +1711,9 @@ Dir GameState::BFSTowards(const pi a, const pi b, const range_t depth, const pi 
 	//cout << "Search begins" << endl;
 	bool w = false;
 	while (Q.size()) {
-		pi p = Q.front();
+		ppi pp = Q.front();
+		pi p = pp.second;
+		int c = pp.first;
 		Q.pop();
 
 		//cout << "Considering point " << p << endl;
@@ -1728,7 +1732,7 @@ Dir GameState::BFSTowards(const pi a, const pi b, const range_t depth, const pi 
 
 				bool pOnB = ((b.x - p2.x < tileSize.x && b.x >= p2.x) && (b.y - p2.y < tileSize.y && b.y >= p2.y));
 
-				if ((pOnB || tileFree) && (util::taxicab(a, p2) <= depth)) {
+				if (pOnB || tileFree) {
 					tileMarkerNum[p2.x + currentWorld->origin.x][p2.y + currentWorld->origin.y] = bfsNum;
 					tileMarkerDir[p2.x + currentWorld->origin.x][p2.y + currentWorld->origin.y] = (Dir)((i + 2) % 4); // reverse direction
 
@@ -1738,7 +1742,8 @@ Dir GameState::BFSTowards(const pi a, const pi b, const range_t depth, const pi 
 						break;
 					}
 
-					Q.push(p2);
+					if (c < depth)
+						Q.push(ppi(c+1, p2));
 				}
 			}
 		}
@@ -1765,10 +1770,14 @@ Dir GameState::BFSTowards(const pi a, const pi b, const range_t depth, const pi 
 Dir GameState::BFSTowardsRanged(const pi a, const pi b, const range_t depth, const range_t range, const pi tileSize) {
 	if (a == b || util::taxicabSize(a, b, tileSize) > depth || util::taxicabSize(a, b, tileSize) <= range) return D_NONE;
 
+	if ((int16_t)(bfsNum + 1) < bfsNum) {
+		cout << "Bfs wrapping" << endl;
+	}
+
 	bfsNum++;
 
-	std::queue<pi> Q;
-	Q.push(a);
+	std::queue<ppi> Q;
+	Q.push(ppi(0, a));
 	tileMarkerNum[a.x + currentWorld->origin.x][a.y + currentWorld->origin.y] = bfsNum;
 
 	bool oneTile = (tileSize == pi(1, 1));
@@ -1778,7 +1787,9 @@ Dir GameState::BFSTowardsRanged(const pi a, const pi b, const range_t depth, con
 	//cout << "Search begins" << endl;
 	bool w = false;
 	while (Q.size()) {
-		pi p = Q.front();
+		ppi pp = Q.front();
+		pi p = pp.second;
+		int c = pp.first;
 		Q.pop();
 
 		//cout << "Considering point " << p << endl;
@@ -1798,7 +1809,7 @@ Dir GameState::BFSTowardsRanged(const pi a, const pi b, const range_t depth, con
 				bool pOnB = util::taxicabSize(p2, b, tileSize) <= range;
 				//bool pOnB = ((b.x - p2.x < tileSize.x && b.x >= p2.x) && (b.y - p2.y < tileSize.y && b.y >= p2.y));
 
-				if ((pOnB || tileFree) && (util::taxicabSize(p2, a, tileSize) <= depth)) {
+				if (tileFree) {
 					tileMarkerNum[p2.x + currentWorld->origin.x][p2.y + currentWorld->origin.y] = bfsNum;
 					tileMarkerDir[p2.x + currentWorld->origin.x][p2.y + currentWorld->origin.y] = (Dir)((i + 2) % 4); // reverse direction
 
@@ -1808,7 +1819,8 @@ Dir GameState::BFSTowardsRanged(const pi a, const pi b, const range_t depth, con
 						break;
 					}
 
-					Q.push(p2);
+					if (c < depth)
+						Q.push(ppi(c+1, p2));
 				}
 			}
 		}
@@ -1820,9 +1832,15 @@ Dir GameState::BFSTowardsRanged(const pi a, const pi b, const range_t depth, con
 	Dir d = D_NONE;
 	pi t = end;
 
+	int c = 0;
 	while (t != a) {
 		d = tileMarkerDir[t.x + currentWorld->origin.x][t.y + currentWorld->origin.y];
 		t += dirOffset[(int)d];
+		c++;
+		if (c > 2000) {
+			cout << "BFS RANGED TAKING TOO LONG" << endl;
+			break;
+		}
 	}
 	if (d == D_NONE) {
 		cout << "HUH? (something went wrong)" << endl << endl;
@@ -1846,10 +1864,14 @@ Dir GameState::BFSTowardsNoEntities(const pi a, const pi b, const range_t depth,
 	//    Use the last direction in there
 	// 2) We don't reach b, return D_NONE
 
+	if ((int16_t)(bfsNum + 1) < bfsNum) {
+		cout << "Bfs wrapping" << endl;
+	}
+
 	bfsNum++;
 
-	std::queue<pi> Q;
-	Q.push(a);
+	std::queue<ppi> Q;
+	Q.push(ppi(0, a));
 	tileMarkerNum[a.x + currentWorld->origin.x][a.y + currentWorld->origin.y] = bfsNum;
 
 	bool oneTile = (tileSize == pi(1, 1));
@@ -1859,7 +1881,9 @@ Dir GameState::BFSTowardsNoEntities(const pi a, const pi b, const range_t depth,
 	//cout << "Search begins" << endl;
 	bool w = false;
 	while (Q.size()) {
-		pi p = Q.front();
+		ppi pp = Q.front();
+		pi p = pp.second;
+		int c = pp.first;
 		Q.pop();
 
 		//cout << "Considering point " << p << endl;
@@ -1888,7 +1912,8 @@ Dir GameState::BFSTowardsNoEntities(const pi a, const pi b, const range_t depth,
 						break;
 					}
 
-					Q.push(p2);
+					if (c < depth)
+						Q.push(ppi(c+1, p2));
 				}
 			}
 		}

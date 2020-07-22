@@ -59,6 +59,12 @@ void Enemy::moveTowardsPlayer(GameState *state, bool returnsToSpawn, bool ignore
 
 				if (d == D_NONE) {
 					d = state->BFSTowardsRanged(pos, p->getCollisionPos(), triggerRange, combatStats.range, tileSize);
+					if (d != D_NONE) {
+						cout << "An enemy is moving with BFS ranged" << endl;
+					}
+				}
+				else {
+					cout << "An enemy is moving normally" << endl;
 				}
 			}
 
@@ -67,10 +73,20 @@ void Enemy::moveTowardsPlayer(GameState *state, bool returnsToSpawn, bool ignore
 			}
 
 			if (d == D_NONE) {
-				if (targets.size() == 0)
+				// BFS couldn't find a way; targets are out of range. Give up, return to spawn
+				if (targetsOutOfRange(state)) {
 					worked = false;
-				else
-					bfsCooldown = bfsCooldownTime;
+
+					// We will proceed to move to spawn
+					if (returnsToSpawn)
+						bfsCooldown = -1;
+					else
+						bfsCooldown = bfsCooldownTime;
+				}
+				else {
+					// BFS couldn't find a way but we're in range, we could be right next to em
+					bfsCooldown = bfsCooldownTime * 0.5f;
+				}
 			}
 
 			else {
