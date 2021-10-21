@@ -5,33 +5,34 @@
 
 #include "GameState.h"
 
-bool speciesCombatStatsConstant[NUM_ENTITY_SPECIES] = {
-	false, // Player
-	true,
-	true,
-	true,
+EntitySpeciesData::EntitySpeciesData(std::string name_, bool combatStatsConstant_) 
+	:name(name_), combatStatsConstant(combatStatsConstant_)
+{
 
-	true,
-	true,
-	true,
-	true,
+}
 
-	false, // Cursed cactus
-	true,
-	true,
-	true,
-
-	true,
-	true,
-	true,
-	true,
-
-	true,
-	true, // Ent - used to be false, but now 1 phase only
-	true,
-	false, // Mega muncher
-
-	true,
+extern EntitySpeciesData entitySpeciesData[NUM_ENTITY_SPECIES] = {
+	EntitySpeciesData("Player", false),
+	EntitySpeciesData("Desert ghoul"),
+	EntitySpeciesData("Sand ghoul"),
+	EntitySpeciesData("Fire mage"),
+	EntitySpeciesData("Scorpion"),
+	EntitySpeciesData("Slime"),
+	EntitySpeciesData("Archer"),
+	EntitySpeciesData("Sand golem"),
+	EntitySpeciesData("Cursed cactus", false),
+	EntitySpeciesData("Ancient mummy"),
+	EntitySpeciesData("Muncher"),
+	EntitySpeciesData("Eye spore"),
+	EntitySpeciesData("Dark muncher"),
+	EntitySpeciesData("Elf archer"),
+	EntitySpeciesData("Elf knight"),
+	EntitySpeciesData("Cursed elf knight"),
+	EntitySpeciesData("Leafling"),
+	EntitySpeciesData("Ent"),
+	EntitySpeciesData("Spider"),
+	EntitySpeciesData("Mega muncher", false),
+	EntitySpeciesData("Ice ghoul"),
 };
 
 
@@ -201,22 +202,6 @@ Entity* spawnEntityID(EntitySpecies spec, ID_t ID, const pi &pos) {
 	}
 	cout << "Failed to spawn enemy, type = " << (int)spec << endl;
 	return nullptr;
-}
-
-EntitySpecies randomEntityFromVector(const spawnVector &vec, int a, int b) {
-	if (b == -1) b = vec.size() - 1;
-	float t = 0;
-	for (int i = a; i <= b; i++) {
-		t += vec[i].second;
-	}
-
-	float x = util::rand(0, t);
-	for (int i = a; i <= b; i++) {
-		if (vec[i].second >= x) return vec[i].first;
-		x -= vec[i].second;
-	}
-	cout << "Failed to spawn from vector" << endl;
-	return vec[b].first;
 }
 
 Entity::Entity(EntitySpecies spec_, EntityType type_, pi pos_, pi tileSize_)

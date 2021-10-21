@@ -50,10 +50,11 @@ DNode::DNode(pi size_) : size(size_) {
 }
 
 
-DungeonGenerator::DungeonGenerator(World *world, BiomeType biome_)
-	: MapGenerator(world), biome(biome_)
+DungeonGenerator::DungeonGenerator(World *world, DungeonType dungeonType_)
+	: MapGenerator(world), dungeonType(dungeonType_)
 {
 	minRoomOverlap = corridorThickness + 3;
+	defaultTiles = dungeonTypeData[(int)dungeonType].defaultTiles;
 }
 
 void DungeonGenerator::generateTree(DNode* node, bool isRightWay, int weight) {
@@ -115,7 +116,7 @@ void DungeonGenerator::allocateSpace(DNode* node) {
 
 	rects.push_back(Rect(node->BL.x, node->BL.y, node->size.x, node->size.y));
 
-	for (int i = 0; i < node->children.size(); i++) {
+	for (int i = 0; i < (int)node->children.size(); i++) {
 		DNode *n = node->children[i];
 		bool p = false;
 
@@ -177,13 +178,13 @@ void DungeonGenerator::allocateSpace(DNode* node) {
 }
 
 void DungeonGenerator::drawRoom(DNode *node) {
-	Tile t = biomes[(int)biome].biomeTile;
+	//Tile t = biomes[(int)biome].biomeTile;
 
 	int X1 = node->BL.x, Y1 = node->BL.y;
 	int X2 = X1 + node->size.x - 1, Y2 = Y1 + node->size.y - 1;
 
 	//cout << "X1 = " << X1 << ", X2 = " << X2 << endl;
-	//cout << "Y1 = " << Y1 << ", Y2 = " << Y2 << endl;
+	//cout << "Y1 = " << Y1 << ", Y2 = " << Y2 << endl
 
 	bool wx, wy; //true on borders
 	for (int x = X1; x <= X2; x++) {
@@ -194,8 +195,9 @@ void DungeonGenerator::drawRoom(DNode *node) {
 			int xi = x + world->origin.x,
 				yi = y + world->origin.y;
 
-			Tile x = ((wx || wy) ? wallTile : t);
-			world->tiles[xi][yi] = x;
+			if (wx || wy) world->tiles[xi][yi] = wallTile;
+			else world->tiles[xi][yi] = world->randomFromWeightedVector(defaultTiles);
+
 		}
 	}
 
@@ -213,7 +215,7 @@ void DungeonGenerator::drawRoomsFrom(DNode* node) {
 	//cout << "Drawing a node at pos = " << node->BL << endl;
 	//cout << "(index = " << node->BL + world->origin << ")" << endl;
 
-	Tile t = biomes[(int)biome].biomeTile;
+	//Tile t = biomes[(int)biome].biomeTile;
 
 	drawRoom(node);
 
@@ -249,7 +251,7 @@ void DungeonGenerator::drawRoomsFrom(DNode* node) {
 				for (int y = y1; y <= y2; y++) {
 					int yi = y + world->origin.y;
 					for (int x = X; x < X + corridorThickness; x++) {
-						world->tiles[x + world->origin.x][yi] = t;
+						world->tiles[x + world->origin.x][yi] = world->randomFromWeightedVector(defaultTiles);
 
 #ifndef CLIENT
 						if (n->isBoss && y == (nIsY1?y1:y2)) {
@@ -287,7 +289,7 @@ void DungeonGenerator::drawRoomsFrom(DNode* node) {
 					for (int x = x1; x <= x2; x++) {
 						int xi = x + world->origin.x;
 						for (int y = Y; y < Y + corridorThickness; y++) {
-							world->tiles[xi][y + world->origin.y] = t;
+							world->tiles[xi][y + world->origin.y] = world->randomFromWeightedVector(defaultTiles);
 
 #ifndef CLIENT
 							if (n->isBoss && x == (nIsX1?x1:x2)) {

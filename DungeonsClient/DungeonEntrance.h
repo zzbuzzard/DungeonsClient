@@ -6,10 +6,10 @@ class DungeonEntrance
 {
 public:
 	DungeonEntrance();
-	DungeonEntrance(BiomeType biomeType_, pi pos_);
+	DungeonEntrance(DungeonType dungeonType_, pi pos_);
 
 	ID_t gameStateID;
-	BiomeType biomeType;
+	DungeonType dungeonType;
 	pi pos;
 private:
 	static ID_t idd;

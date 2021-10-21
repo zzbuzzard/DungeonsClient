@@ -3,7 +3,7 @@
 
 DungeonEntrance::DungeonEntrance() {}
 
-DungeonEntrance::DungeonEntrance(BiomeType biomeType_, pi pos_) 
-	: gameStateID(-1), biomeType(biomeType_), pos(pos_)
+DungeonEntrance::DungeonEntrance(DungeonType dungeonType_, pi pos_) 
+	: gameStateID(-1), dungeonType(dungeonType_), pos(pos_)
 {
 }

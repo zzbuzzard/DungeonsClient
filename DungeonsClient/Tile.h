@@ -25,3 +25,7 @@ enum class Tile {
 extern TEXTURE tileTextures[NUM_TILES];
 extern bool tileWalkable[NUM_TILES];
 extern sf::Color tileMinimapColour[NUM_TILES];
+
+
+typedef std::pair<Tile, float> TileSpawnPair;
+typedef std::vector<TileSpawnPair> TileSpawnVector;

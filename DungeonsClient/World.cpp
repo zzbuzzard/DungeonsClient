@@ -31,28 +31,7 @@ void World::update(GameState *state) {
 	}
 }
 
-pi World::getSpawnPosition() const {
-	if (isOverworld) {
-		return pi(util::randint(-5, 5), util::randint(-5, 5));
-	}
-	return pi(util::randint(-3, 3), util::randint(-3, 3));
-}
-
 #endif
-
-
-// Each biome has one dungeon
-// Each dungeon has a number of bosses
-
-// Description of the end goal:
-//  Spawn in middle. Same biome every time.
-//  We
-
-// Generate a GRAPH.
-// It is a tree stemming out from spawn.
-// Every little tree tree has a fixed number of branches
-// And it has a list of LEFT and RIGHT nodes
-// 
 
 
 void World::seedRandom() {
@@ -71,36 +50,37 @@ int World::randint(int a, int b) {
 }
 
 
-void World::generateMap(seed_t seed_) {
+void World::generateOverworld(seed_t seed_, WorldType worldType) {
 	seed = seed_;
 	seedRandom();
+	cout << "Generating world, seed = " << seed << endl;
 
 	isOverworld = true;
 
-	OverworldGenerator gen(this);
+	OverworldGenerator gen(this, worldType);
 	gen.generate();
 
-	//makeDungeon(pi(1, 0), BiomeType::DESERT);
-	//makeDungeon(pi(-1, 0), BiomeType::GRASS);
+	//makeDungeon(pi(1, 0), DungeonType::DESERT);
+	//makeDungeon(pi(-1, 0), DungeonType::GRASS);
 
 	initialised = true;
 }
 
-void World::generateDungeon(seed_t seed_, BiomeType biome) {
+void World::generateDungeon(seed_t seed_, DungeonType biome) {
 	seed = seed_;
 	seedRandom();
 
 	DungeonGenerator *gen;
 
 	switch (biome) {
-	case BiomeType::DESERT:
+	case DungeonType::DESERT:
 		gen = new DesertDungeonGenerator(this);
 		break;
-	case BiomeType::GRASS:
+	case DungeonType::GRASS:
 		gen = new GrasslandsDungeonGenerator(this);
 		break;
 	default:
-		cout << "No known generator for biome = " << (int)biome << endl;
+		cout << "No known generator for dungeon type = " << (int)biome << endl;
 		gen = new DungeonGenerator(this, biome);
 	}
 
@@ -129,8 +109,8 @@ void World::fillWith(pi start, Tile t, const std::set<pi, piComp> &border) {
 
 		for (auto i = 0; i < 4; i++) {
 			pi g = pos + dirOffset[i];
-			if (g.x >= 0 && g.x < tiles.size()) {
-				if (g.y >= 0 && g.y < tiles[0].size()) {
+			if (g.x >= 0 && g.x < (pos_t)tiles.size()) {
+				if (g.y >= 0 && g.y < (pos_t)tiles[0].size()) {
 					if (tiles[g.x][g.y] != t) {
 						if (border.find(g-origin) == border.end()) {
 							tiles[g.x][g.y] = t;
@@ -143,9 +123,7 @@ void World::fillWith(pi start, Tile t, const std::set<pi, piComp> &border) {
 	}
 }
 
-
-template <typename T>
-void World::shuffle(std::vector<T> &vec) {
+template <typename T> void World::shuffle(std::vector<T> &vec) {
 	int N = vec.size();
 
 	std::vector<T> vec2 = vec;
@@ -155,7 +133,7 @@ void World::shuffle(std::vector<T> &vec) {
 	}
 
 	for (int i = 0; i < N; i++) {
-		int j = randint(0, indices.size() - 1);
+		int j = this->randint(0, indices.size() - 1);
 		int pickedInd = indices[j];
 		vec[pickedInd] = vec2[i];
 		indices.erase(indices.begin() + j);
@@ -166,10 +144,30 @@ template void World::shuffle<int>(std::vector<int> &vec);
 template void World::shuffle<pi>(std::vector<pi> &vec);
 template void World::shuffle<std::pair<int, bool>>(std::vector<std::pair<int, bool>> &vec);
 
+//template <typename T> T randomFromWeightedVector(const std::vector<std::pair<T, float> > &vec);
+template <typename T> T World::randomFromWeightedVector(const std::vector<std::pair<T, float> > &vec) {
+	float t = 0;
+	for (int i = 0; i < (int)vec.size(); i++) {
+		t += vec[i].second;
+	}
+
+	float x = this->rand(0, t);
+	for (int i = 0; i < (int)vec.size(); i++) {
+		if (vec[i].second >= x) return vec[i].first;
+		x -= vec[i].second;
+	}
+	cout << "Failed to spawn from vector" << endl;
+	return vec[vec.size() - 1].first;
+}
+
+template DungeonType World::randomFromWeightedVector<DungeonType>(const std::vector<std::pair<DungeonType, float> > &vec);
+template TLTileType World::randomFromWeightedVector<TLTileType>(const std::vector<std::pair<TLTileType, float> > &vec);
+template Tile World::randomFromWeightedVector<Tile>(const std::vector<std::pair<Tile, float> > &vec);
+
 Tile World::getTile(pi pos) const {
 	pi index = pos + origin;
-	if (index.x >= tiles.size()) return Tile::NONE;
-	if (index.y >= tiles[0].size()) return Tile::NONE;
+	if (index.x >= (pos_t)tiles.size() || index.x < 0) return Tile::NONE;
+	if (index.y >= (pos_t)tiles[0].size() || index.y < 0) return Tile::NONE;
 	return tiles[index.x][index.y];
 }
 
@@ -186,11 +184,10 @@ bool World::isBossRoom(pi pos) const {
 	return false;
 }
 
-void World::makeDungeon(pi pos, BiomeType biomeType) {
-	DungeonEntrance d = DungeonEntrance(biomeType, pos);
+void World::makeDungeon(pi pos, DungeonType dungeonType) {
+	DungeonEntrance d = DungeonEntrance(dungeonType, pos);
 	dungeonEntrances[pos] = d;
 }
-
 
 #include "Entity.h"
 
@@ -205,6 +202,7 @@ bool World::addPermTopLayerTile(Entity* entity) {
 	}
 	else {
 		cout << "Failed to place permanent TL tile : Place was taken" << endl;
+		cout << "Reason: " << topLayerTileArray[p.x][p.y]->type << endl;
 		delete entity;
 		return false;
 	}

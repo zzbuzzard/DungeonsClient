@@ -37,6 +37,8 @@ enum class TLTileType : uint8_t {
 	SPIKE_FLOOR,
 	SPIKY_TREE,
 	HEALING_POOL,
+
+	NONE=255,
 };
 
 extern TLTileData *tileTypes[NUM_TL_TILES];
@@ -65,5 +67,8 @@ public:
 	float livedFor;
 };
 
+
+typedef std::pair<TLTileType, float> tlTileSpawnPair;
+typedef std::vector<tlTileSpawnPair> tlTileSpawnVector;
 
 

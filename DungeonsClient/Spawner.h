@@ -45,9 +45,11 @@ private:
 
 class OverworldSpawner : public Spawner {
 public:
-	OverworldSpawner(BiomeType biome_, const std::vector<pi> &spawnPoints_, pi end_, float maxDist_);
+	OverworldSpawner(DungeonType dungeonType_, const std::vector<pi> &spawnPoints_, pi end_, float maxDist_);
 
-	BiomeType biome;
+	DungeonType dungeonType;
+
+	//BiomeType biome;
 	std::vector<pi> spawnPoints;
 	pi end;
 	float maxDist;

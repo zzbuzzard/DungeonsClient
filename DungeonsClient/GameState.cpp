@@ -32,7 +32,9 @@ bool specialButtonPressed = false;
 #define XVIEW 13
 #define YVIEW 7
 
-GameState::GameState(sf::RenderWindow *window) : State(window), tileBox(2*XVIEW+1, 2*YVIEW+1), lootUI(&pInfo) {
+GameState::GameState(GameStateType gtype, sf::RenderWindow *window) : State(window), tileBox(2*XVIEW+1, 2*YVIEW+1),
+lootUI(&pInfo), gameStateType(gtype)
+{
 	g_gameState = true;
 
 	connection->connect();
@@ -56,18 +58,14 @@ void GameState::resize(const sf::View *v) {
 }
 #else
 //#include "Enemy1.h"
-GameState::GameState(BiomeType biome) : isOverworld(biome == BiomeType::NONE) {
+
+// TODO2: Enum for GameState class Overworld, Dungeon, Town : then replace isOverworld with the enum
+GameState::GameState(GameStateType type) : gameStateType(type) {
 	takenPos = new std::set<pi, piComp>();
 	newTakenPos = new std::set<pi, piComp>();
+}
 
-	currentWorld = new World();
-
-	if (isOverworld) {
-		currentWorld->generateMap((seed_t)(time(0)));
-	}
-	else {
-		currentWorld->generateDungeon((seed_t)util::randint(0, 1<<31), biome);
-	}
+void GameState::worldInitialised() {
 	int X = currentWorld->tiles.size();
 	int Y = currentWorld->tiles[0].size();
 
@@ -75,21 +73,33 @@ GameState::GameState(BiomeType biome) : isOverworld(biome == BiomeType::NONE) {
 	tileMarkerDir = std::vector<std::vector<Dir> >(X, std::vector<Dir>(Y, D_NONE));
 }
 
+
+//
+//GameState::GameState(WorldType worldType) : isOverworld(true) {
+//	takenPos = new std::set<pi, piComp>();
+//	newTakenPos = new std::set<pi, piComp>();
+//
+//	currentWorld = new World();
+//
+//	if (isOverworld) {
+//		currentWorld->generateMap((seed_t)(time(0)));
+//	}
+//	else {
+//		currentWorld->generateDungeon((seed_t)util::randint(0, 1<<31), biome);
+//	}
+//	int X = currentWorld->tiles.size();
+//	int Y = currentWorld->tiles[0].size();
+//
+//	tileMarkerNum = std::vector<std::vector<int16_t> >(X, std::vector<int16_t>(Y, 0));
+//	tileMarkerDir = std::vector<std::vector<Dir> >(X, std::vector<Dir>(Y, D_NONE));
+//}
+
 GameState::~GameState() {
 	delete takenPos;
 	delete newTakenPos;
 	delete currentWorld;
 }
 
-bool GameState::isAlive() const {
-	if (isOverworld) return true;
-	if (currentWorld->bossDefeated) {
-		if (idToPlayer.size() == 0) {
-			return false;
-		}
-	}
-	return true;
-}
 #endif
 
 bool charHeld = false;
@@ -438,7 +448,6 @@ pf GameState::getLocalPlayerPosWorld() {
 	return myPlayer->getPosWorldCentered();
 }
 
-
 bool GameState::isInView(pi pos) {
 	pi player = getLocalPlayerPos();
 	if (pos.x >= player.x - XVIEW - 3 && pos.x <= player.x + XVIEW + 3) {
@@ -453,12 +462,12 @@ bool GameState::isInView(pi pos) {
 void GameState::initialiseOverworld(seed_t seed, ID_t worldID) {
 	overworld = new World();
 	overworld->worldID = worldID;
-	overworld->generateMap(seed);
+	overworld->generateOverworld(seed, WorldType::SNOW); //TODO change
 
 	loadWorld(overworld);
 }
 
-void GameState::initialiseDungeon(BiomeType b, seed_t seed, ID_t worldID) {
+void GameState::initialiseDungeon(DungeonType b, seed_t seed, ID_t worldID) {
 	cout << "Initialising dungeon" << endl;
 
 	World *w = new World();
@@ -471,7 +480,8 @@ void GameState::initialiseDungeon(BiomeType b, seed_t seed, ID_t worldID) {
 void GameState::loadWorld(World *world) {
 	// Remove stuff from the world we are leaving: loot and entities
 	pInfo.clearLoot();
-	deleteAllEntities();
+
+	deleteAllEntities(currentWorld == overworld);
 	myPlayer->setPos(pi(0, 0));
 
 	if (currentWorld != overworld && currentWorld != nullptr) delete currentWorld;
@@ -494,12 +504,12 @@ void GameState::loadWorld(World *world) {
 
 	const auto &cont = currentWorld->dungeonEntrances;
 	for (auto it = cont.begin(); it != cont.end(); ++it) {
-		BiomeType b = it->second.biomeType;
+		DungeonType b = it->second.dungeonType;
 
 		// TODO: Change perm to temp so update() is called
 		//  And make a more complex class: DungeonEntranceEntity
 		//  Which has a mechanism in place to make it disappear at whatever time
-		addPermTopLayerTile(new DisplayTileEntity(it->first, biomes[(int)b].doorTexture));
+		addPermTopLayerTile(new DisplayTileEntity(it->first, dungeonTypeData[(int)b].doorTexture));
 	}
 }
 
@@ -1081,30 +1091,36 @@ void GameState::handleEnterDungeon(const void *data) {
 	cout << "Handling entering a dungeon" << endl;
 
 	// Packet BiomeType Seed ID
-	BiomeType *b = (BiomeType*)((Packet*)data + 1);
-	BiomeType biome = *b; b++;
+	DungeonType *b = (DungeonType*)((Packet*)data + 1);
+	DungeonType dung = *b; b++;
 	seed_t *Seed = (seed_t*)b;
 	seed_t seed = *Seed; Seed++;
 	ID_t worldID = *((ID_t*)Seed);
 
-	initialiseDungeon(biome, seed, worldID);
+	initialiseDungeon(dung, seed, worldID);
 }
 
-void GameState::deleteAllEntities() {
+void GameState::deleteAllEntities(bool save_permanent_tl = false) {
 	if (currentWorld != nullptr) {
-		while (currentWorld->TLset1.size()) {
-			pi pos = *currentWorld->TLset1.begin();
-			currentWorld->TLset1.erase(currentWorld->TLset1.begin());
 
-			pos += currentWorld->origin;
-			Entity *x = currentWorld->topLayerTileArray[pos.x][pos.y];
-			if (x == nullptr) {
-				cout << "BUG: Null entity in top layer tiles" << endl;
+		// If we are not saving the current TL tiles,
+		// [watch out for mem leaks, should only be true when we're dying in the overworld]
+		if (!save_permanent_tl) {
+
+			while (currentWorld->TLset1.size()) {
+				pi pos = *currentWorld->TLset1.begin();
+				currentWorld->TLset1.erase(currentWorld->TLset1.begin());
+
+				pos += currentWorld->origin;
+				Entity *x = currentWorld->topLayerTileArray[pos.x][pos.y];
+				if (x == nullptr) {
+					cout << "BUG: Null entity in top layer tiles" << endl;
+				}
+				else {
+					delete x;
+				}
+				currentWorld->topLayerTileArray[pos.x][pos.y] = nullptr;
 			}
-			else {
-				delete x;
-			}
-			currentWorld->topLayerTileArray[pos.x][pos.y] = nullptr;
 		}
 
 		while (currentWorld->TLset2.size()) {
@@ -1444,7 +1460,7 @@ void GameState::getUpdatePacket(sf::Packet &packet) {
 		if (entity->type == ET_ENEMY) enemies.push_back(entity);
 	}
 
-	player_count_t Pnum = players.size();
+	player_count_t Pnum = (player_count_t)players.size();
 	packet.append(&Pnum, sizeof(player_count_t));
 
 	Player *p;
@@ -1481,7 +1497,7 @@ void GameState::getUpdatePacket(sf::Packet &packet) {
 // I show the shot 0.1s after its actually shot.
 // I show myself taking damage at time 1.15 seconds (takes 0.05s to hit)
 
-	enemy_count_t Enum = enemies.size();
+	enemy_count_t Enum = (enemy_count_t)enemies.size();
 	packet.append(&Enum, sizeof(enemy_count_t));
 
 	LivingEntity *e;
@@ -1496,7 +1512,7 @@ void GameState::getUpdatePacket(sf::Packet &packet) {
 		packet.append(&e->getLife(), sizeof(life_t));
 
 		// Only add CombatStats if it can change for this enemy
-		if (!speciesCombatStatsConstant[(int)e->spec])
+		if (!entitySpeciesData[(int)e->spec].combatStatsConstant)
 			packet.append(&e->combatStats, sizeof(CombatStats));
 		
 		target_count_t num = (target_count_t)e->targets.size();
@@ -1568,7 +1584,7 @@ std::vector<pi> GameState::sendTLtilesPacket(TLTileType type, const std::vector<
 		sf::Packet p;
 		p.append(&P_TL_TILES, sizeof(Packet));
 		p.append(&type, sizeof(TLTileType));
-		int8_t n = points.size();
+		int8_t n = (int8_t)points.size();
 		p.append(&n, sizeof(int8_t));
 
 		for (auto i = 0; i < n; i++) {
@@ -1584,7 +1600,7 @@ std::vector<pi> GameState::sendTLtilesPacket(TLTileType type, const std::vector<
 
 void GameState::getEquipmentPacket(sf::Packet &packet) {
 	packet.append(&P_PLAYER_EQUIPS, sizeof(Packet));
-	player_count_t num = idToPlayer.size();
+	player_count_t num = (player_count_t)idToPlayer.size();
 	packet.append(&num, sizeof(player_count_t));
 
 	for (auto it = idToPlayer.begin(); it != idToPlayer.end(); ++it) {
@@ -1661,9 +1677,9 @@ std::vector<Player*> GameState::getClosestPlayers(pi pos, int k) {
 			int d = util::taxicab(p->getCollisionPos(), pos);
 
 			// Don't add if the queue's full and we'd be furthest
-			if (Q.size() < k || d < Q.top().first) {
+			if ((int)Q.size() < k || d < Q.top().first) {
 				Q.push(playerDist(d, p));
-				if (Q.size() > k) Q.pop();
+				if ((int)Q.size() > k) Q.pop();
 			}
 		}
 	}
@@ -1980,11 +1996,11 @@ void GameState::playerRespawned(Player *p) {
 	if (state != this) {
 		cout << "Moving player to another state" << endl;
 		state->addEntity(p);
-		p->setPos(state->currentWorld->getSpawnPosition());
+		p->setPos(state->getSpawnPosition());
 		playerMoved(p->getID());
 	}
 	else {
-		p->setPos(state->currentWorld->getSpawnPosition());
+		p->setPos(state->getSpawnPosition());
 	}
 	p->fullHeal();
 	p->spawned = true;

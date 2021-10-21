@@ -47,6 +47,9 @@ int main()
 
 	float updateTime = 0, drawTime1 = 0, drawTime2 = 0, serverUpdateTime = 0;
 
+	// TODO: REMOVE
+	connection->getIP();
+
 	// Main loop
 	while (window.isOpen()) {
 		deltaTime = clock.restart().asSeconds();

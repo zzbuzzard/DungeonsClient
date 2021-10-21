@@ -24,7 +24,7 @@ class BossSpawner;
 class DungeonGenerator : public MapGenerator
 {
 public:
-	DungeonGenerator(World *world, BiomeType biome);
+	DungeonGenerator(World *world, DungeonType dungeonType_);
 	bool generate();
 	
 	static bool anyOverlap(const Rect &a, const std::vector<Rect> &rects);
@@ -67,8 +67,10 @@ private:
 	void deallocateFrom(DNode *node);
 
 	int minRoomOverlap;
-	BiomeType biome;
+	const DungeonType dungeonType;
 	std::vector<Rect> rects;
+	TileSpawnVector defaultTiles;
+
 	//void generateFrom(Node *node, float left, float right, int *dungeons, bool last);
 	//void drawFrom(Node *node);
 	//BiomeType getBaseBiome();

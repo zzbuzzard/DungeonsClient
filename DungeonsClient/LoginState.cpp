@@ -69,7 +69,7 @@ void LoginState::update() {
 			cout << "Loading GameState" << endl;
 			sf::RenderWindow *w = window;
 			deleteState();
-			g_state = new GameState(w);
+			g_state = new GameState(GameStateType::Overworld, w);
 			return;
 		}
 	}

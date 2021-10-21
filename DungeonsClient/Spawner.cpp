@@ -39,13 +39,13 @@ void Spawner::update(GameState *state) {
 
 // OverworldSpawner
 
-const float overworldnemyDensity = 0.015f;
-float overworldRespawnRate = 35.0f;
-OverworldSpawner::OverworldSpawner(BiomeType biome_, const std::vector<pi> &spawnPoints_, pi end_, float maxDist_)
+const float overworldnemyDensity = 0.02f; // 0.004f;
+float overworldRespawnRate = 30.0f;
+OverworldSpawner::OverworldSpawner(DungeonType dungeonType_, const std::vector<pi> &spawnPoints_, pi end_, float maxDist_)
 	: Spawner((int)(overworldnemyDensity*spawnPoints_.size()), overworldRespawnRate),
-	biome(biome_), spawnPoints(spawnPoints_), maxDist(maxDist_), end(end_)
+	dungeonType(dungeonType_), spawnPoints(spawnPoints_), maxDist(maxDist_), end(end_)
 {
-	const auto &vec = biomes[(int)biome].spawns;
+	const spawnVector &vec = dungeonTypeData[(int)dungeonType].overworldSpawns;
 	total = 0;
 	for (const auto &p : vec) {
 		total += p.second;
@@ -55,7 +55,8 @@ OverworldSpawner::OverworldSpawner(BiomeType biome_, const std::vector<pi> &spaw
 #define NUM_RETRIES 50
 
 void OverworldSpawner::spawnEnemy(GameState *state) {
-	const auto &vec = biomes[(int)biome].spawns;
+	const spawnVector &vec = dungeonTypeData[(int)dungeonType].overworldSpawns;
+	//const auto &vec = biomes[(int)biome].spawns;
 	if (vec.size() == 0) return;
 
 	//float low = diff * 2.0f / 3.0f;
@@ -137,7 +138,7 @@ DungeonSpawner::DungeonSpawner(const spawnVector *spawns_, pi BL_, pi TR_, int m
 void DungeonSpawner::spawnEnemy(GameState *state) {
 	if (spawns->size() == 0) return;
 
-	EntitySpecies spec = randomEntityFromVector(*spawns);
+	EntitySpecies spec = util::randomFromWeightedVector(*spawns);
 	Entity *e = spawnEntityID(spec, 0, pi(0, 0));
 
 	bool w = false;
@@ -253,7 +254,7 @@ void BossSpawner::beginTimer(GameState *state) {
 	std::string msg = "Boss will spawn in 30 seconds";
 	p.append(&P_MSG, sizeof(Packet)); ID_t x = -1;
 	p.append(&x, sizeof(ID_t));
-	msg_len_t len = msg.size();
+	msg_len_t len = (msg_len_t)msg.size();
 	p.append(&len, sizeof(msg_len_t));
 	for (char c : msg) p.append(&c, sizeof(char));
 	state->sendPacketToAllPlayers(p);

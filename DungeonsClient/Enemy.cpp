@@ -60,11 +60,11 @@ void Enemy::moveTowardsPlayer(GameState *state, bool returnsToSpawn, bool ignore
 				if (d == D_NONE) {
 					d = state->BFSTowardsRanged(pos, p->getCollisionPos(), triggerRange, combatStats.range, tileSize);
 					if (d != D_NONE) {
-						cout << "An enemy is moving with BFS ranged" << endl;
+						//cout << "An enemy is moving with BFS ranged" << endl;
 					}
 				}
 				else {
-					cout << "An enemy is moving normally" << endl;
+					//cout << "An enemy is moving normally" << endl;
 				}
 			}
 

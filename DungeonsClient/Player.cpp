@@ -234,6 +234,7 @@ void Player::update(GameState *state) {
 	LivingEntity::update(state);
 }
 
+
 void Player::handleDirectionInput(Dir d, GameState *state) {
 	if (currentMovement != D_NONE) {
 		queuedDirs.push(d);

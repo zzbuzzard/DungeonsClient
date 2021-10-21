@@ -176,6 +176,7 @@
     <ClInclude Include="DesertDungeonGenerator.h" />
     <ClInclude Include="DisplayTileEntity.h" />
     <ClInclude Include="DungeonEntrance.h" />
+    <ClInclude Include="DungeonGameState.h" />
     <ClInclude Include="DungeonGenerator.h" />
     <ClInclude Include="EArcher.h" />
     <ClInclude Include="ECursedCactus.h" />
@@ -210,6 +211,7 @@
     <ClInclude Include="LootUI.h" />
     <ClInclude Include="MapGenerator.h" />
     <ClInclude Include="Minimap.h" />
+    <ClInclude Include="OverworldGameState.h" />
     <ClInclude Include="OverworldGenerator.h" />
     <ClInclude Include="Packet.h" />
     <ClInclude Include="Player.h" />
@@ -244,6 +246,7 @@
     <ClCompile Include="DesertDungeonGenerator.cpp" />
     <ClCompile Include="DisplayTileEntity.cpp" />
     <ClCompile Include="DungeonEntrance.cpp" />
+    <ClCompile Include="DungeonGameState.cpp" />
     <ClCompile Include="DungeonGenerator.cpp" />
     <ClCompile Include="EArcher.cpp" />
     <ClCompile Include="ECursedCactus.cpp" />
@@ -280,6 +283,7 @@
     <ClCompile Include="MapGenerator.cpp" />
     <ClCompile Include="Media.cpp" />
     <ClCompile Include="Minimap.cpp" />
+    <ClCompile Include="OverworldGameState.cpp" />
     <ClCompile Include="OverworldGenerator.cpp" />
     <ClCompile Include="Packet.cpp" />
     <ClCompile Include="pch.cpp">

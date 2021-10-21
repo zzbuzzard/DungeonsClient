@@ -7,6 +7,8 @@ class GameState;
 class ConnectionManager
 {
 public:
+	void getIP(); // TODO: REMOVE
+
 	ID_t getMyID();
 	void connect();
 	void checkForUpdates();

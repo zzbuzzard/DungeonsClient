@@ -169,7 +169,7 @@ void GameMenu::update(GameState *state) {
 		}
 
 		// If dungeon
-		if (state->currentWorld != nullptr && !state->currentWorld->isOverworld && isDragging) {
+		if (state->gameStateType != GameStateType::Dungeon) {
 			if (draggingInd == (int)Equipment::SPECIAL && equipDragged) {
 				isDragging = false;
 			}

@@ -6,86 +6,88 @@
 struct OG_Node {
 public:
 	int depth;
-	BiomeType biome;
+	DungeonType dungeonType;
 	std::vector<OG_Node*> children;
 	pi pos;
 };
 
-OverworldGenerator::OverworldGenerator(World *world) : MapGenerator(world) {
+OverworldGenerator::OverworldGenerator(World *world, WorldType worldType_) : MapGenerator(world), worldType(worldType_) {
 
 }
 
-int counts[] = {
-	3,3,3,1,       // 0
-	3,3,2,2,       // 4
-	3,3,2,1,1,     // 8
-	3,2,2,2,1,     // 13
-	3,2,2,1,1,1,   // 18
-	3,3,1,1,1,1,   // 24
-	2, 2, 2, 2, 1, 1 }; // 30
+//int counts[] = {
+//	3,3,3,1,       // 0
+//	3,3,2,2,       // 4
+//	3,3,2,1,1,     // 8
+//	3,2,2,2,1,     // 13
+//	3,2,2,1,1,1,   // 18
+//	3,3,1,1,1,1,   // 24
+//	2, 2, 2, 2, 1, 1 }; // 30
+//
+//int indices[] = { 0,4,8,13,18,24,30 };
+//#define numIndices 7
 
-int indices[] = { 0,4,8,13,18,24,30 };
-#define numIndices 7
+// was 30..40
+#define edgeLengthLower 5
+#define edgeLengthUpper 8
 
-#define edgeLengthLower 30
-#define edgeLengthUpper 40
+// was 20..30
+#define spawnRadiusLower 12
+#define spawnRadiusUpper 15
 
-#define spawnRadiusLower 20
-#define spawnRadiusUpper 30
-
+// was 2..4
 #define edgeWidthLower 2
-#define edgeWidthUpper 4
+#define edgeWidthUpper 3
 
 #define PAD_X 30
 #define PAD_Y 30
 
-static Tile overworldCenterTile = Tile::DIRT;
-
-
-//     F(Node* myNode, leftAng, rightAng, int *dungeons)
-//       (if we branch into 2, there must be at least 2 dungeons in dungeons. 
-//        we then reduce dungeons by 1 before recursing so they know there's 1 reserved elsewhere)
+// TODO_
+//static Tile overworldCenterTile = Tile::DIRT;
 
 bool OverworldGenerator::generate() {
-	int ind = indices[world->randint(0, numIndices - 1)];
-	std::vector<int> branchDungeons;
-	int total = 0;
-	for (int i = ind;; i++) {
-		int x = counts[i];
-		total += x;
-		branchDungeons.push_back(x);
-		if (total >= 10) break;
-	}
+	//int total = 0;
+	//for (int i = ind;; i++) {
+	//	int x = counts[i];
+	//	total += x;
+	//	branchDungeons.push_back(x);
+	//	if (total >= 10) break;
+	//}
 
-	world->shuffle(branchDungeons);
+	//world->shuffle(branchDungeons);
 
-	int branches = branchDungeons.size();
+	//int branches = branchDungeons.size();
 
-	cout << "Dungeon branches: ";
-	for (int i : branchDungeons) {
-		cout << i << " ";
-	}
-	cout << endl;
+	//cout << "Dungeon branches: ";
+	//for (int i : branchDungeons) {
+	//	cout << i << " ";
+	//}
+	//cout << endl;
 
-	std::vector<OG_Node> roots = std::vector<OG_Node>(branches);
+	const WorldTypeData &data = worldTypeData[(int)worldType];
 
-	float L = 0;
+	int dungeons = 4;
 
-	for (int i = 0; i < branches; i++) {
-		BiomeType b = getBaseBiome();
-		roots[i].biome = b;
+	std::vector<OG_Node> roots = std::vector<OG_Node>(dungeons);
+
+	float L = world->rand(0, 2*PI);
+
+	for (int i = 0; i < dungeons; i++) {
+		DungeonType d = data.getRandomDungeon(world);
+
+		//BiomeType b = getBaseBiome();
+		roots[i].dungeonType = d;
 		roots[i].depth = 0;
 
 		float rad = world->rand(spawnRadiusLower, spawnRadiusUpper);
-		float angSize = 2 * PI / 10 * branchDungeons[i];
+		float angSize = 2 * PI / dungeons;  // * branchDungeons[i];
 
 		float angPos = L + world->rand(0.4f*angSize, 0.6f*angSize);
 
 		sf::Vector2f posf = rad * sf::Vector2f(cos(angPos), sin(angPos));
 		roots[i].pos = (pi)posf;
 
-		int branchNum = branchDungeons[i];
-		generateFrom(&roots[i], L, L + angSize, &branchNum, true);
+		generateFrom(&roots[i], L, L + angSize);
 		L += angSize;
 
 		//cout << "Branches unused = " << branchNum << endl;
@@ -108,23 +110,36 @@ bool OverworldGenerator::generate() {
 	world->origin = -bottomLeft + pi(PAD_X / 2, PAD_Y / 2);
 
 	std::set<pi, piComp> border;
-	for (int i = 0; i < branches; i++) {
-		std::vector<pi> path = getPath(roots[i].pos, roots[(i + 1) % branches].pos);
+	for (int i = 0; i < dungeons; i++) {
+		std::vector<pi> path = getPath(roots[i].pos, roots[(i + 1) % dungeons].pos);
 		border.insert(path.begin(), path.end());
 	}
 
-	world->fillWith(world->origin, overworldCenterTile, border);
+	// TODO2 Use all tile spawns
+	world->fillWith(world->origin, worldTypeData[(int)worldType].tileSpawns[0].first, border);
 
-	for (int i = 0; i < branches; i++) {
+	for (int i = 0; i < dungeons; i++) {
 		drawFrom(&roots[i], roots[i].pos);
 	}
 
 	drawOutline();
 
+	// Neat hash for checking if client and server are generating the same thing
+	//T = 0;
+	//Q = 1;
+	//for (int i = 0; i < X; i++) {
+	//	for (int j = 0; j < Y; j++) {
+	//		//cout << Q << " * " << (int)(world->tiles[i][j]) << endl;
+	//		T += (int)(world->tiles[i][j]) * Q;
+	//		Q *= 11;
+	//	}
+	//}
+	//cout << "Drawn outline T = " << T << endl;
+
 
 	cout << "Finished overworld map generation" << endl;
 
-	for (int i = 0; i < branches; i++) {
+	for (int i = 0; i < dungeons; i++) {
 		deallocateFrom(&roots[i]);
 	}
 
@@ -145,93 +160,87 @@ void OverworldGenerator::deallocateFrom(OG_Node *node) {
 }
 
 
-void OverworldGenerator::generateFrom(OG_Node *node, float left, float right, int *dungeons, bool last) {
+void OverworldGenerator::generateFrom(OG_Node *node, float left, float right) {
 	if (node->pos.x < bottomLeft.x) bottomLeft.x = node->pos.x;
 	if (node->pos.y < bottomLeft.y) bottomLeft.y = node->pos.y;
 
 	if (node->pos.x > topRight.x) topRight.x = node->pos.x;
 	if (node->pos.y > topRight.y) topRight.y = node->pos.y;
 
-	// Dungeon spawn chance
-	// depth  1  => 0%
-	// depth  2  => 0%
-	// depth  3  => 100%
-	// depth >3  => 100%
-	if (!last && node->depth == 2) {
-		//if (world->rand(0, 1) < 0.25f) {
-			world->makeDungeon(node->pos, node->biome);
-			return;
-		//}
-	}
-	//if (!last && node->depth == 3) {
-	//	if (world->rand(0, 1) < 0.65f) {
-	//		world->makeDungeon(node->pos, node->biome);
-	//		return;
-	//	}
-	//}
-	if (node->depth > 2) {
-		world->makeDungeon(node->pos, node->biome);
+	if (node->depth >= 8) {
+		world->makeDungeon(node->pos, node->dungeonType);
 		return;
 	}
 
-	int minBranch = 1;
-	int maxBranch = *dungeons;
+	//int minBranch = 1;
+	//int maxBranch = *dungeons;
 
-	int c = world->randint(minBranch, maxBranch);
-	if (last && node->depth == 3) c = maxBranch;
+	//int c = world->randint(minBranch, maxBranch);
+	//if (last && node->depth == 3) c = maxBranch;
 
-	*dungeons -= c - 1;
+	//*dungeons -= c - 1;
 
 	//cout << "I am branching " << c << " times" << endl;
 
 	// lets say they always pick 1 ; then there is only 1
 
 	// divide my remaining space into C
-	float angleEach = (right - left) / c;
+	//float angleEach = (right - left) / c;
 
-	for (int i = 0; i < c; i++) {
-		float ll = left + angleEach * i;
-		float rr = left + angleEach * (i + 1);
+	float myang = util::ang((pf)node->pos);
 
-		OG_Node *newNode = new OG_Node();
-		node->children.push_back(newNode);
+	float ang2 = myang + world->rand(-0.2f, 0.2f);
+	if (ang2 < left) ang2 = left;
+	if (ang2 > right) ang2 = right;
 
-		float ang = ll + world->rand(angleEach*0.1, angleEach*0.9);
-		float length = world->rand(edgeLengthLower, edgeLengthUpper);
+	OG_Node *newNode = new OG_Node();
 
-		float myRad = util::mag((sf::Vector2f)node->pos);
-		float rad = length + myRad;
+	float length = world->rand(edgeLengthLower, edgeLengthUpper);
 
-		sf::Vector2f pos = sf::Vector2f(cos(ang), sin(ang)) * rad;
+	float myRad = util::mag((sf::Vector2f)node->pos);
+	float rad = length + myRad;
 
-		newNode->pos = (pi)pos;
-		newNode->biome = node->biome;
-		newNode->depth = node->depth + 1;
+	sf::Vector2f pos = sf::Vector2f(cos(ang2), sin(ang2)) * rad;
+	newNode->pos = (pi)pos;
+	newNode->dungeonType = node->dungeonType;
+	newNode->depth = node->depth + 1;
 
-		//cout << node->pos << " -> " << newNode->pos << endl;
+	node->children.push_back(newNode);
 
-		// they are last only if they're my last child AND I am last
-		bool isL = (i == c - 1) && last;
-		generateFrom(newNode, ll, rr, dungeons, isL);
-	}
-}
+	generateFrom(newNode, left, right);
 
-#define numBases 2
-BiomeType bases[numBases] = {
-	BiomeType::DESERT,
-	BiomeType::GRASS,
-// 	BiomeType::SNOW,
-};
-BiomeType OverworldGenerator::getBaseBiome() {
-	return bases[world->randint(0, numBases - 1)];
+	//for (int i = 0; i < c; i++) {
+	//	float ll = left + angleEach * i;
+	//	float rr = left + angleEach * (i + 1);
+
+	//	node->children.push_back(newNode);
+
+	//	float ang = ll + world->rand(angleEach*0.1, angleEach*0.9);
+
+	//	newNode->pos = (pi)pos;
+	//	newNode->biome = node->biome;
+	//	newNode->depth = node->depth + 1;
+
+	//	//cout << node->pos << " -> " << newNode->pos << endl;
+
+	//	// they are last only if they're my last child AND I am last
+	//	bool isL = (i == c - 1) && last;
+	//	generateFrom(newNode, ll, rr, dungeons, isL);
+	//}
 }
 
 pi OverworldGenerator::drawFrom(OG_Node *node, pi start) {
 	pi closest(0, 0);
 	float closestDist = 1000000;
 
+	const tlTileSpawnVector &tltSpawns = dungeonTypeData[(int)node->dungeonType].overworldTlSpawns;
+	const TileSpawnVector &tileVec = dungeonTypeData[(int)node->dungeonType].defaultTiles;
+
+	// TODO2: We need a better system for this - as we can't just check for == centerTile
+	Tile centerTile = worldTypeData[(int)worldType].tileSpawns[0].first;
+
 	for (OG_Node *n : node->children) {
-		BiomeType b = n->biome;
+
 		//cout << "Getting path " << node->pos << " ... " << n->pos << endl;
 		std::vector<pi> path = getPath(node->pos, n->pos);
 
@@ -242,7 +251,7 @@ pi OverworldGenerator::drawFrom(OG_Node *node, pi start) {
 		//   Everything in Edges expands out to things that have background = wall
 		//   These form the new Edge vector.
 
-		Tile t = biomes[(int)b].biomeTile;
+		//Tile t = biomes[(int)b].biomeTile;
 
 #ifndef CLIENT
 		std::vector<pi> allPoints = path;
@@ -274,12 +283,20 @@ pi OverworldGenerator::drawFrom(OG_Node *node, pi start) {
 					for (int i = 0; i < 4; i++) {
 						p = b + dirOffset[i];
 						ind = p + world->origin;
-						if (ind.x >= 0 && ind.x < world->tiles.size()) {
-							if (ind.y >= 0 && ind.y < world->tiles[0].size()) {
+						if (ind.x >= 0 && ind.x < (pos_t)world->tiles.size()) {
+							if (ind.y >= 0 && ind.y < (pos_t)world->tiles[0].size()) {
 
 								currentTile = world->tiles[ind.x][ind.y];
-								if (currentTile == Tile::NONE || currentTile == overworldCenterTile) {
-									world->tiles[ind.x][ind.y] = t;
+								if (currentTile == Tile::NONE || currentTile == centerTile) {
+									world->tiles[ind.x][ind.y] = world->randomFromWeightedVector(tileVec);
+
+									if (tltSpawns.size() > 0) {
+										TLTileType type = world->randomFromWeightedVector(tltSpawns);
+										if (type != TLTileType::NONE) {
+											world->addPermTopLayerTile(new TopLayerTile(pi(p.x, p.y), type));
+										}
+									}
+
 									newEdge->push_back(p);
 
 									b += dirOffset[i];
@@ -318,7 +335,7 @@ pi OverworldGenerator::drawFrom(OG_Node *node, pi start) {
 #ifndef CLIENT
 		float maxDist = util::dist((pf)start, (pf)end);
 
-		Spawner *spawn = new OverworldSpawner(b, allPoints, end, maxDist);
+		Spawner *spawn = new OverworldSpawner(node->dungeonType, allPoints, end, maxDist);
 		world->spawners.push_back(spawn);
 #endif
 
@@ -340,22 +357,25 @@ pi OverworldGenerator::drawFrom(OG_Node *node, pi start) {
 
 
 void OverworldGenerator::drawOutline() {
-	for (int i = 1; i < world->tiles.size()-1; i++) {
-		for (int j = 1; j < world->tiles[0].size()-1; j++) {
+	for (int i = 1; i < (int)world->tiles.size()-1; i++) {
+		for (int j = 1; j < (int)world->tiles[0].size()-1; j++) {
 			if (world->tiles[i][j] != Tile::NONE) continue;
 			int8_t c = 0;
 			for (int8_t k = 0; k < 4; k++) {
 				Tile t = world->tiles[i + dirOffset[k].x][j + dirOffset[k].y];
 				if (t != Tile::WALL && t != Tile::NONE) c++;
 			}
-			if (c > 0) world->tiles[i][j] = Tile::WALL;
+			if (c > 0) {
+				// This is where the difference between client/server is
+				world->tiles[i][j] = Tile::WALL;
+			}
 		}
 	}
 
 	// Get rid of sharp edges
 	std::vector<pi> p;
-	for (int i = 1; i < world->tiles.size() - 1; i++) {
-		for (int j = 1; j < world->tiles[0].size() - 1; j++) {
+	for (int i = 1; i < (int)world->tiles.size() - 1; i++) {
+		for (int j = 1; j < (int)world->tiles[0].size() - 1; j++) {
 			if (world->tiles[i][j] != Tile::NONE) continue;
 			int8_t c = 0;
 			for (int8_t k = 0; k < 4; k++) {
@@ -366,5 +386,7 @@ void OverworldGenerator::drawOutline() {
 		}
 	}
 
-	for (pi pp : p) world->tiles[pp.x][pp.y] = Tile::WALL;
+	for (pi pp : p) {
+		world->tiles[pp.x][pp.y] = Tile::WALL;
+	}
 }

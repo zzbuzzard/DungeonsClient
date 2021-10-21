@@ -1,0 +1,47 @@
+Plan
+
+I think so:
+Changes:
+  Deprecate BIOME TYPE and the word BIOME in general
+  Replace with
+    DungeonType + DungeonTypeData
+    OverworldType + OverworldTypeData
+  
+  Classes inheriting from GameState:
+    DungeonGS
+    OverworldGS
+    TownGS
+  
+
+Town:
+  Main, safe overworld area
+  Chest in the middle, and a place you can change skins.
+  On the town's outskirts are passages to overworld areas.
+
+Overworld:
+  Each has a floor colour in TOWN indicating the type of the world.
+  The world looks like the normal Overworld. Make it smaller, and way less dungeons.
+  No splits too, and curvier roads.
+
+  An overworld's type has the following info associated
+   - Floor tile spawnlist [e.g. grass1 90% grass2 10%] for the CENTER only
+      (and tl tile spawnlist)
+   - Dungeon spawnlist [e.g. water dungeon 50% shark boss 10%]
+    (However we keep rerolling the spawnlist til we get at least 3 distinct dung)
+   - A boss EntitySpecies
+   - An ObstacleType, for the obstacle spawned in Town
+
+Dungeon:
+  Each dungeon has to be defeated. This can be handled by BossSpawner.
+    Once defeated, it notifies the Overworld object, which sends a message to everyone.
+
+I dont know
+ One currency or two (normal + premium) ?
+ 
+ 
+ 
+ 
+ 
+
+
+

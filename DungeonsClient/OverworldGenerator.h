@@ -11,12 +11,13 @@ struct OG_Node;
 class OverworldGenerator : public MapGenerator
 {
 public:
-	OverworldGenerator(World *world);
+	OverworldGenerator(World *world, WorldType worldType_);
 	bool generate();
 private:
-	void generateFrom(OG_Node *node, float left, float right, int *dungeons, bool last);
+	WorldType worldType;
+
+	void generateFrom(OG_Node *node, float left, float right);
 	pi drawFrom(OG_Node *node, pi start);
-	BiomeType getBaseBiome();
 	void drawOutline();
 	void deallocateFrom(OG_Node *node);
 };

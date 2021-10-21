@@ -19,9 +19,10 @@ enum EntityType {
 	ET_NONE,
 };
 
+// Order can be freely changed, as long as the vector overleaf is also changed
 #define NUM_ENTITY_SPECIES 21
 enum EntitySpecies : uint8_t {
-	E_PLAYER,	
+	E_PLAYER,
 	E_ENEMY1, // Desert
 	E_ENEMY2,
 	E_FIRE_MAGE,
@@ -48,19 +49,27 @@ enum EntitySpecies : uint8_t {
 
 	E_ICE_ENEMY, // Tundra
 
-	E_NONE = -1,
+	E_NONE=255,
 };
+
+class EntitySpeciesData {
+public:
+	EntitySpeciesData(std::string name, bool combatStatsConstant = true);
+
+	std::string name;
+	bool combatStatsConstant;
+private:
+};
+
+extern EntitySpeciesData entitySpeciesData[NUM_ENTITY_SPECIES];
 
 typedef std::pair<EntitySpecies, float> spawnPair;
 typedef std::vector<spawnPair> spawnVector;
-
-extern bool speciesCombatStatsConstant[NUM_ENTITY_SPECIES];
 
 class GameState;
 class Entity;
 
 Entity* spawnEntityID(EntitySpecies spec, ID_t ID, const pi &pos);
-EntitySpecies randomEntityFromVector(const spawnVector &vec, int a=0, int b=-1);
 
 class Entity
 {

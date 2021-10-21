@@ -55,7 +55,7 @@ std::vector<pi> MapGenerator::getPath(pi a, pi b) {
 
 	world->shuffle(path);
 	on = a;
-	for (int i = 0; i < path.size(); i++) {
+	for (int i = 0; i < (int)path.size(); i++) {
 		pi disp = path[i];
 		path[i] = on;
 		on += disp;
@@ -69,6 +69,5 @@ class Entity;
 
 void MapGenerator::initTiles(int a, int b) {
 	world->tiles = std::vector<std::vector<Tile> >(a, std::vector<Tile>(b, Tile::NONE));
-
 	world->topLayerTileArray = std::vector<std::vector<Entity*> >(a, std::vector<Entity*>(b, nullptr));;
 }

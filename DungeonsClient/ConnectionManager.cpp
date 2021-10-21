@@ -10,7 +10,20 @@ using std::cout;
 using std::endl;
 
 #define PORT 38383
-#define IP "81.106.47.202"
+//#define IP "10.249.161.243" //"131.111.5.182" //"81.106.47.202"
+
+std::string ip = "";
+
+void ConnectionManager::getIP() {
+	ip = "10.249.161.243";
+	cout << "Change IP? (y/n) ";
+	std::string a;
+	std::cin >> a;
+	if (a == "Y" || a == "y") {
+		cout << "Enter IP: ";
+		std::cin >> ip;
+	}
+}
 
 void ConnectionManager::connect() {
 	if (!tokenReady()) {
@@ -20,7 +33,7 @@ void ConnectionManager::connect() {
 
 	cout << "Connecting to server..." << endl;
 
-	sf::Socket::Status status = socket.connect(IP, PORT);
+	sf::Socket::Status status = socket.connect(ip, PORT);
 
 	if (status == sf::Socket::Done) {
 		cout << "Connected to server" << endl;

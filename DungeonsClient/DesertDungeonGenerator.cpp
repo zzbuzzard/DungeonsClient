@@ -10,7 +10,7 @@ const static spawnVector blockRoomSpawns = { spawnPair(E_SCORPION, 1.0f), spawnP
 const static EntitySpecies boss = E_CURSED_CACTUS;
 
 DesertDungeonGenerator::DesertDungeonGenerator(World *world)
-	: DungeonGenerator(world, BiomeType::DESERT)
+	: DungeonGenerator(world, DungeonType::DESERT)
 {
 	roomXMin = 12; roomXMax = 20;
 	roomYMin = 12; roomYMax = 20;

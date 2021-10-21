@@ -11,7 +11,7 @@ const static spawnVector mudRoomSpawns = { spawnPair(E_SLIME, 1.0f), spawnPair(E
 const static EntitySpecies boss = E_MEGA_MUNCHER;
 
 GrasslandsDungeonGenerator::GrasslandsDungeonGenerator(World *world)
-	: DungeonGenerator(world, BiomeType::GRASS)
+	: DungeonGenerator(world, DungeonType::GRASS)
 {
 	spawnRoomX = 21; spawnRoomY = 21;
 	roomXMin = 17; roomXMax = 24;

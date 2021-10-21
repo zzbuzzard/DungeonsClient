@@ -219,6 +219,12 @@
     <ClInclude Include="WebReq.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OverworldGameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonGameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -417,6 +423,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WebReq.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OverworldGameState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonGameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

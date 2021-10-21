@@ -30,9 +30,6 @@ Item *itemTypes[NUM_ITEMS] = {
 	new Item("Cursed cactus eye", ItemRarity::RARE, T_CURSED_CACTUS_EYE, Equipment::ACCESSORY, Stats(-25,0,0,0,12,12,0,0)),
 	new Item("Corrupt amulet", ItemRarity::UNCOMMON, T_CORRUPT_AMULET, Equipment::ACCESSORY, Stats(-25,0,-5,0,15,0,0,0)),
 
-
-	// 55   0.4
-	// 50   0.25
 	new Weapon("Wooden bow", ItemRarity::COMMON, T_TEST_BOW, Stats(0,0,0,0,0,0,0,0), 35, 7, 0.3f, T_ARROW, 1),
 	new Weapon("Bone bow", ItemRarity::COMMON, T_DESERT_BOW, Stats(0,0,0,0,0,0,0,0), 45, 7, 0.25f, T_ARROW, 1),
 	new Weapon("Golden bow", ItemRarity::UNCOMMON, T_GOLDEN_BOW, Stats(0,0,0,5,0,0,0,0), 25, 9, 0.1f, T_GOLD_ARROW, 2), // buff and move drop

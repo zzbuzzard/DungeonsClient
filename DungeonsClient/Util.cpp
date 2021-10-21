@@ -224,6 +224,27 @@ namespace util {
 		}
 		return pi(std::stoi(numS), i);
 	}
+
+//	template <typename T> T randomFromWeightedVector(const std::vector<std::pair<T, float> > &vec) {
+//		float t = 0;
+//		for (int i = 0; i < vec.size(); i++) {
+//			t += vec[i].second;
+//		}
+//
+//		float x = util::rand(0, t);
+//		for (int i = 0; i < vec.size(); i++) {
+//			if (vec[i].second >= x) return vec[i].first;
+//			x -= vec[i].second;
+//		}
+//		cout << "Failed to spawn from vector" << endl;
+//		return vec[vec.size() - 1].first;
+//	}
+//
+//// C++ sucks (or maybe it's me)
+//#include "Entity.h"
+//#include "TopLayerTile.h"
+//	template<> EntitySpecies randomFromWeightedVector<EntitySpecies>(const std::vector<std::pair<EntitySpecies, float> > &vec);
+//	template<> TLTileType randomFromWeightedVector<TLTileType>(const std::vector<std::pair<TLTileType, float> > &vec);
 }
 
 

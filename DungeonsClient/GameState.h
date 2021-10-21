@@ -23,6 +23,13 @@
 #include "Item.h"
 #endif
 
+// Server only
+enum class GameStateType {
+	Overworld,
+	Dungeon,
+	Town
+};
+
 class Entity;
 class Player;
 class Enemy;
@@ -40,7 +47,8 @@ class GameState
 // Public functions
 public:
 #ifdef CLIENT
-	GameState(sf::RenderWindow *window);
+	// TODO: Handle the GameStateType and store it
+	GameState(GameStateType gtype, sf::RenderWindow *window);
 	~GameState();
 
 	// handle output from server
@@ -70,13 +78,15 @@ public:
 	bool isInView(pi pos);
 
 	void initialiseOverworld(seed_t seed, ID_t worldID);
-	void initialiseDungeon(BiomeType b, seed_t seed, ID_t worldID);
+	void initialiseDungeon(DungeonType b, seed_t seed, ID_t worldID);
 #else
-	GameState(BiomeType biome);
+	GameState(GameStateType gameStateType);
+	//GameState(DungeonType dungeon);
+	//GameState(WorldType world);
 	~GameState();
 
-	const bool isOverworld;
-	bool isAlive() const;
+	const GameStateType gameStateType;
+	virtual bool isAlive() const = 0;
 
 	void getUpdatePacket(sf::Packet &packet);
 	void getEquipmentPacket(sf::Packet &packet);
@@ -88,6 +98,8 @@ public:
 	void playerDied(Player *p);
 	void playerRespawned(Player *p);
 	void specialUsed(Special *s, ID_t a, ID_t b, sf::Packet &packet);
+
+	virtual pi getSpawnPosition() const = 0;
 
 	std::vector<pi> sendTLtilesPacket(TLTileType type, const std::vector<pi> points); // Returns the list that was sent
 
@@ -107,11 +119,17 @@ public:
 	bool canMoveDir(pi pos, pi tileSize, Dir d);
 	bool canMoveDirWorld(pi pos, pi tileSize, Dir d); //Only checks the world, not entities
 
+// Protected functions
+protected:
+#ifndef CLIENT
+	void worldInitialised();
+#endif
+
 // Private functions
 private:
 #ifdef CLIENT
 	void handlePlayerRespawn();
-	void deleteAllEntities();
+	void deleteAllEntities(bool save_permanent_tl);
 
 	void useSpecial();
 	void cleanseSpecialTargets();
@@ -127,6 +145,8 @@ public:
 #ifdef CLIENT
 	PlayerInfo pInfo;
 	GameMenu gameMenu; // TODO: Move back to private after XP/level up UI is sorted out
+
+	GameStateType gameStateType;
 
 	double specialUsedTime = -1;
 
@@ -146,7 +166,7 @@ public:
 	std::map<ID_t, Enemy*> idToEnemy;
 	std::set<pi, piComp> *takenPos;
 
-	// Server: initialise in constructor
+	// Server: initialise in inherited constructor
 	// Client: initialise when we receive the seed
 	World *currentWorld = nullptr;
 

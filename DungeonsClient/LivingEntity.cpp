@@ -107,7 +107,7 @@ const void *LivingEntity::handleUpdate(const void *data) {
 
 	target_count_t *Target_count;
 
-	if (!speciesCombatStatsConstant[(int)spec]) {
+	if (!entitySpeciesData[(int)spec].combatStatsConstant) {
 		CombatStats *CombatStatss = (CombatStats*)Life;
 		combatStats = *CombatStatss;
 		CombatStatss++;
@@ -299,7 +299,7 @@ void LivingEntity::update(GameState *state) {
 		reloadOn -= deltaTime;
 	if (reloadOn <= 0 && targets.size() > 0) {
 		reloadOn += combatStats.reloadTime;
-		for (int i = 0; i < targets.size(); i++) {
+		for (int i = 0; i < (int)targets.size(); i++) {
 			ID_t t_id = targets[i];
 			if (t_id < 0) // target enemy
 			{
@@ -407,7 +407,7 @@ void LivingEntity::handleTarget(ID_t id) {
 		if (!heal && id >= 0) return; //attacking a friend
 	}
 
-	for (int i = 0; i < targets.size(); i++) {
+	for (int i = 0; i < (int)targets.size(); i++) {
 		if (targets[i] == id) {
 			targets.erase(targets.begin() + i);
 			return;
@@ -427,7 +427,7 @@ damage_t LivingEntity::getDamageOf(damage_t dmg) {
 
 	damage_t x = dmg - combatStats.def;
 
-	damage_t min = MIN_DEALT_DAMAGE_MUL * dmg;
+	damage_t min = (damage_t)(MIN_DEALT_DAMAGE_MUL * dmg);
 	if (min < 1) min = 1;
 
 	if (x < min) x = min;
@@ -483,6 +483,11 @@ void LivingEntity::handleDirectionInput(Dir d, GameState *state) {
 		pi newPos = getPos() + dirOffset[d];
 		if (state->canMove(newPos)) {
 			currentMovement = d;
+		}
+		else {
+			cout << "Living Entity can't move because " << (state->getTLTile(newPos) == nullptr ? "nullptr" : "tl tile") << endl
+				<< (state->currentWorld->getTile(newPos) == Tile::WALL ? "wall" : "no wall");
+			cout << "POS: " << newPos + state->currentWorld->origin << endl;
 		}
 	}
 }

@@ -62,4 +62,20 @@ namespace util {
 	msgpair getCommand(std::string msg); // e.g. /setname james -> (setname, james)
 
 	pi getNextNum(const std::string &st, int start=0); // returns (the number, the index where the string continues)
+
+	//template <typename T> T randomFromWeightedVector(const std::vector<std::pair<T, float> > &vec);
+	template <typename T> T randomFromWeightedVector(const std::vector<std::pair<T, float> > &vec) {
+		float t = 0;
+		for (int i = 0; i < (int)vec.size(); i++) {
+			t += vec[i].second;
+		}
+
+		float x = util::rand(0, t);
+		for (int i = 0; i < (int)vec.size(); i++) {
+			if (vec[i].second >= x) return vec[i].first;
+			x -= vec[i].second;
+		}
+		cout << "Failed to spawn from vector" << endl;
+		return vec[vec.size() - 1].first;
+	}
 }
